@@ -23,9 +23,11 @@
         <a href="#medidas">3. Medir eje y adaptador</a>
         <a href="#especificacion">4. Especificar el rotor</a>
         <a href="#configuraciones">5. Patrones 4, 6 y 8</a>
+        <a href="#plantilla-imprimible">5A. Plantilla imprimible</a>
         <a href="#imanes">6. Clasificar los imanes</a>
         <a href="#plantilla">7. Plantilla y montaje en seco</a>
         <a href="#retencion">8. Retención mecánica</a>
+        <a href="#montaje-visual">8A. Montaje visual</a>
         <a href="#acoplamiento">9. Acoplar sin energía</a>
         <a href="#equilibrado">10. Equilibrado preliminar</a>
         <a href="#resguardo">11. Envolvente y giro manual</a>
@@ -101,7 +103,7 @@
         <div class="box success">
           <span class="box-title">Decisiones conservadas</span>
           <ul class="status-list">
-            <li>Rotor <strong>ligero y no metálico</strong> como dirección inicial.</li>
+          <li>Un <strong>CD real</strong> como disco del rotor, decisión confirmada por el proyecto.</li>
             <li>Configuraciones previstas de <strong>4, 6 y 8 imanes</strong>.</li>
             <li>Imanes principales descritos como discos de neodimio de <strong>15 × 2 mm</strong>, pendientes de medir físicamente.</li>
             <li>Adaptador anunciado M10-5 para eje de 5 mm, pendiente de identificación real.</li>
@@ -133,7 +135,7 @@
 
       <div class="check-group">
         <label class="check-row" for="c3-apartar-sierra"><input id="c3-apartar-sierra" type="checkbox" data-checklist><span>Hoja dentada, aro y accesorios de corte están etiquetados “NO USAR” y fuera del banco.</span></label>
-        <label class="check-row" for="c3-candidatos"><input id="c3-candidatos" type="checkbox" data-checklist><span>El CD u otro disco no metálico se registra como candidato, no como rotor aprobado.</span></label>
+        <label class="check-row" for="c3-candidatos"><input id="c3-candidatos" type="checkbox" data-checklist><span>El CD real destinado al proyecto está identificado, fotografiado por ambas caras e inspeccionado sin grietas ni delaminación.</span></label>
         <label class="check-row" for="c3-imanes-separados"><input id="c3-imanes-separados" type="checkbox" data-checklist><span>Imanes redondos principales y rectangulares auxiliares están separados e identificados.</span></label>
         <label class="check-row" for="c3-inventario-fisico"><input id="c3-inventario-fisico" type="checkbox" data-checklist><span>Motor, adaptador, arandelas, tuercas y tornillos reales están contados y fotografiados por ambas caras.</span></label>
       </div>
@@ -204,8 +206,8 @@
       <div class="grid-2">
         <div class="box warning">
           <span class="box-title">Candidato conservado</span>
-          <p>Un CD u otro disco ligero y no metálico permanece como <strong>idea inicial</strong>. No se elimina esta decisión.</p>
-          <p>Sin embargo, un CD doméstico no aporta por sí solo resistencia declarada, tolerancia del orificio, retención de imanes ni velocidad máxima. Por eso no se autoriza todavía como pieza giratoria.</p>
+          <p>El proyecto utilizará un <strong>CD real</strong> como disco del rotor. Esta decisión se conserva y las plantillas se trazan sobre sus medidas físicas.</p>
+          <p>El CD no aporta por sí solo resistencia declarada, tolerancia del orificio, retención de imanes ni velocidad máxima. Por eso la elección del CD no autoriza todavía una prueba giratoria.</p>
         </div>
         <div class="box danger">
           <span class="box-title">TODO de ingeniería</span>
@@ -294,6 +296,42 @@
         <label class="check-row" for="c3-regla-polaridad"><input id="c3-regla-polaridad" type="checkbox" data-checklist><span>La regla de caras A/B está decidida, justificada y dibujada sin ambigüedad.</span></label>
         <label class="check-row" for="c3-variable-unica"><input id="c3-variable-unica" type="checkbox" data-checklist><span>La tabla experimental identifica qué cambia y qué debe permanecer constante entre 4, 6 y 8.</span></label>
       </div>
+
+      <section class="template-builder manual-template-builder" id="plantilla-imprimible" data-rotor-template aria-labelledby="plantilla-imprimible-title">
+        <h3 id="plantilla-imprimible-title">Generador de plantilla imprimible 1:1</h3>
+        <p>Escribe únicamente las <strong>medidas reales ya verificadas</strong>. El dibujo calcula la simetría y detecta solapes geométricos; no valida resistencia, retención ni RPM.</p>
+        <div class="template-controls">
+          <label for="c3-template-count">Número de imanes
+            <select id="c3-template-count"><option value="4">4 posiciones · 90°</option><option value="6">6 posiciones · 60°</option><option value="8" selected>8 posiciones · 45°</option></select>
+          </label>
+          <label for="c3-template-rotor">Diámetro del rotor (mm)
+            <input id="c3-template-rotor" type="number" inputmode="decimal" min="1" max="150" step="0.1" placeholder="TODO: medir">
+          </label>
+          <label for="c3-template-center">Diámetro del centro/cubo (mm)
+            <input id="c3-template-center" type="number" inputmode="decimal" min="1" step="0.1" placeholder="TODO: medir">
+          </label>
+          <label for="c3-template-magnet">Diámetro real del imán (mm)
+            <input id="c3-template-magnet" type="number" inputmode="decimal" min="1" step="0.1" placeholder="TODO: medir; no asumir 15">
+          </label>
+          <label for="c3-template-radius">Radio al centro del imán (mm)
+            <input id="c3-template-radius" type="number" inputmode="decimal" min="1" step="0.1" placeholder="TODO: decidir y aprobar">
+          </label>
+          <label for="c3-template-polarity">Marcas de cara
+            <select id="c3-template-polarity"><option value="numbered" selected>Numerar 1…N · sin decidir</option><option value="same-a">Todas A · solo si se aprueba</option><option value="alternate">Alternar A/B · solo si se aprueba</option></select>
+          </label>
+        </div>
+        <div class="template-actions">
+          <button type="button" data-template-render>Dibujar plantilla</button>
+          <button type="button" data-template-download disabled>Descargar SVG 1:1</button>
+          <a class="template-link" href="plantilla-rotor.html">Abrir herramienta en una página limpia</a>
+        </div>
+        <div class="template-preview">
+          <svg class="rotor-template-svg" data-template-svg viewBox="0 0 210 150" role="img" aria-label="Vista previa pendiente de introducir medidas"><text x="50%" y="50%" text-anchor="middle" class="template-placeholder">Introduce medidas verificadas para dibujar</text></svg>
+        </div>
+        <p class="template-message" data-template-message>La plantilla permanece vacía para no inventar el tamaño del rotor, el centro o el radio magnético.</p>
+        <aside class="notice warning"><strong>Al imprimir:</strong> seleccionar escala 100 % o “tamaño real”, nunca “ajustar”. Medir la regla de control con calibre o regla fiable antes de trasladar un punto al material.</aside>
+        <label class="check-row" for="c3-plantilla-generada"><input id="c3-plantilla-generada" type="checkbox" data-checklist><span>La plantilla se generó con medidas reales aprobadas, se imprimió al 100 % y su regla de control coincide físicamente.</span></label>
+      </section>
       <div class="page-footer">Simetría geométrica no garantiza por sí sola equilibrio de masas.</div>
     </section>
 
@@ -301,7 +339,7 @@
       <span class="page-number">Página 6</span>
       <p class="eyebrow">Capítulo 3 · Imanes de neodimio</p>
       <h2 id="imanes-title">Medir, inspeccionar y marcar sin golpes</h2>
-      <p class="page-subtitle">Los discos se mantienen separados; una referencia generada no prueba las piezas recibidas.</p>
+      <p class="page-subtitle">Los imanes se mantienen separados; una referencia generada no prueba las piezas recibidas.</p>
 
       <div class="grid-2">
         <article class="component-card">
@@ -371,7 +409,7 @@
           <ul>
             <li>Distancia centro–centro igual en todas las posiciones.</li>
             <li>Margen al borde exterior definido por el diseño competente.</li>
-            <li>Ninguna cavidad invade el cubo, arandela o zona de apriete.</li>
+            <li>Ninguna huella de imán invade el cubo, arandela o zona de apriete.</li>
             <li>La cara activa de todos los imanes queda en el mismo plano.</li>
             <li>El entrehierro futuro puede medirse y ajustarse sin contacto.</li>
           </ul>
@@ -402,21 +440,67 @@
       <div class="box danger">
         <span class="box-title">Carga radial</span>
         <p>La fuerza centrífuga de cada masa puede expresarse como <strong>F = m · r · ω²</strong>. Depende de la masa <em>m</em>, el radio <em>r</em> y el cuadrado de la velocidad angular <em>ω</em>.</p>
-        <p>Sin masa real, radio, RPM máxima y propiedades de materiales no se puede aprobar adhesivo, cavidad, tapa ni margen de seguridad.</p>
+        <p>Sin masa real, radio, RPM máxima, estado del CD y propiedades de materiales no se puede aprobar el adhesivo ni determinar si hace falta otra retención o qué forma debería tener.</p>
       </div>
 
       <div class="grid-3">
         <div class="box blue">
           <span class="box-title">Retención radial</span>
-          <p>Una pared, cavidad, aro o elemento equivalente impide el desplazamiento hacia el exterior incluso ante degradación del adhesivo.</p>
+          <p>El CD plano no aporta esta función. Debe decidirse si el adhesivo validado y el límite de RPM son suficientes o si hace falta una retención añadida compatible con el CD.</p>
         </div>
         <div class="box blue">
           <span class="box-title">Retención axial</span>
-          <p>Una tapa o solución equivalente impide que el imán salga hacia la bobina o hacia la cara posterior.</p>
+          <p>El montaje previsto no incluye tapa. La necesidad de una retención axial adicional queda pendiente de cálculo y no se inventa aquí.</p>
         </div>
         <div class="box warning">
           <span class="box-title">Contención externa</span>
           <p>El resguardo rodea el plano de giro y contiene fragmentos si fallan rotor o retención.</p>
+        </div>
+      </div>
+
+      <section id="montaje-visual" aria-labelledby="montaje-visual-title">
+        <h3 id="montaje-visual-title">Construcción real sobre el CD</h3>
+        <figure class="cd-layout-diagram">
+          <div class="cd-layout" aria-label="Dibujo de un CD con ocho huellas de imán equidistantes y centro reservado para el adaptador">
+            <span class="cd-hole"></span>
+            <span class="cd-adapter-zone">CENTRO<br>ADAPTADOR</span>
+            <span class="cd-magnet" style="--angle:0deg">1</span><span class="cd-magnet" style="--angle:45deg">2</span><span class="cd-magnet" style="--angle:90deg">3</span><span class="cd-magnet" style="--angle:135deg">4</span><span class="cd-magnet" style="--angle:180deg">5</span><span class="cd-magnet" style="--angle:225deg">6</span><span class="cd-magnet" style="--angle:270deg">7</span><span class="cd-magnet" style="--angle:315deg">8</span>
+          </div>
+          <figcaption><strong>Dibujo orientativo, sin cotas:</strong> las posiciones se trasladan desde la plantilla 1:1 generada con el CD y los imanes reales. El radio no se toma de este dibujo.</figcaption>
+        </figure>
+        <div class="assembly-stack" aria-label="Secuencia conceptual desde el cuerpo del rotor hasta el resguardo exterior">
+          <div class="assembly-layer"><span class="layer-shape cd">1</span><strong>CD real inspeccionado</strong><small>Sin grietas, alabeo ni delaminación.</small></div>
+          <div class="assembly-layer"><span class="layer-shape template">2</span><strong>Plantilla 1:1</strong><small>Centro, radio y posiciones verificados.</small></div>
+          <div class="assembly-layer"><span class="layer-shape adhesive">3</span><strong>Adhesivo validado</strong><small>Compatible con CD e imán reales.</small></div>
+          <div class="assembly-layer"><span class="layer-shape magnet">4</span><strong>Imanes por pares</strong><small>Opuestos, medidos y marcados A/B.</small></div>
+          <div class="assembly-layer"><span class="layer-shape camera">5</span><strong>Fotos reales</strong><small>Frontal, posterior, canto y centro.</small></div>
+        </div>
+
+        <div class="detail-gallery">
+          <figure><div class="media-placeholder"><div><strong>TODO · FOTO REAL</strong><p>CD limpio sobre la plantilla impresa, con centro y posiciones marcados pero todavía sin adhesivo.</p></div></div><figcaption>Tomar perpendicularmente, con regla de control visible y sin perspectiva que deforme el patrón.</figcaption></figure>
+          <figure><div class="media-placeholder"><div><strong>TODO · FOTO REAL</strong><p>CD terminado con los imanes pegados: vista frontal, posterior, canto y unión con el adaptador real.</p></div></div><figcaption>No se sustituirá por una imagen generada. Estas vistas deben permitir detectar desplazamiento, exceso de adhesivo, grietas y alabeo.</figcaption></figure>
+        </div>
+      </section>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Secuencia si el adhesivo se aprueba</span>
+          <ol class="step-list">
+            <li>Fotografiar e inspeccionar el CD real; rechazarlo ante grietas, alabeo, delaminación o centro dañado.</li>
+            <li>Imprimir la plantilla 1:1, comprobar su regla y hacer montaje en seco con fichas inertes.</li>
+            <li>Preparar cada superficie según el adhesivo, el recubrimiento del imán y el material del rotor.</li>
+            <li>Dosificar una cantidad repetible sin contaminar caras, centro ni tornillos.</li>
+            <li>Colocar por pares opuestos, respetando posición y cara A/B; no dejar que los imanes salten.</li>
+            <li>Aplicar el útil de presión y completar exactamente el curado documentado.</li>
+            <li>Tomar las fotografías reales previstas y comparar cada posición con la plantilla.</li>
+            <li>Pesar, inspeccionar, medir descentramiento y equilibrar antes de presentarlo al motor.</li>
+          </ol>
+        </div>
+        <div class="box danger">
+          <span class="box-title">No hay receta universal de pegado</span>
+          <p>La preparación depende del polímero o compuesto del rotor, del revestimiento del imán y del adhesivo elegido. Por eso el manual no ordena lijar el imán, usar acetona ni seleccionar “epoxi” a ciegas.</p>
+          <p class="decision todo"><strong>TODO:</strong> registrar fabricante y ficha técnica del adhesivo, compatibilidad específica con el sustrato real del CD y el revestimiento del imán, limpieza autorizada, mezcla, espesor, presión/útil, temperatura y tiempo de curado.</p>
+          <p>Como principio general, las superficies deben estar limpias y secas; algunos materiales necesitan abrasión o promotor, pero eso se decide para el sistema real, no por una foto.</p>
         </div>
       </div>
 
@@ -435,10 +519,12 @@
 
       <div class="check-group">
         <label class="check-row" for="c3-carga"><input id="c3-carga" type="checkbox" data-checklist><span>Cargas por imán calculadas con masa, radio y RPM máxima reales.</span></label>
-        <label class="check-row" for="c3-retencion-radial"><input id="c3-retencion-radial" type="checkbox" data-checklist><span>El diseño incluye retención radial independiente de la atracción magnética.</span></label>
-        <label class="check-row" for="c3-retencion-axial"><input id="c3-retencion-axial" type="checkbox" data-checklist><span>El diseño incluye retención axial y conserva un plano magnético repetible.</span></label>
+        <label class="check-row" for="c3-retencion-radial"><input id="c3-retencion-radial" type="checkbox" data-checklist><span>Se ha calculado y documentado si el pegado sobre el CD necesita retención radial adicional; si la necesita, se ha definido con piezas que realmente tendremos.</span></label>
+        <label class="check-row" for="c3-retencion-axial"><input id="c3-retencion-axial" type="checkbox" data-checklist><span>Se ha calculado y documentado si el pegado sobre el CD necesita retención axial adicional; no se presupone una tapa inexistente.</span></label>
         <label class="check-row" for="c3-adhesivo"><input id="c3-adhesivo" type="checkbox" data-checklist><span>Cualquier adhesivo está especificado y validado para ambos materiales, carga, temperatura y proceso.</span></label>
         <label class="check-row" for="c3-trazabilidad"><input id="c3-trazabilidad" type="checkbox" data-checklist><span>El proceso de fabricación e inspección tiene registro y criterios de rechazo.</span></label>
+        <label class="check-row" for="c3-foto-final-real"><input id="c3-foto-final-real" type="checkbox" data-checklist><span>Existen fotos reales del CD antes de pegar y del rotor terminado: frontal, posterior, canto, centro y unión con el adaptador.</span></label>
+        <label class="check-row" for="c3-adhesivo-registro"><input id="c3-adhesivo-registro" type="checkbox" data-checklist><span>La preparación, dosificación, útil, presión, temperatura, curado y lote del adhesivo están documentados según su ficha técnica.</span></label>
       </div>
       <label class="observation" for="c3-memoria-retencion">Memoria de retención
         <textarea id="c3-memoria-retencion" data-note placeholder="m · r · RPM/ω · carga calculada · margen · retención radial/axial · adhesivo/proceso si aplica · contención · responsable."></textarea>
@@ -548,13 +634,12 @@
         <article class="component-card">
           <div class="component-card-header">
             <span class="component-number">3</span>
-            <div><h3>Maqueta de envolvente</h3><div class="component-status"><span class="tag reference">Referencia generada</span><span class="tag todo">No es diseño final</span></div></div>
+            <div><h3>Documentar el resguardo real</h3><div class="component-status"><span class="tag todo">Falta foto real</span><span class="tag pending">Diseño pendiente</span></div></div>
           </div>
           <div class="media-frame">
-            <a href="assets/img/cap3-maqueta-resguardo-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap3-maqueta-resguardo-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia generada de una plantilla circular inerte separada del eje dentro de una envolvente transparente atornillada, con el adaptador retirado"></a>
-            <span class="zoom-hint">Abrir imagen</span>
+            <div class="media-placeholder"><div><strong>TODO · FOTO REAL</strong><p>CD unido al adaptador real dentro del resguardo que efectivamente construyáis, todavía sin alimentación.</p></div></div>
           </div>
-          <p class="photo-note">Referencia generada: la pieza gris es una plantilla sin imanes y no está unida al eje. Material, espesor, fijaciones y capacidad de contención del resguardo real siguen como TODO.</p>
+          <p class="photo-note">No se usa una imagen inventada. La foto deberá mostrar el CD, el adaptador, las holguras y las fijaciones del resguardo reales.</p>
         </article>
         <div>
           <div class="box blue">
@@ -620,7 +705,7 @@
 
       <div class="box danger">
         <span class="box-title">Bloqueos que permanecen</span>
-        <p class="decision todo"><strong>Rotor:</strong> no se ha confirmado todavía material, dimensiones, resistencia ni interfaz física del candidato real.</p>
+        <p class="decision todo"><strong>Rotor:</strong> se usará un CD, pero faltan su inspección, medidas, condición real, compatibilidad adhesiva, resistencia y la interfaz física con el adaptador.</p>
         <p class="decision todo"><strong>Imanes:</strong> la foto disponible es generada; faltan fotografía, medidas, masas, grado, revestimiento y magnetización del lote real.</p>
         <p class="decision todo"><strong>Velocidad:</strong> falta RPM máxima aprobada, medición independiente y un método que evite sobrevelocidad.</p>
         <p class="decision todo"><strong>Validación:</strong> faltan criterios de balance/descentramiento y capacidad de contención del resguardo.</p>
@@ -633,6 +718,8 @@
           <li><a href="https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.212" target="_blank" rel="noopener">OSHA 1910.212 · Requisitos generales de resguardo</a>: principios comparables para proteger frente a partes giratorias y proyectiles y para fijar el resguardo sin crear otro peligro.</li>
           <li><a href="https://www.kjmagnetics.com/neodymium-magnet-safety.asp" target="_blank" rel="noopener">K&amp;J Magnetics · Seguridad con imanes de neodimio</a>: fragilidad, proyección de fragmentos, protección ocular e interferencia con dispositivos implantados.</li>
           <li><a href="https://www.supermagnete.de/spa/safety-neodymium" target="_blank" rel="noopener">supermagnete · Advertencias para imanes de neodimio</a>: pellizcos, astillas, revestimiento, almacenamiento, dispositivos médicos y prohibición de mecanizado sin medios adecuados.</li>
+          <li><a href="https://www.3m.com/3M/en_US/bonding-and-assembly-us/resources/science-of-adhesion/changing-surface-properties/" target="_blank" rel="noopener">3M · Preparación de superficies para adhesión</a>: la limpieza, energía superficial y posible abrasión o imprimación dependen del sustrato y del sistema adhesivo.</li>
+          <li><a href="https://permabond.com/materials_bonded/how-to-bond-magnets/" target="_blank" rel="noopener">Permabond · Unión adhesiva de imanes</a>: la química se selecciona por impacto, temperatura, disolventes y materiales; limpiar con isopropanol puede ser apropiado en determinados sistemas contaminados.</li>
         </ul>
         <p><strong>Alcance:</strong> son referencias de principios, no una certificación del rotor. La norma aplicable, tolerancias y diseño final corresponden al conjunto real y al contexto de Colombia.</p>
       </section>
@@ -654,5 +741,6 @@
   </main>
   <script src="assets/js/checklist.js" defer></script>
   <script src="assets/js/navigation.js" defer></script>
+  <script src="assets/js/rotor-template.js" defer></script>
 </body>
 </html>

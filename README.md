@@ -164,7 +164,7 @@ Las imágenes disponibles de la fuente proceden del material/anuncio y no identi
 
 Las imágenes del PWM tampoco permiten leer con fiabilidad qué bornes son entrada y salida. El Capítulo 2 conserva como `TODO` bloqueantes esa asignación, las corrientes reales del controlador y el motor, el comportamiento de arranque, la protección y el corte DC, la validez del AWG18 y los terminales. La primera prueba se limita al motor desnudo, fijado y con el eje completamente resguardado; el rotor sigue fuera.
 
-El Capítulo 3 conserva el rotor ligero y no metálico como dirección inicial y las configuraciones de 4, 6 y 8 imanes, pero no convierte un CD doméstico ni el adaptador del anuncio en piezas aprobadas. Añade tres referencias generadas y rotuladas —medición del adaptador, clasificación segura de imanes y maqueta inerte del resguardo—. La geometría angular se representa con diagramas HTML deterministas. La prueba motorizada queda bloqueada hasta fijar RPM máxima, medida independiente, retención, equilibrado y capacidad de contención.
+El Capítulo 3 documenta la decisión del proyecto de construir el rotor sobre un CD real con configuraciones de 4, 6 y 8 imanes. Incluye un generador de plantillas SVG a escala 1:1 que exige introducir las medidas físicas del CD, el centro y los imanes; no precarga cotas ni representa soportes que no existen. Los huecos del rotor, el montaje final y el resguardo se reservan para fotografías reales tomadas durante la construcción. El adhesivo queda pendiente de validar específicamente para el sustrato real del CD y el revestimiento de los imanes; la prueba motorizada sigue bloqueada hasta cerrar RPM máxima, retención, equilibrado y contención.
 
 La imagen del paquete que estaba rotulada como «imanes redondos» sigue descartada porque muestra anillos/adaptadores con orificio, no los discos macizos de 15 × 2 mm descritos en el proyecto.
 
@@ -226,6 +226,7 @@ generador/
 ├── capitulo-1.html            # Cable de red, fuente protegida y prueba de 12 V
 ├── capitulo-2.html            # Protección DC, PWM, motor y primera rotación sin rotor
 ├── capitulo-3.html            # Rotor, imanes, retención, equilibrado y resguardo
+├── plantilla-rotor.html       # Generador SVG imprimible 1:1 para 4, 6 u 8 imanes
 ├── README.md                  # Este documento
 └── assets/
     ├── css/
