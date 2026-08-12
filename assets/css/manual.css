@@ -607,6 +607,10 @@ a.chapter-card:hover {
   counter-reset: step;
 }
 
+.step-list.continued {
+  counter-reset: step 4;
+}
+
 .step-list li {
   position: relative;
   min-height: 54px;
