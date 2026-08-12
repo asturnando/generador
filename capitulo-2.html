@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Capítulo 2 del manual del generador: identificar el PWM y el motor 775, definir la protección de 12 V, cablear con la fuente desenchufada y realizar la primera rotación sin rotor.">
+  <title>Capítulo 2 · Fuente, PWM y motor 775</title>
+  <link rel="stylesheet" href="assets/css/manual.css">
+</head>
+<body data-storage-namespace="generador:capitulo-2:v1:" data-checklist-label="Capítulo 2">
+  <a class="skip-link" href="#capitulo">Saltar al capítulo</a>
+
+  <header class="toolbar" aria-label="Navegación del manual">
+    <strong class="toolbar-title">Manual del generador · Capítulo 2</strong>
+    <a href="index.html">← Portada</a>
+    <a href="capitulo-1.html">Anterior</a>
+    <span class="is-disabled" aria-label="El capítulo siguiente está en preparación">Siguiente</span>
+    <details class="quick-menu">
+      <summary>Índice rápido</summary>
+      <nav aria-label="Índice del Capítulo 2">
+        <a href="#alcance">1. Alcance y seguridad</a>
+        <a href="#mapa">2. Fuente, PWM y motor</a>
+        <a href="#bloqueos">3. Datos que faltan</a>
+        <a href="#pwm">4. Identificar el PWM</a>
+        <a href="#motor">5. Revisar el motor</a>
+        <a href="#proteccion">6. Protección y cable</a>
+        <a href="#montaje">7. Fijación y resguardo</a>
+        <a href="#preparar-cables">8. Preparar los cables</a>
+        <a href="#entrada-pwm">9. Conectar la entrada</a>
+        <a href="#salida-motor">10. Conectar el motor</a>
+        <a href="#primera-rotacion">11. Primera rotación</a>
+        <a href="#cierre">12. Checklist final y fuentes</a>
+      </nav>
+    </details>
+    <button type="button" data-print>Imprimir / PDF</button>
+  </header>
+
+  <main class="manual-main" id="capitulo">
+    <section class="page" id="alcance" aria-labelledby="alcance-title">
+      <span class="page-number">Página 1</span>
+      <p class="eyebrow">Capítulo 2 · Movimiento controlado</p>
+      <h1 id="alcance-title">De los 12 V a la primera rotación</h1>
+      <p class="page-subtitle">Preparar el PWM y hacer girar el motor desnudo, sujeto y resguardado.</p>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Resultado buscado</span>
+          <p class="lead">Dejar un banco de 12 V con <strong>corte accesible, protección DC definida, PWM fijo y motor 775 inmóvil sobre su soporte</strong>, y registrar una primera rotación breve y controlada.</p>
+          <p>Al terminar, el motor vuelve a quedar sin tensión. El rotor, adaptador, discos, imanes y sensores siguen fuera.</p>
+        </div>
+        <div class="box danger">
+          <span class="box-title">Puerta de entrada</span>
+          <p><strong>No se empieza</strong> hasta que el Capítulo 1 esté realmente terminado: fuente cerrada, salida de 12 V medida, polaridad confirmada y enchufe fuera de la toma.</p>
+          <p>Este capítulo es de baja tensión, pero el motor puede arrancar con mucha corriente y su eje puede atrapar, golpear o proyectar piezas.</p>
+        </div>
+      </div>
+
+      <div class="role-grid" aria-label="Responsabilidades durante el capítulo">
+        <article class="role-card observer">
+          <strong>Sara</strong>
+          <span>Reconoce y registra</span>
+          <p>Puede etiquetar, fotografiar y completar notas con todo desconectado. No hace la primera energización.</p>
+        </article>
+        <article class="role-card competent">
+          <strong>Persona competente</strong>
+          <span>Dimensiona y ejecuta</span>
+          <p>Confirma bornes y corrientes, elige protección y cable, conecta y controla la prueba.</p>
+        </article>
+        <article class="role-card stop">
+          <strong>Cualquiera</strong>
+          <span>Puede ordenar parar</span>
+          <p>Ante duda, movimiento inesperado, olor, humo, ruido, vibración, calor o cable desplazado.</p>
+        </article>
+      </div>
+
+      <div class="progress-panel">
+        <div class="progress-copy">
+          <strong data-progress-text>0 comprobaciones realizadas</strong>
+          <div class="progress-track" role="progressbar" aria-label="Progreso del Capítulo 2" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
+            <span data-progress-bar></span>
+          </div>
+        </div>
+        <button class="reset-button" type="button" data-reset-checklist>Borrar progreso</button>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c2-cap1-cerrado"><input id="c2-cap1-cerrado" type="checkbox" data-checklist><span>El Capítulo 1 está completo y la salida de la fuente se ha registrado dentro de la tolerancia de su manual.</span></label>
+        <label class="check-row" for="c2-regla-desconectar"><input id="c2-regla-desconectar" type="checkbox" data-checklist><span>Entendido: antes de tocar cable, borne, mando o motor se abre el corte DC, se desenchufa la fuente y se espera su descarga.</span></label>
+        <label class="check-row" for="c2-regla-sin-rotor"><input id="c2-regla-sin-rotor" type="checkbox" data-checklist><span>Adaptador, rotor, discos, hoja de sierra, imanes y cargas mecánicas están retirados del banco.</span></label>
+      </div>
+
+      <aside class="notice danger"><strong>La hoja de sierra del kit no se utiliza en ningún capítulo.</strong> Tampoco se prueba el motor suelto en la mano ni con el eje descubierto.</aside>
+      <div class="page-footer">Primero se domina el movimiento del motor desnudo; después se diseña el rotor.</div>
+    </section>
+
+    <section class="page" id="mapa" aria-labelledby="mapa-title">
+      <span class="page-number">Página 2</span>
+      <p class="eyebrow">Capítulo 2 · Mapa de energía</p>
+      <h2 id="mapa-title">Qué hace el PWM y qué no hace</h2>
+      <p class="page-subtitle">La fuente entrega 12 V DC; el PWM dosifica la energía que recibe el motor.</p>
+
+      <div class="flow-diagram" aria-label="Recorrido desde la fuente de 12 voltios hasta el motor 775">
+        <div class="flow-node low-voltage-node">Fuente · 12 V DC</div><span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-node protected-node">Protección + corte DC</div><span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-node low-voltage-node">Entrada del PWM</div><span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-node low-voltage-node">Salida PWM · motor 775</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="box success">
+          <span class="box-title">Sí hace</span>
+          <ul>
+            <li>Conmuta rápidamente la alimentación del motor y cambia el ciclo de trabajo.</li>
+            <li>Permite buscar una velocidad repetible cuando el conjunto esté caracterizado.</li>
+            <li>Entrega por sus bornes de salida una señal pulsada, no una nueva fuente DC regulada.</li>
+          </ul>
+        </div>
+        <div class="box warning">
+          <span class="box-title">No garantiza</span>
+          <ul>
+            <li>No limita por sí solo la corriente a un valor seguro.</li>
+            <li>El “20 A” del anuncio no demuestra una corriente continua admisible en el montaje real.</li>
+            <li>El mínimo del mando puede no equivaler a apagado ni impedir un arranque al volver la energía.</li>
+          </ul>
+        </div>
+      </div>
+
+      <table class="spec-table">
+        <tbody>
+          <tr><th>Fuente anunciada</th><td>12 V, 10 A, 120 W. Se utiliza únicamente si el Capítulo 1 ha confirmado la unidad física y su salida real.</td></tr>
+          <tr><th>PWM anunciado</th><td>10–60 V y 20 A. <strong>Dato comercial pendiente de verificar</strong> en el controlador físico y su documentación.</td></tr>
+          <tr><th>Motor anunciado</th><td>Motor 775 de 12/24 V. La tensión concreta, corriente en vacío, corriente de bloqueo y servicio del motor recibido siguen sin estar demostrados.</td></tr>
+          <tr><th>Cable disponible</th><td>Par rojo/negro AWG18. El color ayuda a mantener polaridad; su aptitud depende de corriente, longitud, aislamiento, temperatura, agrupamiento y terminal.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="check-group">
+        <label class="check-row" for="c2-mapa-pwm"><input id="c2-mapa-pwm" type="checkbox" data-checklist><span>Podemos distinguir la entrada de alimentación del PWM de su salida al motor.</span></label>
+        <label class="check-row" for="c2-mapa-no-limita"><input id="c2-mapa-no-limita" type="checkbox" data-checklist><span>Entendido: el PWM no sustituye la protección contra sobrecorriente ni el corte accesible.</span></label>
+        <label class="check-row" for="c2-mapa-pulsos"><input id="c2-mapa-pulsos" type="checkbox" data-checklist><span>Entendido: un multímetro común puede no representar correctamente la forma de onda PWM.</span></label>
+      </div>
+      <div class="page-footer">La etiqueta de un módulo no dimensiona el sistema completo.</div>
+    </section>
+
+    <section class="page" id="bloqueos" aria-labelledby="bloqueos-title">
+      <span class="page-number">Página 3</span>
+      <p class="eyebrow">Capítulo 2 · Antes de conectar</p>
+      <h2 id="bloqueos-title">Datos reales que deben cerrar los TODO</h2>
+      <p class="page-subtitle">Las fotografías del paquete permiten reconocer las piezas, pero no autorizan su conexión.</p>
+
+      <div class="grid-2">
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">1</span>
+            <div><h3>Distribución previa del banco</h3><div class="component-status"><span class="tag reference">Referencia generada</span><span class="tag todo">Sin cablear</span></div></div>
+          </div>
+          <div class="media-frame">
+            <a href="assets/img/cap2-banco-sin-cablear-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap2-banco-sin-cablear-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia generada de fuente protegida, PWM cerrado y motor 775 sujeto y resguardado, separados y sin cableado entre ellos"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">Referencia generada para ordenar el banco. No muestra una conexión aprobada, no sustituye resguardos reales y mantiene la clavija tipo B fuera de la toma.</p>
+        </article>
+        <div class="box danger">
+          <span class="box-title">TODO bloqueantes</span>
+          <p class="decision todo"><strong>PWM real:</strong> fabricante/modelo, manual, orden exacto de entrada/salida, polaridad, corriente continua, pico permitido, ventilación y comportamiento al arrancar.</p>
+          <p class="decision todo"><strong>Motor real:</strong> tensión nominal, corriente en vacío, corriente de arranque/bloqueo, sentido de giro observado y límites térmicos.</p>
+          <p class="decision todo"><strong>Protección DC:</strong> tipo, poder de corte y valor del fusible o limitador, además de un corte accesible compatible con DC.</p>
+          <p class="decision todo"><strong>Interconexión:</strong> sección y longitud del cable, temperatura, terminales, pelado y par de apriete aceptados por cada borne.</p>
+          <p class="decision todo"><strong>Mecánica:</strong> tornillos, base, soporte, resguardo cerrado del eje y distancia de exclusión validados.</p>
+        </div>
+      </div>
+
+      <aside class="notice danger"><strong>Hasta resolver todos esos datos solo se puede inspeccionar, medir y montar con todo sin tensión.</strong> No se inventa un fusible ni se decide que AWG18 “aguanta” por el nombre del cable.</aside>
+
+      <div class="check-group">
+        <label class="check-row" for="c2-doc-pwm"><input id="c2-doc-pwm" type="checkbox" data-checklist><span>El controlador físico y sus dos caras están fotografiados con cualquier marca o etiqueta legible.</span></label>
+        <label class="check-row" for="c2-doc-motor"><input id="c2-doc-motor" type="checkbox" data-checklist><span>El motor físico, sus marcas, eje, terminales y dimensiones reales están fotografiados y medidos.</span></label>
+        <label class="check-row" for="c2-doc-corriente"><input id="c2-doc-corriente" type="checkbox" data-checklist><span>Se dispone de datos fiables de corriente en vacío y de bloqueo/arranque del motor recibido.</span></label>
+        <label class="check-row" for="c2-doc-proteccion"><input id="c2-doc-proteccion" type="checkbox" data-checklist><span>Una persona competente ha documentado la selección de protección, corte, cable y terminales.</span></label>
+      </div>
+
+      <label class="observation" for="c2-registro-modelos">Modelos, documentación y valores confirmados
+        <textarea id="c2-registro-modelos" data-note placeholder="PWM: marca/modelo/manual/bornes/rating continuo · Motor: marca/tensión/corrientes · Protección DC · Cable y terminales."></textarea>
+      </label>
+      <div class="page-footer">Un TODO bloqueante no se completa con un dato de otra placa parecida.</div>
+    </section>
+
+    <section class="page" id="pwm" aria-labelledby="pwm-title">
+      <span class="page-number">Página 4</span>
+      <p class="eyebrow">Capítulo 2 · Controlador</p>
+      <h2 id="pwm-title">Identificar el PWM sin adivinar sus cuatro bornes</h2>
+      <p class="page-subtitle">La posición en la fotografía no define entrada, salida ni polaridad.</p>
+
+      <div class="detail-gallery">
+        <figure>
+          <a href="assets/img/pwm.webp" target="_blank" rel="noopener"><img src="assets/img/pwm.webp" width="1200" height="1002" loading="lazy" alt="Fotografía aportada de un controlador PWM verde con cuatro bornes, disipadores y potenciómetro externo"></a>
+          <figcaption>Foto aportada/anuncio · Se reconocen cuatro bornes y disipadores, pero no se leen asignaciones fiables.</figcaption>
+        </figure>
+        <figure>
+          <a href="assets/img/pwm-vista.webp" target="_blank" rel="noopener"><img src="assets/img/pwm-vista.webp" width="1200" height="886" loading="lazy" alt="Segunda fotografía aportada del mismo tipo de controlador PWM y su mando"></a>
+          <figcaption>Segunda vista aportada · Útil para comparar componentes; tampoco demuestra el orden de conexión.</figcaption>
+        </figure>
+      </div>
+
+      <ol class="step-list">
+        <li><strong>Dejar la fuente desenchufada.</strong> Mantener el PWM sin ningún cable en sus bornes de potencia.</li>
+        <li><strong>Fotografiar ambas caras.</strong> Usar luz lateral y macro para leer serigrafía junto a cada tornillo.</li>
+        <li><strong>Transcribir literalmente.</strong> Registrar de izquierda a derecha lo grabado; no traducir todavía a V+, V−, M+ o M−.</li>
+        <li><strong>Buscar documentación exacta.</strong> Comparar disposición, conector del potenciómetro, componentes y dimensiones. Una placa “parecida” no basta.</li>
+        <li><strong>Asignar función solo con evidencia.</strong> Marcar físicamente el par de entrada y el par de salida, con sus polaridades, después de confirmarlos.</li>
+        <li><strong>Comprobar el mando.</strong> Documentar recorrido, tope mínimo, posible clic de apagado y comportamiento de arranque indicado por el fabricante.</li>
+      </ol>
+
+      <div class="terminal-map" aria-label="Campos pendientes para documentar los bornes reales del PWM">
+        <div><strong>Bornes reales</strong><span>→</span><strong>Entrada DC</strong><span>TODO</span></div>
+        <div><strong>Bornes reales</strong><span>→</span><strong>Salida motor</strong><span>TODO</span></div>
+        <div><strong>Potenciómetro</strong><span>→</span><strong>Mínimo / apagado</strong><span>TODO</span></div>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c2-pwm-serigrafia"><input id="c2-pwm-serigrafia" type="checkbox" data-checklist><span>La serigrafía de los cuatro bornes se ha leído directamente en la placa física.</span></label>
+        <label class="check-row" for="c2-pwm-manual"><input id="c2-pwm-manual" type="checkbox" data-checklist><span>La asignación entrada/salida y polaridad está respaldada por documentación del modelo exacto.</span></label>
+        <label class="check-row" for="c2-pwm-mando"><input id="c2-pwm-mando" type="checkbox" data-checklist><span>El recorrido del mando y su comportamiento al recuperar alimentación están documentados.</span></label>
+        <label class="check-row" for="c2-pwm-estado"><input id="c2-pwm-estado" type="checkbox" data-checklist><span>Placa, tornillos, conector, potenciómetro y aislamiento no presentan daño ni piezas sueltas.</span></label>
+      </div>
+      <aside class="notice danger"><strong>Invertir la alimentación puede destruir el PWM.</strong> La continuidad o el aspecto de las pistas no sustituyen el esquema del fabricante.</aside>
+      <div class="page-footer">Cuatro tornillos verdes no contienen un orden universal.</div>
+    </section>
+
+    <section class="page" id="motor" aria-labelledby="motor-title">
+      <span class="page-number">Página 5</span>
+      <p class="eyebrow">Capítulo 2 · Motor 775</p>
+      <h2 id="motor-title">Revisar el motor antes de hacerlo girar</h2>
+      <p class="page-subtitle">La fotografía comercial da una familia y unas medidas anunciadas; el ejemplar físico decide.</p>
+
+      <div class="detail-gallery">
+        <figure>
+          <a href="assets/img/motor-775-kit.webp" target="_blank" rel="noopener"><img src="assets/img/motor-775-kit.webp" width="1200" height="1076" loading="lazy" alt="Fotografía aportada de un kit con motor 775, soporte, adaptador y varios accesorios"></a>
+          <figcaption>Foto del paquete · Para este capítulo se separan motor y soporte. La hoja de sierra y todos los discos quedan excluidos.</figcaption>
+        </figure>
+        <figure>
+          <a href="assets/img/motor-775-medidas.webp" target="_blank" rel="noopener"><img src="assets/img/motor-775-medidas.webp" width="1200" height="1121" loading="lazy" alt="Imagen aportada con dimensiones anunciadas para un motor 775"></a>
+          <figcaption>Anuncio · Aproxima 42 mm de diámetro, 66,5 mm de cuerpo y eje de 5 × 16 mm; se mide la pieza recibida.</figcaption>
+        </figure>
+      </div>
+
+      <div class="grid-2">
+        <ol class="step-list">
+          <li>Leer y fotografiar cualquier marca, pegatina o grabado del motor real.</li>
+          <li>Medir cuerpo, eje y agujeros sin forzar el eje ni introducir objetos en las ranuras.</li>
+          <li>Comprobar que el eje gira suavemente a mano, con el motor desconectado y sin accesorio.</li>
+          <li>Buscar holgura excesiva, golpes, óxido, escobillas sueltas, terminales doblados o olor a quemado.</li>
+          <li>Identificar los dos terminales únicamente como A y B hasta registrar el sentido de giro real.</li>
+        </ol>
+        <div>
+          <div class="box warning">
+            <span class="box-title">Corriente de arranque</span>
+            <p>Al arrancar, y especialmente si se bloquea, un motor DC puede demandar muchas veces su corriente en vacío. La fuente, el controlador, el cable y la protección deben evaluarse con el dato de bloqueo/arranque, no solo con el consumo girando libre.</p>
+          </div>
+          <aside class="notice danger"><strong>No bloquear el eje para “medir” la corriente.</strong> Si el fabricante no aporta el dato, la caracterización exige un plan e instrumental apropiados definidos por una persona competente.</aside>
+        </div>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c2-motor-sin-accesorio"><input id="c2-motor-sin-accesorio" type="checkbox" data-checklist><span>Motor sin adaptador, disco, hoja, rotor, imanes ni carga acoplada.</span></label>
+        <label class="check-row" for="c2-motor-marcas"><input id="c2-motor-marcas" type="checkbox" data-checklist><span>Marcas, tensión y cualquier dato del motor físico se han fotografiado.</span></label>
+        <label class="check-row" for="c2-motor-mecanica"><input id="c2-motor-mecanica" type="checkbox" data-checklist><span>Eje, carcasa, ventilación y terminales superan la inspección con todo desconectado.</span></label>
+        <label class="check-row" for="c2-motor-corrientes"><input id="c2-motor-corrientes" type="checkbox" data-checklist><span>La corriente en vacío y la de bloqueo/arranque proceden de una fuente fiable o de una caracterización segura documentada.</span></label>
+      </div>
+
+      <label class="observation" for="c2-registro-motor">Datos del motor recibido
+        <textarea id="c2-registro-motor" data-note placeholder="Marcas · tensión nominal · medidas reales · corriente en vacío · corriente de bloqueo/arranque · estado mecánico."></textarea>
+      </label>
+      <div class="page-footer">En este capítulo se prueba el motor, no los accesorios del kit.</div>
+    </section>
+
+    <section class="page" id="proteccion" aria-labelledby="proteccion-title">
+      <span class="page-number">Página 6</span>
+      <p class="eyebrow">Capítulo 2 · Dimensionamiento</p>
+      <h2 id="proteccion-title">Elegir protección, corte y cable</h2>
+      <p class="page-subtitle">La fuente puede entregar mucha energía a un cortocircuito aunque la tensión sea 12 V.</p>
+
+      <div class="grid-3">
+        <div class="box danger">
+          <span class="box-title">Protección DC</span>
+          <p>Se instala cerca de V+ de la fuente y protege el tramo que sale de ella. Tipo, valor y poder de corte los decide la persona competente a partir de la fuente, motor, PWM, cable y conectores reales.</p>
+        </div>
+        <div class="box warning">
+          <span class="box-title">Corte accesible</span>
+          <p>Debe permitir quitar energía al PWM/motor sin cruzar la zona mecánica. Su tensión y corriente deben estar declaradas para DC y debe impedir un cierre accidental durante ajustes.</p>
+        </div>
+        <div class="box blue">
+          <span class="box-title">Conductores</span>
+          <p>El AWG18 rojo/negro disponible solo se acepta después de calcular su aptitud en la longitud, instalación y temperatura reales y de confirmar sus terminales.</p>
+        </div>
+      </div>
+
+      <table class="spec-table">
+        <thead><tr><th>Dato</th><th>Criterio que debe quedar documentado</th></tr></thead>
+        <tbody>
+          <tr><th>Corriente del motor</th><td>En vacío, arranque/bloqueo y duración de los picos según el motor real.</td></tr>
+          <tr><th>PWM</th><td>Corriente continua con la refrigeración prevista, pico permitido y límites térmicos. No usar solo el “20 A” comercial.</td></tr>
+          <tr><th>Fuente</th><td>Corriente disponible, respuesta ante sobrecarga/cortocircuito y si su protección interna cubre o no el circuito exterior.</td></tr>
+          <tr><th>Fusible/limitador</th><td>Protege el elemento más débil y tolera el arranque normal sin dejar el cable desprotegido.</td></tr>
+          <tr><th>Cable y terminal</th><td>Sección, longitud, caída de tensión, aislamiento, temperatura, agrupamiento, tamaño de tornillo, pelado y par.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="box danger">
+        <span class="box-title">Decisión técnica pendiente</span>
+        <p class="decision todo"><strong>TODO:</strong> anotar aquí el dispositivo de protección y su justificación. Hasta entonces no se conectará V+ al PWM.</p>
+        <p class="decision todo"><strong>TODO:</strong> seleccionar el corte DC y decidir, con documentación, si abre uno o ambos conductores.</p>
+        <p class="decision todo"><strong>TODO:</strong> aceptar o sustituir el AWG18 tras calcular el circuito real. No se propone una sección alternativa sin esos datos.</p>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c2-proteccion-seleccion"><input id="c2-proteccion-seleccion" type="checkbox" data-checklist><span>Protección DC seleccionada y justificada frente a corrientes, cable, terminales y poder de corte.</span></label>
+        <label class="check-row" for="c2-corte-seleccion"><input id="c2-corte-seleccion" type="checkbox" data-checklist><span>Corte accesible adecuado para DC, fijado y con posición abierta/cerrada inequívoca.</span></label>
+        <label class="check-row" for="c2-cable-calculo"><input id="c2-cable-calculo" type="checkbox" data-checklist><span>Longitud, caída, temperatura y capacidad del conductor elegido están documentadas.</span></label>
+        <label class="check-row" for="c2-terminales-seleccion"><input id="c2-terminales-seleccion" type="checkbox" data-checklist><span>Terminales, pelado, herramienta y par corresponden a cada borne real.</span></label>
+      </div>
+
+      <label class="observation" for="c2-registro-proteccion">Memoria de selección
+        <textarea id="c2-registro-proteccion" data-note placeholder="Protección/tipo/valor/poder de corte · Corte DC · Cable/longitud/caída/temperatura · Terminales · Responsable y fuente documental."></textarea>
+      </label>
+      <div class="page-footer">El fusible protege el circuito; no se elige para que “no se funda nunca”.</div>
+    </section>
+
+    <section class="page" id="montaje" aria-labelledby="montaje-title">
+      <span class="page-number">Página 7</span>
+      <p class="eyebrow">Capítulo 2 · Mecánica</p>
+      <h2 id="montaje-title">Fijar el motor, el PWM y el banco</h2>
+      <p class="page-subtitle">Nada debe moverse salvo el eje, y el eje no debe poder tocarse.</p>
+
+      <div class="grid-2">
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">2</span>
+            <div><h3>Motor sujeto y eje encerrado</h3><div class="component-status"><span class="tag reference">Referencia generada</span><span class="tag todo">Medir montaje real</span></div></div>
+          </div>
+          <div class="media-frame">
+            <a href="assets/img/cap2-motor-sujeto-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap2-motor-sujeto-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia generada de motor 775 atornillado a un soporte y una base fijada, con el eje completamente dentro de un resguardo transparente cerrado"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">Referencia generada: muestra el principio de soporte fijo y resguardo cerrado. El diseño real debe adaptarse a las medidas, tornillos y cargas verificadas.</p>
+        </article>
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">3</span>
+            <div><h3>PWM fijo, ventilado y protegido</h3><div class="component-status"><span class="tag reference">Referencia generada</span><span class="tag todo">Sin cables</span></div></div>
+          </div>
+          <div class="media-frame">
+            <a href="assets/img/cap2-pwm-protegido-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap2-pwm-protegido-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia generada de un controlador PWM sobre separadores dentro de una envolvente transparente ventilada, con mando fijo y bornes cubiertos"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">Referencia generada: no define el orden de los bornes, la ventilación requerida ni una caja final certificada.</p>
+        </article>
+      </div>
+
+      <ol class="step-list">
+        <li><strong>Fijar una base de prueba.</strong> Sujetarla al banco para que no camine con el par de arranque ni al accionar el mando.</li>
+        <li><strong>Atornillar el soporte del 775.</strong> Usar tornillos de longitud correcta, arandelas y el método de bloqueo validado; no deformar la carcasa.</li>
+        <li><strong>Encerrar todo el eje.</strong> El resguardo fijo no deja sobresalir la punta, no flexa hacia el eje y solo se retira con herramienta y sin energía.</li>
+        <li><strong>Separar zonas.</strong> Colocar una barrera entre control y motor, dejando ventilación y acceso al corte fuera de la zona mecánica.</li>
+        <li><strong>Montar el PWM.</strong> Separadores aislantes, base rígida, disipadores libres y bornes bajo cubiertas desmontables.</li>
+        <li><strong>Fijar el potenciómetro.</strong> El mando no cuelga de sus cables y puede accionarse sin acercarse al motor.</li>
+      </ol>
+
+      <div class="check-group">
+        <label class="check-row" for="c2-montaje-base"><input id="c2-montaje-base" type="checkbox" data-checklist><span>Base y soporte no se desplazan ni giran bajo una prueba manual moderada con todo desconectado.</span></label>
+        <label class="check-row" for="c2-montaje-eje"><input id="c2-montaje-eje" type="checkbox" data-checklist><span>El eje completo queda dentro de un resguardo fijo, rígido y sin aberturas alcanzables.</span></label>
+        <label class="check-row" for="c2-montaje-pwm"><input id="c2-montaje-pwm" type="checkbox" data-checklist><span>PWM, mando y cubrebornes están fijos; disipadores y ventilación cumplen su documentación.</span></label>
+        <label class="check-row" for="c2-montaje-zonas"><input id="c2-montaje-zonas" type="checkbox" data-checklist><span>Corte y mando son alcanzables sin cruzar la zona del motor.</span></label>
+      </div>
+      <aside class="notice danger"><strong>Recoger cabello y retirar joyas, bufandas, cordones y ropa suelta.</strong> El resguardo sigue siendo obligatorio aunque el eje esté desnudo.</aside>
+      <div class="page-footer">El resguardo evita el contacto; la distancia por sí sola no lo reemplaza.</div>
+    </section>
+
+    <section class="page" id="preparar-cables" aria-labelledby="preparar-cables-title">
+      <span class="page-number">Página 8</span>
+      <p class="eyebrow">Capítulo 2 · Interconexión</p>
+      <h2 id="preparar-cables-title">Medir, etiquetar y terminar los cables</h2>
+      <p class="page-subtitle">Primero se construyen tramos reconocibles; después se conectan.</p>
+
+      <div class="grid-2">
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">4</span>
+            <div><h3>Par rojo y negro disponible</h3><div class="component-status"><span class="tag owned">Foto del material aportado</span><span class="tag todo">Aptitud por calcular</span></div></div>
+          </div>
+          <div class="media-frame">
+            <a href="assets/img/cable-awg18.webp" target="_blank" rel="noopener"><img src="assets/img/cable-awg18.webp" width="910" height="876" loading="lazy" alt="Fotografía aportada de cable paralelo rojo y negro anunciado como AWG18"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">El anuncio ayuda a reconocer el cable. Se confirma marcado, conductor, aislamiento y sección del material físico.</p>
+        </article>
+        <div>
+          <ol class="step-list">
+            <li><strong>Dibujar los tramos aprobados.</strong> Fuente/protección/corte→entrada PWM y salida PWM→motor; no reutilizar una misma etiqueta para ambos.</li>
+            <li><strong>Medir el recorrido.</strong> Añadir solo la holgura necesaria para prensaestopas y mantenimiento; nada queda tirante ni forma lazos junto al eje.</li>
+            <li><strong>Cortar y etiquetar ambos extremos.</strong> “ENTRADA PWM +/−” y “MOTOR A/B”, según el mapa real confirmado.</li>
+            <li><strong>Conservar color coherente.</strong> Rojo se reserva al positivo documentado; negro, al retorno/negativo. En la salida al motor, A/B y el sentido observado también quedan escritos.</li>
+            <li><strong>Pelar y terminar.</strong> Usar exactamente la longitud, terminal, matriz y método aceptados por cada fabricante.</li>
+            <li><strong>Inspeccionar y tirar con moderación.</strong> Ningún hilo queda cortado, suelto o visible fuera del borne/terminal.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="wire-map" aria-label="Convención de color para los cables de 12 voltios">
+        <div class="wire-row"><span class="wire-swatch" style="background:#c52229" aria-hidden="true"></span><strong>Rojo</strong><span>Positivo solo después de verificar y etiquetar la función real.</span></div>
+        <div class="wire-row"><span class="wire-swatch phase-black" aria-hidden="true"></span><strong>Negro</strong><span>Negativo/retorno solo después de verificar y etiquetar la función real.</span></div>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c2-cables-material"><input id="c2-cables-material" type="checkbox" data-checklist><span>Marcado, material, sección e aislamiento del cable físico coinciden con el cálculo aprobado.</span></label>
+        <label class="check-row" for="c2-cables-tramos"><input id="c2-cables-tramos" type="checkbox" data-checklist><span>Cada tramo tiene función y extremos etiquetados antes de conectarlo.</span></label>
+        <label class="check-row" for="c2-cables-terminacion"><input id="c2-cables-terminacion" type="checkbox" data-checklist><span>Pelado y terminación corresponden al borne real; no hay cobre ni hilos indebidos.</span></label>
+        <label class="check-row" for="c2-cables-traccion"><input id="c2-cables-traccion" type="checkbox" data-checklist><span>Todos los extremos superan inspección ampliada y prueba de tracción moderada.</span></label>
+      </div>
+      <div class="page-footer">El color conserva una decisión ya comprobada; nunca crea por sí solo la polaridad.</div>
+    </section>
+
+    <section class="page" id="entrada-pwm" aria-labelledby="entrada-pwm-title">
+      <span class="page-number">Página 9</span>
+      <p class="eyebrow">Capítulo 2 · Entrada de potencia</p>
+      <h2 id="entrada-pwm-title">Conectar la fuente a la entrada del PWM</h2>
+      <p class="page-subtitle">Primero se valida el controlador sin motor conectado.</p>
+
+      <div class="box danger">
+        <span class="box-title">Estado seguro inicial</span>
+        <p>Clavija tipo B sobre la mesa, fuente descargada según su manual, corte DC abierto y bloqueado, protección DC retirada/abierta según su diseño, motor separado y mando del PWM en el tope mínimo documentado.</p>
+      </div>
+
+      <ol class="step-list">
+        <li><strong>Comparar el mapa con la placa.</strong> La persona competente señala físicamente entrada positiva y entrada negativa del PWM.</li>
+        <li><strong>Conectar el retorno.</strong> V− de la fuente llega al conductor negro y al borne negativo de entrada confirmado, siguiendo el esquema de corte aprobado.</li>
+        <li><strong>Conectar el positivo protegido.</strong> V+ llega por la protección y el corte DC al conductor rojo y al borne positivo de entrada confirmado.</li>
+        <li><strong>Aplicar el par especificado.</strong> Hacer prueba de tracción, instalar prensaestopas y cerrar cubrebornes.</li>
+        <li><strong>Comprobar sin energía.</strong> Verificar continuidad del recorrido previsto y ausencia de cortocircuito entre positivo y negativo con el método aprobado para el módulo.</li>
+        <li><strong>Primera alimentación sin motor.</strong> Con protecciones cerradas y manos apartadas, energizar brevemente para confirmar la tensión y polaridad en la entrada del PWM mediante puntos de prueba protegidos.</li>
+        <li><strong>Volver a cero energía.</strong> Abrir corte, desenchufar, esperar descarga y verificar ausencia de tensión antes del siguiente paso.</li>
+      </ol>
+
+      <div class="terminal-map" aria-label="Correspondencia lógica de la entrada del PWM, pendiente del nombre real de sus bornes">
+        <div><span class="wire-swatch" style="background:#c52229" aria-hidden="true"></span><strong>V+ protegido</strong><span aria-hidden="true">→</span><strong>Entrada + confirmada</strong></div>
+        <div><span class="wire-swatch phase-black" aria-hidden="true"></span><strong>V− / retorno</strong><span aria-hidden="true">→</span><strong>Entrada − confirmada</strong></div>
+        <div><strong>Motor</strong><span aria-hidden="true">→</span><strong>Sin conectar</strong><span>En esta prueba</span></div>
+      </div>
+
+      <div class="check-group box danger">
+        <span class="box-title">No continuar hasta</span>
+        <label class="check-row" for="c2-entrada-mapa"><input id="c2-entrada-mapa" type="checkbox" data-checklist><span>El mapa documentado coincide con las marcas de entrada en la placa física.</span></label>
+        <label class="check-row" for="c2-entrada-protegida"><input id="c2-entrada-protegida" type="checkbox" data-checklist><span>Protección y corte están en el recorrido aprobado y todos los bornes han quedado cubiertos.</span></label>
+        <label class="check-row" for="c2-entrada-sin-corto"><input id="c2-entrada-sin-corto" type="checkbox" data-checklist><span>La revisión sin tensión no detecta cruce, hilo suelto, inversión ni cortocircuito.</span></label>
+        <label class="check-row" for="c2-entrada-medida"><input id="c2-entrada-medida" type="checkbox" data-checklist><span>La entrada del PWM recibe la tensión y polaridad previstas, y vuelve a quedar sin tensión.</span></label>
+      </div>
+
+      <aside class="notice warning"><strong>No se usa la lectura de salida de un multímetro común para certificar el ciclo PWM.</strong> La señal es pulsada; cualquier caracterización exige instrumento y método apropiados.</aside>
+      <div class="page-footer">Entrada validada, motor todavía aislado.</div>
+    </section>
+
+    <section class="page" id="salida-motor" aria-labelledby="salida-motor-title">
+      <span class="page-number">Página 10</span>
+      <p class="eyebrow">Capítulo 2 · Salida al motor</p>
+      <h2 id="salida-motor-title">Conectar el motor y hacer la revisión previa</h2>
+      <p class="page-subtitle">Se cablea sin energía y se prepara el banco como si el motor pudiera arrancar de inmediato.</p>
+
+      <ol class="step-list">
+        <li><strong>Demostrar cero energía.</strong> Corte DC abierto, enchufe fuera, descarga esperada y ausencia de tensión comprobada.</li>
+        <li><strong>Confirmar salida del PWM.</strong> Identificar los dos bornes de motor con la serigrafía y el manual exactos; no usar los bornes de entrada.</li>
+        <li><strong>Conectar A y B.</strong> Llevar el par etiquetado desde la salida del PWM hasta los dos terminales del motor. La correspondencia inicial se registra, no se presupone como giro “correcto”.</li>
+        <li><strong>Cerrar y sujetar.</strong> Aplicar pares especificados, cubrir bornes y fijar el cable para que no toque ventilación, eje, resguardo ni cantos.</li>
+        <li><strong>Poner el mando al mínimo.</strong> Usar el tope mecánico documentado; no confiar en que equivalga a apagado.</li>
+        <li><strong>Ensayar el corte sin energía.</strong> La persona que prueba puede abrirlo de inmediato sin cruzar la barrera ni mirar hacia otro lado.</li>
+      </ol>
+
+      <div class="grid-2">
+        <div class="check-group">
+          <h3>Preflight eléctrico</h3>
+          <label class="check-row" for="c2-pre-polaridad"><input id="c2-pre-polaridad" type="checkbox" data-checklist><span>Entrada y salida del PWM no están intercambiadas y la polaridad de entrada coincide con el mapa.</span></label>
+          <label class="check-row" for="c2-pre-bornes"><input id="c2-pre-bornes" type="checkbox" data-checklist><span>Bornes apretados, tracción correcta, cubiertas colocadas y cero cobre expuesto.</span></label>
+          <label class="check-row" for="c2-pre-proteccion"><input id="c2-pre-proteccion" type="checkbox" data-checklist><span>Protección DC instalada y corte probado en posición abierta.</span></label>
+          <label class="check-row" for="c2-pre-mando"><input id="c2-pre-mando" type="checkbox" data-checklist><span>Mando fijado en el mínimo documentado y accesible fuera de la zona mecánica.</span></label>
+        </div>
+        <div class="check-group">
+          <h3>Preflight mecánico</h3>
+          <label class="check-row" for="c2-pre-sin-rotor"><input id="c2-pre-sin-rotor" type="checkbox" data-checklist><span>No hay accesorio, rotor, imán, disco ni carga sobre el eje.</span></label>
+          <label class="check-row" for="c2-pre-resguardo"><input id="c2-pre-resguardo" type="checkbox" data-checklist><span>Motor y base fijos; eje completo dentro del resguardo cerrado.</span></label>
+          <label class="check-row" for="c2-pre-cables"><input id="c2-pre-cables" type="checkbox" data-checklist><span>Cables sujetos, sin lazos ni recorrido por el área del eje o la ventilación.</span></label>
+          <label class="check-row" for="c2-pre-personas"><input id="c2-pre-personas" type="checkbox" data-checklist><span>Zona despejada; cabello y ropa recogidos; nadie está frente a la línea del eje.</span></label>
+        </div>
+      </div>
+
+      <aside class="notice danger"><strong>No poner el INA219 del proyecto en este circuito del motor.</strong> Su rango, shunt, conexiones y transitorios no se han validado para la corriente de arranque. La corriente solo se caracterizará con un método específicamente aprobado.</aside>
+      <aside class="notice warning"><strong>Ruido eléctrico:</strong> mantener cortos y juntos los conductores del motor. Si la documentación exige condensadores de supresión u otras medidas, se incorporarán como TODO verificado; no se añaden valores genéricos a ciegas.</aside>
+      <div class="page-footer">Preparado no significa energizado: el corte permanece abierto hasta la orden de prueba.</div>
+    </section>
+
+    <section class="page" id="primera-rotacion" aria-labelledby="primera-rotacion-title">
+      <span class="page-number">Página 11</span>
+      <p class="eyebrow">Capítulo 2 · Puesta en marcha</p>
+      <h2 id="primera-rotacion-title">Hacer un primer giro breve y registrarlo</h2>
+      <p class="page-subtitle">Se supone que el motor puede arrancar al devolver la energía, incluso con el mando al mínimo.</p>
+
+      <div class="box danger">
+        <span class="box-title">Control de la prueba</span>
+        <p>Una persona competente maneja el corte DC y el mando. Otra mantiene acceso al enchufe sin acercarse al motor. Sara observa desde fuera de la zona marcada. Si solo hay una persona competente, no se energiza hasta que pueda controlar ambas desconexiones con seguridad.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Arranque</span>
+          <ol class="step-list">
+            <li>Repetir en voz alta: eje resguardado, sin rotor, mando mínimo, corte abierto.</li>
+            <li>Conectar la fuente a la toma validada y observar sin cerrar todavía el corte DC.</li>
+            <li>Cerrar el corte DC preparados para abrirlo al instante. Si el motor arranca ya, abrir y documentar el comportamiento.</li>
+            <li>Si permanece detenido, aumentar el mando lo mínimo necesario para obtener un giro estable.</li>
+          </ol>
+        </div>
+        <div class="box success">
+          <span class="box-title">Parada y registro</span>
+          <ol class="step-list continued">
+            <li>Observar desde fuera: sentido, ruido, vibración, olor, estabilidad de cables y controlador.</li>
+            <li>Tras el impulso breve definido para la prueba, volver el mando a mínimo y abrir el corte DC.</li>
+            <li>Desenchufar, esperar la descarga y comprobar ausencia de tensión antes de acercarse.</li>
+            <li>Registrar el sentido visto desde el extremo del eje, el comportamiento de arranque y cualquier anomalía.</li>
+          </ol>
+        </div>
+      </div>
+
+      <aside class="notice danger"><strong>Parada inmediata:</strong> giro antes de la orden, vibración, desplazamiento, roce, chispas visibles, humo, olor, sonido irregular, cable caliente, disipador que se calienta rápidamente o actuación de una protección. No se reintenta sin diagnóstico.</aside>
+      <aside class="notice warning"><strong>No tocar para “ver si está caliente” durante ni justo después de la prueba.</strong> La evaluación térmica se hace con método sin contacto o tras el tiempo seguro definido por la persona competente.</aside>
+
+      <div class="check-group">
+        <label class="check-row" for="c2-giro-control"><input id="c2-giro-control" type="checkbox" data-checklist><span>Corte DC, enchufe y mando estuvieron bajo control durante toda la prueba.</span></label>
+        <label class="check-row" for="c2-giro-estable"><input id="c2-giro-estable" type="checkbox" data-checklist><span>El motor giró brevemente sin desplazamiento, roce, vibración, olor, humo ni ruido anormal.</span></label>
+        <label class="check-row" for="c2-giro-sentido"><input id="c2-giro-sentido" type="checkbox" data-checklist><span>Sentido de giro registrado desde un punto de vista explícito y con correspondencia A/B documentada.</span></label>
+        <label class="check-row" for="c2-giro-parada"><input id="c2-giro-parada" type="checkbox" data-checklist><span>El corte detuvo el motor y el conjunto quedó desenchufado, descargado y sin tensión.</span></label>
+      </div>
+
+      <label class="observation" for="c2-registro-giro">Acta de primera rotación
+        <textarea id="c2-registro-giro" data-note placeholder="Fecha · responsables · tensión de entrada · ajuste inicial · ¿arrancó al cerrar? · sentido visto desde el eje · ruido/vibración · parada · incidencias."></textarea>
+      </label>
+      <div class="page-footer">Cambiar el sentido, si fuera necesario, se hará después y solo sin energía, de acuerdo con el controlador real.</div>
+    </section>
+
+    <section class="page" id="cierre" aria-labelledby="cierre-title">
+      <span class="page-number">Página 12</span>
+      <p class="eyebrow">Capítulo 2 · Cierre</p>
+      <h2 id="cierre-title">No pasar al rotor hasta…</h2>
+      <p class="page-subtitle">El giro desnudo debe ser seguro, repetible y estar documentado.</p>
+
+      <div class="grid-2">
+        <div class="check-group">
+          <h3>Diseño y construcción</h3>
+          <label class="check-row" for="c2-final-datos"><input id="c2-final-datos" type="checkbox" data-checklist><span>PWM y motor reales están identificados; bornes, tensiones y corrientes se apoyan en evidencia.</span></label>
+          <label class="check-row" for="c2-final-dc"><input id="c2-final-dc" type="checkbox" data-checklist><span>Protección, corte, cable y terminales están calculados, instalados y documentados.</span></label>
+          <label class="check-row" for="c2-final-mecanica"><input id="c2-final-mecanica" type="checkbox" data-checklist><span>Base, motor, PWM, mando, cables, cubiertas y resguardo permanecen firmes.</span></label>
+          <label class="check-row" for="c2-final-fotos"><input id="c2-final-fotos" type="checkbox" data-checklist><span>Hay fotografías reales del montaje sin tensión, sus etiquetas y sus protecciones.</span></label>
+        </div>
+        <div class="check-group">
+          <h3>Validación</h3>
+          <label class="check-row" for="c2-final-entrada"><input id="c2-final-entrada" type="checkbox" data-checklist><span>Entrada del PWM verificada primero sin motor y con polaridad correcta.</span></label>
+          <label class="check-row" for="c2-final-arranque"><input id="c2-final-arranque" type="checkbox" data-checklist><span>Comportamiento al devolver energía y posición mínima del mando están registrados.</span></label>
+          <label class="check-row" for="c2-final-giro"><input id="c2-final-giro" type="checkbox" data-checklist><span>Primera rotación sin carga superada y sentido de giro documentado.</span></label>
+          <label class="check-row" for="c2-final-cero"><input id="c2-final-cero" type="checkbox" data-checklist><span>Banco finalmente desenchufado, descargado, sin tensión y sin rotor instalado.</span></label>
+        </div>
+      </div>
+
+      <div class="box danger">
+        <span class="box-title">Estado técnico conservado</span>
+        <p>Las fotografías disponibles no permiten leer el orden de bornes del PWM ni demostrar sus corrientes. Tampoco aportan la corriente de bloqueo del motor ni un fusible, corte DC o resguardo reales.</p>
+        <p class="decision todo"><strong>TODO bloqueante:</strong> esos datos deben completarse con el hardware, documentación y selección competente antes de ejecutar la energización. Este capítulo no rellena los huecos con valores inventados.</p>
+      </div>
+
+      <section class="source-panel" aria-labelledby="fuentes-title">
+        <h3 id="fuentes-title">Fuentes técnicas consultadas</h3>
+        <ul>
+          <li><a href="https://www.pololu.com/docs/0J44/all" target="_blank" rel="noopener">Pololu · Simple Motor Controller User's Guide</a>: referencia comparable sobre corriente de bloqueo/arranque, calentamiento, ruido del motor y arranque seguro. <strong>No es el manual del PWM del proyecto.</strong></li>
+          <li><a href="https://www.pololu.com/docs/0J73/4.1" target="_blank" rel="noopener">Pololu · Choosing a motor controller</a>: criterios generales para comparar tensión, corriente continua y corriente de bloqueo al dimensionar fuente y controlador.</li>
+          <li><a href="https://www.hse.gov.uk/agriculture/topics/machinery/entanglement.htm" target="_blank" rel="noopener">Health and Safety Executive · Machinery entanglement</a>: desconectar antes de ajustes, controlar cabello/ropa y usar resguardos fijos en piezas giratorias.</li>
+          <li><a href="https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.212" target="_blank" rel="noopener">OSHA · General requirements for all machines</a>: principios comparables de resguardo de partes rotativas y fijación segura.</li>
+          <li><a href="https://www.osha.gov/laws-regs/regulations/standardnumber/1917/1917.151" target="_blank" rel="noopener">OSHA · Machine guarding</a>: referencia comparable para corte accesible, prevención de rearranque inesperado y ajustes sin energía.</li>
+        </ul>
+        <p><strong>Alcance:</strong> estas referencias ayudan a definir principios de diseño; no identifican los componentes genéricos recibidos ni sustituyen el manual exacto, una evaluación competente o los requisitos aplicables en Colombia.</p>
+      </section>
+
+      <div class="box success text-center">
+        <div class="big-number">Siguiente: Capítulo 3</div>
+        <p><strong>Rotor, adaptador e imanes.</strong></p>
+        <p>Se habilitará después de medir el eje y el adaptador reales y de cerrar geometría, equilibrado, retención de imanes y protección mecánica.</p>
+      </div>
+
+      <nav class="bottom-nav" aria-label="Navegación al final del capítulo">
+        <a href="index.html">← Volver a la portada</a>
+        <a href="capitulo-1.html">← Capítulo 1</a>
+        <span class="is-disabled">Capítulo 3: en preparación</span>
+        <button type="button" data-print>Imprimir / Guardar PDF</button>
+      </nav>
+      <div class="page-footer">Generador electromagnético experimental · Fin del Capítulo 2</div>
+    </section>
+  </main>
+  <script src="assets/js/checklist.js" defer></script>
+  <script src="assets/js/navigation.js" defer></script>
+</body>
+</html>

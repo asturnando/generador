@@ -1,31 +1,725 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Capítulo 0 · Preparación e inventario</title>
-<style>
-:root{--n:#082e6b;--b:#0c5ea8;--p:#eef7ff;--l:#c9deef;--i:#17263a;--m:#617286;--w:#fff3c4;--d:#fff0f0;--g:#effbf4;--bg:#e8eef5}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--i);font:15px/1.45 Inter,Segoe UI,Arial,sans-serif}.bar{position:sticky;top:0;z-index:30;background:#071c3d;color:#fff;padding:11px 18px;display:flex;gap:10px;align-items:center}.bar strong{margin-right:auto}.bar a,.bar button{border:0;border-radius:8px;padding:9px 13px;font-weight:800;text-decoration:none}.bar a{background:#fff;color:#08366d}.bar button{background:#18a7d7;color:#fff}.page{width:min(1040px,calc(100vw - 30px));margin:28px auto;background:#fff;padding:58px 46px 46px;box-shadow:0 8px 30px #17304a2c;position:relative;border-radius:4px;overflow:hidden}.page:before,.page:after{content:"";position:absolute;left:0;right:0;height:15px;background:linear-gradient(90deg,var(--n) 0 29%,transparent 29% 31%,var(--b) 31% 37%,transparent 37%)}.page:before{top:0}.page:after{bottom:0;transform:scaleX(-1)}.pn{position:absolute;right:34px;top:31px;background:var(--n);color:#fff;padding:7px 12px;border-radius:9px;font-weight:900}.eye{color:var(--b);font-weight:900;letter-spacing:.08em;text-transform:uppercase}.title{margin:4px 130px 4px 0;color:var(--n);font-size:38px;line-height:1.04;text-transform:uppercase}.sub{margin:0 0 22px;color:#23609a;font-size:19px;font-style:italic}.box{border:2px solid #82add0;border-radius:16px;padding:17px;margin:16px 0;background:#fff}.blue{background:var(--p)}.warn{background:var(--w);border-color:#e3b321}.danger{background:var(--d);border-color:#d86468}.good{background:var(--g);border-color:#5db983}.head{display:inline-block;background:var(--n);color:#fff;padding:7px 12px;border-radius:8px;font-weight:900;margin:-31px 0 12px}.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.flow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.node{flex:1;min-width:115px;border:2px solid #7aadd3;border-radius:14px;padding:12px;text-align:center;font-weight:900;color:#0b457d}.arr{font-size:24px;color:#1581be;font-weight:900}.zone{border:2px solid #82add0;border-radius:14px;padding:14px 10px;text-align:center;background:#f8fcff}.zone b{display:block;color:var(--n);margin-bottom:6px}.check{display:flex;gap:10px;padding:7px 0;border-bottom:1px dotted #b7cad9}.check input{width:19px;height:19px;accent-color:#0c79bb}.check small{display:block;color:var(--m)}.spec{width:100%;border-collapse:collapse}.spec th,.spec td{padding:8px;border-bottom:1px solid #d7e5f0;text-align:left}.spec th{color:#0a4c84;width:36%}.photo{width:100%;display:block;border:2px solid var(--l);border-radius:15px;margin:8px 0 16px}.legend{display:grid;grid-template-columns:1fr 1fr;gap:10px}.legend div{border:1px solid var(--l);border-radius:12px;background:#f9fcff;padding:10px 12px}.legend b{color:var(--n)}.timeline{display:grid;grid-template-columns:120px 1fr;gap:12px;margin:9px 0}.date{background:#0b4b86;color:#fff;border-radius:9px;padding:9px;text-align:center;font-weight:900}.item{border-left:3px solid #8ac1e5;padding-left:14px}.ok{border-left:6px solid #24a160;padding-left:12px}.bad{border-left:6px solid #d43b42;padding-left:12px}.huge{font-size:28px;font-weight:900;color:var(--n)}.center{text-align:center}.foot{text-align:center;color:#67788a;font-size:11px;margin-top:22px}@media(max-width:800px){.page{width:100%;margin:0;padding:52px 20px 38px;border-radius:0}.pn{position:static;display:inline-block;margin-bottom:12px}.title{font-size:30px;margin-right:0}.g2,.g4,.legend{grid-template-columns:1fr}.bar{flex-wrap:wrap}.bar strong{width:100%}.timeline{grid-template-columns:1fr}.date{text-align:left}}@media print{body{background:#fff}.bar{display:none}.page{width:210mm;margin:0;box-shadow:none;page-break-after:always}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Capítulo 0 del manual del generador electromagnético: preparación, inventario visual, tablero y seguridad.">
+  <title>Capítulo 0 · Preparación, inventario y materiales pendientes</title>
+  <link rel="stylesheet" href="assets/css/manual.css">
 </head>
-<body>
-<div class="bar"><strong>Manual del generador · Capítulo 0</strong><a href="index.html">← Portada</a><button onclick="window.print()">Imprimir / PDF</button></div>
+<body data-storage-namespace="generador:capitulo-0:v2:" data-checklist-label="Capítulo 0">
+  <a class="skip-link" href="#capitulo">Saltar al capítulo</a>
 
-<section class="page"><div class="pn">Página 1</div><div class="eye">CAPÍTULO 0 · PREPARACIÓN</div><h1 class="title">Antes de tocar nada</h1><p class="sub">Primero entendemos las piezas. Después las montamos.</p><div class="g2"><div class="box blue"><div class="head">OBJETIVO</div><p><b>Este capítulo no es para encender la maqueta.</b> Sirve para saber qué es cada pieza, qué ha llegado, qué falta y cómo prepararemos el trabajo antes de cortar, soldar, pegar o taladrar.</p><div class="flow"><div class="node">1<br>RECIBIR</div><div class="arr">→</div><div class="node">2<br>IDENTIFICAR</div><div class="arr">→</div><div class="node">3<br>PREPARAR</div></div></div><div class="box warn"><div class="head">REGLA DE ORO</div><p>Al final de cada etapa habrá un <b>NO CONTINUAR HASTA…</b>. Si algo falla, se corrige antes. Nada de montar cinco cosas y luego jugar a CSI con los cables.</p><label class="check"><input type="checkbox" data-save><span>Entendido: avanzamos paso a paso.</span></label></div></div><div class="box"><div class="head">DOS CIRCUITOS DIFERENTES</div><div class="g2"><div><h3>⚙️ El que mueve</h3><p><b>Red → fuente 12 V → PWM → motor → rotor.</b></p></div><div><h3>📈 El que genera y medimos</h3><p><b>Imanes → bobina → rectificador → carga → INA219 → ESP32.</b></p></div></div></div><div class="g4"><div class="zone"><b>A · RED</b>Alargador + fuente</div><div class="zone"><b>B · 12 V</b>PWM + motor</div><div class="zone"><b>C · GENERACIÓN</b>Rotor + imanes + bobina</div><div class="zone"><b>D · MEDIDA</b>Diodos + INA219 + ESP32</div></div><div class="foot">Generador electromagnético experimental · Preparación e inventario</div></section>
+  <header class="toolbar" aria-label="Navegación del manual">
+    <strong class="toolbar-title">Manual del generador · Capítulo 0</strong>
+    <a href="index.html">← Portada</a>
+    <span class="is-disabled" aria-label="No hay capítulo anterior">Anterior</span>
+    <a href="capitulo-1.html">Siguiente</a>
+    <details class="quick-menu">
+      <summary>Índice rápido</summary>
+      <nav aria-label="Índice del Capítulo 0">
+        <a href="#antes">1. Antes de empezar</a>
+        <a href="#mapa">2. Mapa general</a>
+        <a href="#orden">3. Orden de trabajo</a>
+        <a href="#envios">4. Envíos y recepción</a>
+        <a href="#inventario-electronica">5. Electrónica y control</a>
+        <a href="#inventario-potencia">6. Potencia y movimiento</a>
+        <a href="#inventario-generacion">7. Generación y bobina</a>
+        <a href="#fuente">8. Fuente y zona de red</a>
+        <a href="#motor">9. Kit del motor</a>
+        <a href="#disponible">10. Material disponible</a>
+        <a href="#faltantes">11. Material auxiliar</a>
+        <a href="#tablero">12. Tablero DM/MDF</a>
+        <a href="#decisiones">13. Decisiones y problemas</a>
+        <a href="#cierre">14. Checklist final</a>
+      </nav>
+    </details>
+    <button type="button" data-print>Imprimir / PDF</button>
+  </header>
 
-<section class="page"><div class="pn">Página 2</div><div class="eye">CAPÍTULO 0 · TABLERO</div><h1 class="title">La base de la maqueta</h1><p class="sub">Qué es el DM/MDF y para qué lo queremos</p><div class="g2"><div class="box blue"><div class="head">TABLERO DM / MDF</div><div class="huge">≈ 70 × 40 cm</div><p>El DM o MDF es un tablero de fibras de madera prensadas. Será el <b>chasis</b>: aquí fijaremos fuente, PWM, motor, electrónica, bobina y soportes.</p><table class="spec"><tr><th>Grosor</th><td>10–12 mm</td></tr><tr><th>¿Exacto?</th><td>No. 60×40 u 80×40 también sirven.</td></tr><tr><th>¿Taladrar ya?</th><td><b>NO.</b></td></tr></table></div><div class="box warn"><div class="head">ANTES DE TALADRAR</div><label class="check"><input type="checkbox" data-save><span>Esperar piezas grandes.</span></label><label class="check"><input type="checkbox" data-save><span>Presentarlas encima sin fijar.</span></label><label class="check"><input type="checkbox" data-save><span>Comprobar que los cables llegan.</span></label><label class="check"><input type="checkbox" data-save><span>Dejar espacio alrededor del rotor.</span></label><label class="check"><input type="checkbox" data-save><span>Marcar con lápiz cuando convenza.</span></label></div></div><div class="foot">El ordenador queda fuera del tablero y se conecta al ESP32 por USB.</div></section>
+  <main class="manual-main" id="capitulo">
+    <section class="page" id="antes" aria-labelledby="antes-title">
+      <span class="page-number">Página 1</span>
+      <p class="eyebrow">Capítulo 0 · Preparación</p>
+      <h1 id="antes-title">Preparación, inventario y materiales pendientes</h1>
+      <p class="page-subtitle">Primero entendemos las piezas. Después las montamos.</p>
 
-<section class="page"><div class="pn">Página 3</div><div class="eye">CAPÍTULO 0 · ENVÍOS</div><h1 class="title">Qué viene de camino</h1><p class="sub">Checklist para ir tachando al abrir los paquetes</p><div class="box blue"><div class="head">CALENDARIO</div><div class="timeline"><div class="date">Hoy</div><div class="item"><b>Protoboard 830 puntos.</b></div></div><div class="timeline"><div class="date">Mañana</div><div class="item"><b>Diodos, INA219, fuente 12 V/10 A, kit de resistencias, TCRT5000, alargador, cable rojo/negro y PWM.</b></div></div><div class="timeline"><div class="date">13–14 ago</div><div class="item"><b>Terminales de horquilla.</b></div></div><div class="timeline"><div class="date">14–20 ago</div><div class="item"><b>Resistencias 100 Ω / 5 W.</b></div></div><div class="timeline"><div class="date">19–22 ago</div><div class="item"><b>Alambre esmaltado AWG28.</b></div></div><div class="timeline"><div class="date">26–31 ago</div><div class="item"><b>Motor 775 + soporte + adaptador.</b></div></div></div><div class="box good"><div class="head">AL ABRIR CADA PAQUETE</div><div class="g2"><label class="check"><input type="checkbox" data-save><span>Comparar con la foto.</span></label><label class="check"><input type="checkbox" data-save><span>Contar piezas.</span></label><label class="check"><input type="checkbox" data-save><span>Mirar golpes o patas dobladas.</span></label><label class="check"><input type="checkbox" data-save><span>Hacer una foto real sobre la mesa.</span></label></div></div><div class="foot">La pieza real siempre manda sobre la fotografía del vendedor.</div></section>
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Objetivo</span>
+          <p class="lead"><strong>Este capítulo no es para encender la maqueta.</strong> Sirve para reconocer cada pieza, registrar qué ha llegado, detectar qué falta y preparar un trabajo ordenado.</p>
+          <p>Al terminar debemos poder mirar una pieza y responder: “sé qué es, para qué servirá, qué aspecto tiene y qué todavía no debo hacer con ella”.</p>
+        </div>
+        <div class="box warning">
+          <span class="box-title">Regla de oro</span>
+          <p><strong>No cortar, soldar, pegar, taladrar ni conectar todavía.</strong> La pieza física manda sobre la fotografía del anuncio y cada etapa termina con un “NO CONTINUAR HASTA…”.</p>
+          <label class="check-row" for="regla-paso-a-paso">
+            <input id="regla-paso-a-paso" type="checkbox" data-checklist data-key="regla-paso-a-paso">
+            <span>Entendido: avanzamos pieza por pieza y comprobación por comprobación.</span>
+          </label>
+        </div>
+      </div>
 
-<section class="page"><div class="pn">Página 4</div><div class="eye">CAPÍTULO 0 · INVENTARIO VISUAL</div><h1 class="title">Electrónica y control</h1><p class="sub">Fotos originales para que Sara reconozca las piezas</p><img class="photo" src="assets/img/inventario-electronica.webp" alt="Diodos, INA219, PWM, TCRT5000 y protoboard"><div class="legend"><div><b>1 · Diodos 1N5818</b><br>Cuatro formarán el puente rectificador. La banda marca orientación.</div><div><b>2 · INA219</b><br>Mide tensión y corriente. Habrá que soldar sus pines.</div><div><b>3 · PWM</b><br>Es el acelerador del motor; no es un medidor.</div><div><b>4 · TCRT5000</b><br>Sensor óptico auxiliar para detectar una marca y calcular RPM.</div><div><b>5 · Protoboard</b><br>Base de pruebas para el puente de diodos y señales.</div></div><div class="box blue"><p><b>INA219:</b> tendrá explicación de soldadura. <b>Puente:</b> lo construiremos con cuatro diodos porque no encontramos un módulo comercial que nos convenciera.</p></div><div class="foot">Generador electromagnético experimental · Inventario visual</div></section>
+      <aside class="box danger">
+        <span class="box-title">Peligro real: red eléctrica</span>
+        <p>La fuente tiene bornes conectados a la red y una carcasa abierta. En este capítulo permanece <strong>desenchufada</strong>. Las conexiones de red se harán más adelante, con los bornes protegidos y bajo revisión de una persona adulta o competente.</p>
+        <p><strong>Nunca deduciremos L, N, tierra, V−, V+ ni la posición 110/220 solo por una foto.</strong> Se leerán las marcas de la unidad recibida y se comprobarán antes de conectar.</p>
+      </aside>
 
-<section class="page"><div class="pn">Página 5</div><div class="eye">CAPÍTULO 0 · INVENTARIO VISUAL</div><h1 class="title">Potencia y movimiento</h1><p class="sub">Cómo reconocer lo que llevará energía hasta el motor</p><img class="photo" src="assets/img/inventario-potencia.webp" alt="Fuente, bornes, alargador, terminal, cable y motor"><div class="legend"><div><b>1 · Fuente 12 V / 10 A</b><br>Convierte la red en 12 V DC.</div><div><b>2 · Bornes</b><br>Buscaremos L, N, tierra, V− y V+ antes de encender.</div><div><b>3 · Alargador</b><br>Conservaremos el macho y retiraremos la hembra.</div><div><b>4 · Horquilla</b><br>Se crimpa en el cable para atornillarlo limpiamente.</div><div><b>5 · Cable AWG18</b><br>Zona 12 V: fuente → PWM → motor.</div><div><b>6 · Motor 775</b><br>Hará girar el rotor; esperaremos al adaptador real para cerrar la mecánica.</div></div><div class="box danger"><div class="head">LA SIERRA NO SE USA</div><p>La hoja de sierra incluida en el kit <b>NO será el rotor</b>. Aprovecharemos motor, soporte y sistema de apriete para sujetar un <b>rotor seguro basado en CD o disco ligero</b>.</p></div><div class="foot">Nada de convertir la exposición en Final Destination.</div></section>
+      <div class="progress-panel" aria-label="Progreso del Capítulo 0">
+        <div class="progress-copy">
+          <strong data-progress-text aria-live="polite">0 comprobaciones realizadas</strong>
+          <div class="progress-track" role="progressbar" aria-label="Progreso de comprobaciones" aria-valuemin="0" aria-valuenow="0" aria-valuemax="64"><span data-progress-bar></span></div>
+        </div>
+        <button class="reset-button" type="button" data-reset-checklist>Borrar checklist</button>
+      </div>
 
-<section class="page"><div class="pn">Página 6</div><div class="eye">CAPÍTULO 0 · INVENTARIO VISUAL</div><h1 class="title">Generación y control</h1><p class="sub">Material que ya tenemos y piezas para la bobina</p><img class="photo" src="assets/img/inventario-generacion.webp" alt="Resistencias, cobre, imanes, ESP32, KY003 y sierra no utilizable"><div class="legend"><div><b>1 · Resistencias 100 Ω / 5 W</b><br>Carga para ensayos. Comprobar el valor impreso.</div><div><b>2 · Cobre esmaltado AWG28</b><br>Con él fabricaremos la bobina.</div><div><b>3 · Imanes</b><br>Tenemos redondos 15×2 mm y rectangulares; priorizaremos los redondos.</div><div><b>4 · ESP32-S3</b><br>Cerebro del sistema de medida.</div><div><b>5 · KY-003</b><br>Sensor Hall disponible como plan B.</div><div><b>6 · Sierra</b><br><b style="color:#b92027">NO SE UTILIZA.</b></div></div><div class="box blue"><p><b>La bobina no viene hecha.</b> Tendrá capítulo propio: molde → vueltas → conteo → tomas intermedias → fijación → raspado del esmalte → continuidad → montaje frente al rotor.</p></div><div class="foot">Generador electromagnético experimental · Inventario visual</div></section>
+      <div class="page-footer">Generador electromagnético experimental · Preparación e inventario</div>
+    </section>
 
-<section class="page"><div class="pn">Página 7</div><div class="eye">CAPÍTULO 0 · FALTANTES</div><h1 class="title">Lo que todavía hay que conseguir</h1><p class="sub">Ferretería y herramientas que no venían en los pedidos</p><div class="g2"><div class="box blue"><div class="head">MATERIALES</div><label class="check"><input type="checkbox" data-save><span><b>Tablero DM/MDF</b><small>≈70×40 cm, 10–12 mm.</small></span></label><label class="check"><input type="checkbox" data-save><span><b>Tornillos, tuercas y arandelas</b><small>M3/M4 y algunos tirafondos.</small></span></label><label class="check"><input type="checkbox" data-save><span><b>Escuadras / separadores</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Bridas, cinta aislante y doble cara</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Epoxi bicomponente</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Rotor seguro: CD/disco ligero</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Pantalla transparente de protección</b></span></label></div><div class="box good"><div class="head">HERRAMIENTAS</div><label class="check"><input type="checkbox" data-save><span><b>Multímetro</b><small>Imprescindible.</small></span></label><label class="check"><input type="checkbox" data-save><span><b>Pelacables y alicate de corte</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Crimpadora / alicate firme</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Soldador + estaño</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Destornilladores</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Taladro y brocas</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Regla, lápiz y etiquetas</b></span></label></div></div><div class="foot">Una caja pequeña para tornillos evita que una arandela decida vivir debajo del sofá.</div></section>
+    <section class="page" id="mapa" aria-labelledby="mapa-title">
+      <span class="page-number">Página 2</span>
+      <p class="eyebrow">Capítulo 0 · Mapa general</p>
+      <h2 id="mapa-title">Dos circuitos diferentes</h2>
+      <p class="page-subtitle">Uno mueve el experimento; el otro genera y mide</p>
 
-<section class="page"><div class="pn">Página 8</div><div class="eye">CAPÍTULO 0 · DECISIONES</div><h1 class="title">Qué está decidido y qué no</h1><p class="sub">No confundimos una idea provisional con una decisión final</p><div class="g2"><div class="box good"><div class="head">YA DECIDIDO</div><p class="ok"><b>Alimentación:</b> alargador → fuente 12 V.</p><p class="ok"><b>Movimiento:</b> fuente → PWM → motor.</p><p class="ok"><b>Rectificación:</b> 4 diodos 1N5818 en protoboard.</p><p class="ok"><b>Medida:</b> INA219 + ESP32-S3.</p><p class="ok"><b>Imanes:</b> redondos 15×2 mm como base.</p><p class="ok"><b>Sierra:</b> no se usa.</p></div><div class="box warn"><div class="head">PENDIENTE</div><p class="bad"><b>Rotor definitivo:</b> esperar motor/adaptador real.</p><p class="bad"><b>Número exacto de imanes:</b> se probarán configuraciones.</p><p class="bad"><b>Molde de bobina:</b> se diseña con el rotor medido.</p><p class="bad"><b>Distancia bobina–imán:</b> debe quedar ajustable.</p><p class="bad"><b>RPM:</b> TCRT5000 o KY-003 según cuál mida mejor.</p></div></div><div class="box danger"><div class="head">PROBLEMAS PREVISIBLES</div><div class="g2"><div><p><b>Selector 110/220.</b> Identificar antes de encender.</p><p><b>INA219 sin soldar.</b> Practicar primero.</p><p><b>Rotor desequilibrado.</b> Colocar imanes simétricamente.</p><p><b>Imanes despegados.</b> Curar epoxi y proteger rotor.</p></div><div><p><b>Bobina lejos.</b> Soporte ajustable.</p><p><b>Lecturas raras.</b> Multímetro antes que software.</p><p><b>Demasiadas RPM.</b> Arrancar siempre con PWM bajo.</p><p><b>Cables confusos.</b> Etiquetarlos desde el principio.</p></div></div></div><div class="foot">Generador electromagnético experimental · Decisiones de diseño</div></section>
+      <div class="box blue">
+        <span class="circuit-label">Circuito de movimiento</span>
+        <div class="flow-diagram" aria-label="Red eléctrica a fuente, PWM, motor y rotor">
+          <div class="flow-node">Red eléctrica</div><span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-node">Fuente 12 V</div><span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-node">PWM</div><span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-node">Motor 775</div><span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-node">Rotor</div>
+        </div>
+        <p><strong>Función:</strong> dar al rotor un giro controlable y repetible. Este circuito consume energía para mover el banco de pruebas.</p>
+      </div>
 
-<section class="page"><div class="pn">Página 9</div><div class="eye">CAPÍTULO 0 · CIERRE</div><h1 class="title">No pasamos al capítulo 1 hasta…</h1><p class="sub">Checklist final de salida</p><div class="g2"><div class="box blue"><div class="head">INVENTARIO</div><label class="check"><input type="checkbox" data-save><span>Sabemos reconocer cada pieza principal.</span></label><label class="check"><input type="checkbox" data-save><span>Los envíos están controlados.</span></label><label class="check"><input type="checkbox" data-save><span>Imanes y ESP32 localizados.</span></label><label class="check"><input type="checkbox" data-save><span>Sabemos qué materiales faltan.</span></label></div><div class="box good"><div class="head">TALLER</div><label class="check"><input type="checkbox" data-save><span>Tablero conseguido.</span></label><label class="check"><input type="checkbox" data-save><span>Multímetro disponible.</span></label><label class="check"><input type="checkbox" data-save><span>Soldador y estaño.</span></label><label class="check"><input type="checkbox" data-save><span>Pelacables/crimpadora/destornilladores.</span></label><label class="check"><input type="checkbox" data-save><span>Epoxi, tornillería, bridas y cinta.</span></label></div></div><div class="box danger"><div class="head">NO CONTINUAR HASTA…</div><label class="check"><input type="checkbox" data-save><span><b>Fuente recibida y fotografiada.</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Bornes L / N / tierra / V− / V+ identificados.</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Selector 110/220 identificado, si existe.</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Alargador, horquillas y cable de salida disponibles.</b></span></label><label class="check"><input type="checkbox" data-save><span><b>Una persona competente revisará la parte de red.</b></span></label></div><div class="box good center"><div class="huge">SIGUIENTE: CAPÍTULO 1</div><p><b>Del enchufe a los 12 voltios.</b><br>Alargador → cortar → pelar → terminales → L/N/tierra → revisar → primer encendido → medir V+ / V−.</p></div><div class="foot"><a href="index.html">← Volver a la portada</a></div></section>
-<script>document.querySelectorAll('input[data-save]').forEach((x,i)=>{let k='gen-c0-'+i;x.checked=localStorage.getItem(k)==='1';x.onchange=()=>localStorage.setItem(k,x.checked?'1':'0')})</script>
-</body></html>
+      <div class="box success">
+        <span class="circuit-label generated">Circuito generador y de medida</span>
+        <div class="flow-diagram" aria-label="Rotor, bobina, rectificador, carga, INA219, ESP32 y ordenador">
+          <div class="flow-node">Rotor + imanes</div><span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-node">Bobina</div><span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-node">Rectificador + carga</div><span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-node">INA219</div><span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-node">ESP32 + ordenador</div>
+        </div>
+        <p><strong>Función:</strong> producir una tensión en la bobina, rectificarla, aplicarla a una carga y registrar tensión, corriente y potencia. El TCRT5000 o el KY-003 podrán aportar RPM/sincronización.</p>
+      </div>
+
+      <aside class="notice warning">
+        <strong>No mezclar:</strong> el PWM controla la velocidad del motor; no mide la electricidad generada. El INA219 mide en el circuito experimental; no controla el motor. Separar ambas funciones evitará muchos cables “misteriosos”.
+      </aside>
+
+      <div class="page-footer">Este mapa volverá a aparecer en los capítulos de cableado, medida y pruebas.</div>
+    </section>
+
+    <section class="page" id="orden" aria-labelledby="orden-title">
+      <span class="page-number">Página 3</span>
+      <p class="eyebrow">Capítulo 0 · Método</p>
+      <h2 id="orden-title">En qué orden vamos a trabajar</h2>
+      <p class="page-subtitle">Cada bloque debe quedar entendido y comprobado antes del siguiente</p>
+
+      <div class="grid-2">
+        <ol class="step-list">
+          <li><strong>Recibir y fotografiar.</strong><br>Comparar cada paquete con su ficha y guardar una foto de la pieza real.</li>
+          <li><strong>Identificar sin conectar.</strong><br>Leer modelo, valores impresos, bornes, conectores, medidas y posibles daños.</li>
+          <li><strong>Preparar tablero y herramientas.</strong><br>Presentar las piezas sobre el DM/MDF sin perforar.</li>
+          <li><strong>Construir el circuito de movimiento.</strong><br>Será materia de los Capítulos 1 y 2, con la red separada y protegida.</li>
+        </ol>
+        <ol class="step-list continued" start="5">
+          <li><strong>Resolver la mecánica real.</strong><br>Medir motor y adaptador; después decidir rotor, soporte y protección.</li>
+          <li><strong>Construir generación y medida.</strong><br>Bobina, rectificador, carga, INA219, ESP32 y sensor RPM.</li>
+          <li><strong>Probar por bloques.</strong><br>Primero multímetro; después software y registro.</li>
+          <li><strong>Ensayar y documentar.</strong><br>Variar una condición cada vez, guardar resultados y preparar la defensa.</li>
+        </ol>
+      </div>
+
+      <aside class="notice success">
+        <strong>La comprobación forma parte del montaje.</strong> Si una pieza no coincide con la foto, no es “más o menos la misma”: se registra la diferencia antes de continuar.
+      </aside>
+      <div class="page-footer">Recibir → identificar → preparar → montar → comprobar → documentar</div>
+    </section>
+
+    <section class="page" id="envios" aria-labelledby="envios-title">
+      <span class="page-number">Página 4</span>
+      <p class="eyebrow">Capítulo 0 · Envíos</p>
+      <h2 id="envios-title">Inventario de paquetes</h2>
+      <p class="page-subtitle">Previsión inicial registrada el 12 de agosto de 2026</p>
+
+      <div class="box blue">
+        <span class="box-title">Calendario de referencia</span>
+        <div class="timeline"><div class="timeline-date">12 ago</div><div class="timeline-content"><strong>Protoboard de 830 puntos.</strong></div></div>
+        <div class="timeline"><div class="timeline-date">13 ago</div><div class="timeline-content"><strong>Diodos, INA219, fuente 12 V/10 A, kit de resistencias, TCRT5000, extensión, cable rojo/negro y PWM.</strong></div></div>
+        <div class="timeline"><div class="timeline-date">13–14 ago</div><div class="timeline-content"><strong>Terminales de horquilla.</strong></div></div>
+        <div class="timeline"><div class="timeline-date">14–20 ago</div><div class="timeline-content"><strong>Resistencias cerámicas 100 Ω / 5 W.</strong></div></div>
+        <div class="timeline"><div class="timeline-date">19–22 ago</div><div class="timeline-content"><strong>Alambre de cobre esmaltado AWG28.</strong></div></div>
+        <div class="timeline"><div class="timeline-date">26–31 ago</div><div class="timeline-content"><strong>Motor 775, soporte, adaptador y accesorios.</strong></div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="check-group">
+          <h3>Al abrir cada paquete</h3>
+          <label class="check-row" for="paquete-comparar"><input id="paquete-comparar" type="checkbox" data-checklist data-key="paquete-comparar"><span>Comparar la pieza con la foto de su ficha.</span></label>
+          <label class="check-row" for="paquete-contar"><input id="paquete-contar" type="checkbox" data-checklist data-key="paquete-contar"><span>Contar piezas y accesorios incluidos.</span></label>
+          <label class="check-row" for="paquete-danos"><input id="paquete-danos" type="checkbox" data-checklist data-key="paquete-danos"><span>Buscar golpes, grietas, óxido o patas dobladas.</span></label>
+          <label class="check-row" for="paquete-foto"><input id="paquete-foto" type="checkbox" data-checklist data-key="paquete-foto"><span>Hacer una foto propia, nítida y sin embalaje.</span></label>
+        </div>
+        <div class="box warning">
+          <span class="box-title">Si algo no coincide</span>
+          <p>No se “corrige” el manual imaginando que servirá. Se anota el modelo, el valor impreso y la diferencia. En componentes eléctricos o mecánicos, esa diferencia puede cambiar un capítulo completo.</p>
+          <p><strong>TODO:</strong> actualizar el estado de envío de cada ficha cuando se confirme la recepción física.</p>
+        </div>
+      </div>
+      <div class="page-footer">Las fechas son una previsión del pedido, no una garantía de entrega.</div>
+    </section>
+
+    <section class="page" id="inventario-electronica" aria-labelledby="electronica-title">
+      <span class="page-number">Página 5</span>
+      <p class="eyebrow">Capítulo 0 · Inventario comprado</p>
+      <h2 id="electronica-title">Electrónica y control</h2>
+      <p class="page-subtitle">Fotos grandes para reconocer cada componente sin confundir funciones</p>
+
+      <div class="inventory-grid">
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">1</span><div><h3>Diodos Schottky 1N5818 · pack x5</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag">Comprado</span></div></div></header>
+          <figure class="media-frame vertical"><a href="assets/img/diodos-1n5818.webp" target="_blank" rel="noopener"><img src="assets/img/diodos-1n5818.webp" width="635" height="1200" loading="lazy" alt="Diodo axial 1N5818 negro con dos patillas metálicas"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> un componente que deja pasar corriente principalmente en una dirección.</p>
+            <p><strong>Para qué sirve:</strong> cuatro diodos formarán el puente rectificador; el quinto queda de repuesto.</p>
+            <p class="recognition"><strong>Cómo reconocerlo:</strong> cuerpo cilíndrico negro, una patilla a cada lado y una banda clara que marca el cátodo. La banda deberá verse en la pieza real antes de montar.</p>
+            <label class="component-check" for="recibido-diodos"><input id="recibido-diodos" type="checkbox" data-checklist data-key="recibido-diodos"><span>Recibidos 5; referencia 1N5818 y banda visibles.</span></label>
+            <label class="observation" for="nota-diodos">Observaciones<textarea id="nota-diodos" data-note data-key="nota-diodos" placeholder="Cantidad, texto impreso, estado de patillas…"></textarea></label>
+          </div>
+          <p class="photo-note">Foto original aportada para identificar el pedido. La orientación eléctrica se comprobará en la pieza física.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">2</span><div><h3>Sensor INA219 I2C</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag">Requiere soldadura</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/ina219.webp" target="_blank" rel="noopener"><img src="assets/img/ina219.webp" width="921" height="619" loading="lazy" alt="Módulo INA219 azul con bornera verde y tira de pines sin soldar"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> una placa que mide tensión y corriente y comunica los datos por I2C.</p>
+            <p><strong>Para qué sirve:</strong> enviará a la ESP32 las medidas del circuito generado.</p>
+            <p class="recognition"><strong>Cómo reconocerlo:</strong> placa azul pequeña, resistencia metálica marcada R100, bornera verde y orificios VCC, GND, SCL, SDA, VIN+ y VIN−. Puede llegar con bornera y pines sueltos.</p>
+            <label class="component-check" for="recibido-ina219"><input id="recibido-ina219" type="checkbox" data-checklist data-key="recibido-ina219"><span>Placa, bornera y pines recibidos sin daños.</span></label>
+            <label class="observation" for="nota-ina219">Observaciones<textarea id="nota-ina219" data-note data-key="nota-ina219" placeholder="¿Bornera/pines sueltos? ¿Alguna soldadura hecha?"></textarea></label>
+          </div>
+          <p class="photo-note">No soldar todavía. VIN+, VIN− y el pinout se explicarán en su capítulo específico.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">11</span><div><h3>Controlador PWM 10–60 V / 20 A</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag">Circuito de movimiento</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/pwm.webp" target="_blank" rel="noopener"><img src="assets/img/pwm.webp" width="1200" height="1002" loading="lazy" alt="Controlador PWM verde con disipadores, cuatro bornes y mando giratorio"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> un regulador electrónico de velocidad para motor DC.</p>
+            <p><strong>Para qué sirve:</strong> ajustará la potencia entregada al motor para variar sus RPM.</p>
+            <p class="recognition"><strong>Cómo reconocerlo:</strong> placa verde grande, varios disipadores de aluminio, cuatro bornes con tornillo y un potenciómetro con mando negro unido por tres cables.</p>
+            <label class="component-check" for="recibido-pwm"><input id="recibido-pwm" type="checkbox" data-checklist data-key="recibido-pwm"><span>PWM, mando, tuerca y arandela recibidos.</span></label>
+            <label class="observation" for="nota-pwm">Observaciones<textarea id="nota-pwm" data-note data-key="nota-pwm" placeholder="Texto de bornes, daños, piezas sueltas…"></textarea></label>
+          </div>
+          <p class="photo-note">El texto de los bornes debe leerse en la unidad real antes de conectarla.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">12</span><div><h3>Sensor óptico TCRT5000</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag">RPM</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/tcrt5000.webp" target="_blank" rel="noopener"><img src="assets/img/tcrt5000.webp" width="987" height="572" loading="lazy" alt="Módulo sensor óptico TCRT5000 alargado con pines GND, VCC y OUT"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> un sensor óptico reflectivo que detecta cambios entre una marca clara y una oscura.</p>
+            <p><strong>Para qué sirve:</strong> podrá contar vueltas del rotor y calcular RPM.</p>
+            <p class="recognition"><strong>Cómo reconocerlo:</strong> placa negra estrecha, emisor/receptor en un extremo y tres pines rotulados GND, VCC y OUT en el otro. La forma exacta puede variar.</p>
+            <label class="component-check" for="recibido-tcrt5000"><input id="recibido-tcrt5000" type="checkbox" data-checklist data-key="recibido-tcrt5000"><span>Sensor recibido con pines rectos y sin grietas.</span></label>
+            <label class="observation" for="nota-tcrt5000">Observaciones<textarea id="nota-tcrt5000" data-note data-key="nota-tcrt5000" placeholder="Número de pines, etiquetas impresas, formato…"></textarea></label>
+          </div>
+          <p class="photo-note">El KY-003 seguirá disponible como plan B; la elección se hará probando ambos.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">13</span><div><h3>Protoboard de 830 puntos</h3><div class="component-status"><span class="tag pending">Previsto: 12 ago</span><span class="tag">Montaje sin soldar</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/protoboard.webp" target="_blank" rel="noopener"><img src="assets/img/protoboard.webp" width="1200" height="816" loading="lazy" alt="Protoboard blanca de 830 puntos con carriles rojos y azules"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> una placa de pruebas con agujeros conectados internamente.</p>
+            <p><strong>Para qué sirve:</strong> permitirá montar y comprobar el puente de diodos y señales sin soldar cada unión.</p>
+            <p class="recognition"><strong>Cómo reconocerla:</strong> base blanca alargada, ranura central, filas numeradas y carriles laterales marcados en rojo y azul. Esos colores no garantizan polaridad: la decide el cableado.</p>
+            <label class="component-check" for="recibido-protoboard"><input id="recibido-protoboard" type="checkbox" data-checklist data-key="recibido-protoboard"><span>Protoboard recibida, plana y sin zonas rotas.</span></label>
+            <label class="observation" for="nota-protoboard">Observaciones<textarea id="nota-protoboard" data-note data-key="nota-protoboard" placeholder="Carriles partidos, adhesivo trasero, golpes…"></textarea></label>
+          </div>
+          <p class="photo-note">La distribución interna de los carriles se comprobará antes del rectificador.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">15</span><div><h3>Kit de resistencias</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: foto propia</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/kit-resistencias-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/kit-resistencias-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de un kit genérico de resistencias axiales en organizador"></a><span class="zoom-hint">Abrir referencia</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> una colección de resistencias de distintos valores, normalmente agrupadas y etiquetadas.</p>
+            <p><strong>Para qué sirve:</strong> pruebas auxiliares, LEDs y adaptación de señales en capítulos posteriores.</p>
+            <p class="recognition"><strong>Cómo reconocerlo:</strong> muchas resistencias pequeñas con bandas de colores, ordenadas por valor. No confundirlas con las resistencias cerámicas grandes de 100 Ω / 5 W.</p>
+            <label class="component-check" for="recibido-kit-resistencias"><input id="recibido-kit-resistencias" type="checkbox" data-checklist data-key="recibido-kit-resistencias"><span>Kit recibido y valores/etiquetas legibles.</span></label>
+            <label class="observation" for="nota-kit-resistencias">Observaciones<textarea id="nota-kit-resistencias" data-note data-key="nota-kit-resistencias" placeholder="Rango de valores, presentación, cantidades…"></textarea></label>
+          </div>
+          <p class="photo-note">Referencia fotográfica generada para reconocer el tipo de componente. No representa el surtido comprado: comprobar valores, cantidades y presentación al recibirlo.</p>
+        </article>
+      </div>
+      <div class="page-footer">Electrónica comprada · Identificar ahora, conectar más adelante</div>
+    </section>
+
+    <section class="page" id="inventario-potencia" aria-labelledby="potencia-title">
+      <span class="page-number">Página 6</span>
+      <p class="eyebrow">Capítulo 0 · Inventario comprado</p>
+      <h2 id="potencia-title">Potencia y movimiento</h2>
+      <p class="page-subtitle">Las piezas que llevarán energía hasta el motor y harán girar el rotor</p>
+
+      <div class="inventory-grid">
+        <article class="component-card featured">
+          <header class="component-card-header"><span class="component-number">7</span><div><h3>Fuente conmutada 12 V / 10 A / 120 W</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag todo">Zona de red</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/fuente-12v-10a.webp" target="_blank" rel="noopener"><img src="assets/img/fuente-12v-10a.webp" width="1208" height="642" loading="lazy" alt="Fuente conmutada metálica abierta de 12 voltios y 10 amperios"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> una fuente que transforma la tensión de la red en 12 V de corriente continua.</p>
+            <p><strong>Para qué sirve:</strong> alimentará el PWM y el motor; no alimenta directamente el circuito generado.</p>
+            <p class="recognition"><strong>Cómo reconocerla:</strong> caja rectangular metálica perforada, fila de bornes bajo una cubierta transparente, etiqueta amarilla de peligro y posible selector de tensión en un lateral.</p>
+            <label class="component-check" for="recibido-fuente"><input id="recibido-fuente" type="checkbox" data-checklist data-key="recibido-fuente"><span>Fuente recibida sin golpes y con carcasa, bornes y marcas visibles.</span></label>
+            <label class="observation" for="nota-fuente">Observaciones<textarea id="nota-fuente" data-note data-key="nota-fuente" placeholder="Modelo, tensión de entrada, disposición de bornes, selector…"></textarea></label>
+          </div>
+          <p class="photo-note">Foto del producto aportada. Comprobar en la pieza física antes de conectar.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">8</span><div><h3>Extensión de 2 m con tierra</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag todo">Zona de red</span></div></div></header>
+          <figure class="media-frame vertical"><a href="assets/img/alargador-con-tierra.webp" target="_blank" rel="noopener"><img src="assets/img/alargador-con-tierra.webp" width="1084" height="1199" loading="lazy" alt="Extensión blanca con enchufe y toma de tierra"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> un cable de red con conductor de tierra.</p>
+            <p><strong>Para qué sirve:</strong> en un capítulo posterior aportará fase, neutro y tierra a la fuente.</p>
+            <p class="recognition"><strong>Cómo reconocerla:</strong> cable de tres conductores y enchufe con contacto de tierra. La fotografía muestra el formato del pedido; debe comprobarse que coincide con la instalación real.</p>
+            <label class="component-check" for="recibido-alargador"><input id="recibido-alargador" type="checkbox" data-checklist data-key="recibido-alargador"><span>Extensión recibida, sin cortes y con tierra identificable.</span></label>
+            <label class="observation" for="nota-alargador">Observaciones<textarea id="nota-alargador" data-note data-key="nota-alargador" placeholder="Tipo de enchufe, colores internos (sin cortar aún), longitud…"></textarea></label>
+          </div>
+          <p class="photo-note">No cortar en el Capítulo 0. El tipo de enchufe y la red local deben ser compatibles.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">9</span><div><h3>Terminales tipo horquilla</h3><div class="component-status"><span class="tag pending">Previsto: 13–14 ago</span><span class="tag">Cableado</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/terminales-horquilla.webp" target="_blank" rel="noopener"><img src="assets/img/terminales-horquilla.webp" width="1200" height="793" loading="lazy" alt="Terminal eléctrico de horquilla con funda aislante roja"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> un terminal metálico en forma de U que se fija al extremo de un cable mediante crimpado.</p>
+            <p><strong>Para qué sirve:</strong> permite sujetar el cable bajo un tornillo de borne sin dejar hilos sueltos.</p>
+            <p class="recognition"><strong>Cómo reconocerlo:</strong> horquilla metálica abierta y manguito aislante rojo. El tamaño debe admitir el cable y encajar bajo los tornillos reales.</p>
+            <label class="component-check" for="recibido-terminales"><input id="recibido-terminales" type="checkbox" data-checklist data-key="recibido-terminales"><span>Terminales recibidos; cantidad y tamaño comprobados sin crimpar.</span></label>
+            <label class="observation" for="nota-terminales">Observaciones<textarea id="nota-terminales" data-note data-key="nota-terminales" placeholder="Cantidad, diámetro de horquilla, calibre admitido…"></textarea></label>
+          </div>
+          <p class="photo-note">El crimpado se practicará y revisará antes de usarlo en la zona de red.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">10</span><div><h3>Cable rojo/negro AWG18</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag">12 V DC</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/cable-awg18.webp" target="_blank" rel="noopener"><img src="assets/img/cable-awg18.webp" width="910" height="876" loading="lazy" alt="Rollos de cable eléctrico rojo y negro AWG18"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> dos conductores flexibles de potencia, uno rojo y otro negro.</p>
+            <p><strong>Para qué sirve:</strong> llevará los 12 V desde la fuente al PWM y desde el PWM al motor.</p>
+            <p class="recognition"><strong>Cómo reconocerlo:</strong> dos cables de grosor similar, marcados como AWG18 si el fabricante lo imprime. Usaremos rojo/negro de forma coherente, pero la polaridad se verificará.</p>
+            <label class="component-check" for="recibido-cable-awg18"><input id="recibido-cable-awg18" type="checkbox" data-checklist data-key="recibido-cable-awg18"><span>Cable recibido; rojo, negro y calibre AWG18 comprobados.</span></label>
+            <label class="observation" for="nota-cable-awg18">Observaciones<textarea id="nota-cable-awg18" data-note data-key="nota-cable-awg18" placeholder="Metros, texto de cubierta, flexibilidad…"></textarea></label>
+          </div>
+          <p class="photo-note">Este cable es para la zona de 12 V; no sustituye el cable de red con tierra.</p>
+        </article>
+
+        <article class="component-card featured">
+          <header class="component-card-header"><span class="component-number">3</span><div><h3>Motor 775 de 12/24 V</h3><div class="component-status"><span class="tag pending">Previsto: 26–31 ago</span><span class="tag">Esperar medidas reales</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/motor-775-kit.webp" target="_blank" rel="noopener"><img src="assets/img/motor-775-kit.webp" width="1200" height="1076" loading="lazy" alt="Kit de motor 775 con soporte, adaptador, discos, llaves y disco dentado incluido"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> un motor DC cilíndrico de alta velocidad con eje de 5 mm.</p>
+            <p><strong>Para qué sirve:</strong> hará girar el rotor experimental de forma controlada.</p>
+            <p class="recognition"><strong>Cómo reconocerlo:</strong> cuerpo metálico cilíndrico, ranuras de ventilación, dos terminales traseros y eje frontal. El kit mostrado incluye soporte, adaptador, platos/arandelas, llaves y un disco dentado.</p>
+            <label class="component-check" for="recibido-motor"><input id="recibido-motor" type="checkbox" data-checklist data-key="recibido-motor"><span>Motor recibido; eje, terminales y carcasa sin daños.</span></label>
+            <label class="observation" for="nota-motor">Observaciones<textarea id="nota-motor" data-note data-key="nota-motor" placeholder="Etiqueta, diámetro real del eje, longitud, accesorios…"></textarea></label>
+          </div>
+          <p class="photo-note">La foto identifica el kit. La geometría final del rotor no se decide hasta medir estas piezas reales.</p>
+        </article>
+      </div>
+      <div class="page-footer">Potencia y movimiento · La zona de red sigue desenchufada</div>
+    </section>
+
+    <section class="page" id="inventario-generacion" aria-labelledby="generacion-title">
+      <span class="page-number">Página 7</span>
+      <p class="eyebrow">Capítulo 0 · Inventario comprado</p>
+      <h2 id="generacion-title">Generación y bobina</h2>
+      <p class="page-subtitle">Los materiales que producirán y cargarán la señal eléctrica</p>
+
+      <div class="inventory-grid">
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">14</span><div><h3>Resistencias cerámicas 100 Ω / 5 W</h3><div class="component-status"><span class="tag pending">Previsto: 14–20 ago</span><span class="tag">Carga de prueba</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/resistencia-100ohm-5w.webp" target="_blank" rel="noopener"><img src="assets/img/resistencia-100ohm-5w.webp" width="1175" height="1162" loading="lazy" alt="Dos resistencias cerámicas blancas marcadas 5W 100 ohmios"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> una resistencia grande capaz de disipar más calor que una resistencia pequeña.</p>
+            <p><strong>Para qué sirve:</strong> actuará como carga durante ensayos del generador.</p>
+            <p class="recognition"><strong>Cómo reconocerla:</strong> bloque cerámico blanco con una patilla en cada extremo y texto parecido a “5W 100ΩJ”. Confirmar el valor impreso.</p>
+            <label class="component-check" for="recibido-resistencia-potencia"><input id="recibido-resistencia-potencia" type="checkbox" data-checklist data-key="recibido-resistencia-potencia"><span>Resistencias recibidas y marcadas 100 Ω / 5 W.</span></label>
+            <label class="observation" for="nota-resistencia-potencia">Observaciones<textarea id="nota-resistencia-potencia" data-note data-key="nota-resistencia-potencia" placeholder="Cantidad y marcado exacto…"></textarea></label>
+          </div>
+          <p class="photo-note">Pueden calentarse durante una prueba; su montaje se explicará más adelante.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">16</span><div><h3>Alambre de cobre esmaltado AWG28</h3><div class="component-status"><span class="tag pending">Previsto: 19–22 ago</span><span class="tag">Bobina</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/cobre-esmaltado-awg28.webp" target="_blank" rel="noopener"><img src="assets/img/cobre-esmaltado-awg28.webp" width="844" height="852" loading="lazy" alt="Varias bobinas de alambre de cobre esmaltado"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body">
+            <p><strong>Qué es:</strong> hilo fino de cobre cubierto por una capa aislante de esmalte.</p>
+            <p><strong>Para qué sirve:</strong> con él fabricaremos la bobina del generador.</p>
+            <p class="recognition"><strong>Cómo reconocerlo:</strong> hilo color cobre brillante enrollado en carrete. Aunque parezca cobre desnudo, el esmalte lo aísla; los extremos deben prepararse antes de medir continuidad.</p>
+            <label class="component-check" for="recibido-cobre"><input id="recibido-cobre" type="checkbox" data-checklist data-key="recibido-cobre"><span>Carrete recibido y calibre AWG28 confirmado en la etiqueta.</span></label>
+            <label class="observation" for="nota-cobre">Observaciones<textarea id="nota-cobre" data-note data-key="nota-cobre" placeholder="Peso/longitud del carrete, etiqueta, daños…"></textarea></label>
+          </div>
+          <p class="photo-note">La foto muestra alambre esmaltado de referencia; comprobar AWG28 en el carrete recibido.</p>
+        </article>
+      </div>
+
+      <div class="box blue">
+        <span class="box-title">Plan futuro de la bobina</span>
+        <p>Se estudia una sola bobina con derivaciones: <strong>A = inicio, B = 200, C = 400, D = 600 y E = 800 espiras</strong>. Así podrían ensayarse A–B, A–C, A–D y A–E.</p>
+        <p><strong>Pendiente:</strong> no se define todavía el molde ni se bobina. El diámetro dependerá del rotor y de los imanes reales.</p>
+      </div>
+
+      <div class="box warning">
+        <span class="box-title">Plan futuro del rectificador</span>
+        <p>El puente se construirá con <strong>4 diodos Schottky 1N5818</strong> porque no se eligió un puente comercial. Ánodo, cátodo, banda, entradas AC y salidas DC se explicarán en el Capítulo 5; aquí solo registramos la decisión.</p>
+      </div>
+      <div class="page-footer">La bobina y el rectificador tienen capítulos propios; aquí no se montan.</div>
+    </section>
+
+    <section class="page" id="fuente" aria-labelledby="fuente-title">
+      <span class="page-number">Página 8</span>
+      <p class="eyebrow">Capítulo 0 · Seguridad</p>
+      <h2 id="fuente-title">Fuente y zona de red</h2>
+      <p class="page-subtitle">Mirar, identificar y anotar; todavía no conectar</p>
+
+      <div class="detail-gallery">
+        <figure><a href="assets/img/fuente-12v-10a-vista.webp" target="_blank" rel="noopener"><img src="assets/img/fuente-12v-10a-vista.webp" width="966" height="690" loading="lazy" alt="Vista de la fuente con la fila de bornes y sus símbolos"></a><figcaption>Vista del anuncio: posición aproximada de L, N, tierra, V− y V+. La pieza real manda.</figcaption></figure>
+        <figure><a href="assets/img/fuente-bornes.webp" target="_blank" rel="noopener"><img src="assets/img/fuente-bornes.webp" width="788" height="764" loading="lazy" alt="Primer plano de los bornes de una fuente 12 V 10 A 120 W"></a><figcaption>Detalle de bornes. La fotografía no autoriza ninguna conexión.</figcaption></figure>
+        <figure><a href="assets/img/fuente-selector-tension.webp" target="_blank" rel="noopener"><img src="assets/img/fuente-selector-tension.webp" width="1200" height="1200" loading="lazy" alt="Imagen de referencia de un selector de tensión 110 y 220 voltios"></a><figcaption>Referencia del anuncio para localizar un posible selector 110/220. En Colombia se verificará el rango bajo que incluya 120 V, 60 Hz.</figcaption></figure>
+        <figure><a href="assets/img/pwm-vista.webp" target="_blank" rel="noopener"><img src="assets/img/pwm-vista.webp" width="1200" height="886" loading="lazy" alt="Segunda vista del PWM con mando, tuerca y cuatro bornes"></a><figcaption>Segunda vista del PWM: pertenece a 12 V DC y se mantiene separado de la red.</figcaption></figure>
+      </div>
+
+      <aside class="box danger">
+        <span class="box-title">No pasar por alto</span>
+        <ul>
+          <li>Trabajar con la fuente desenchufada.</li>
+          <li>Identificar la tensión de entrada admitida por la unidad real y la red local.</li>
+          <li>Localizar L, N, tierra, V− y V+ leyendo el metal/etiqueta de esa fuente.</li>
+          <li>Proteger los bornes para que no puedan tocarse accidentalmente.</li>
+          <li>Pedir revisión a una persona adulta o competente antes del primer encendido.</li>
+        </ul>
+      </aside>
+      <p class="decision pending"><strong>Plan registrado para el Capítulo 1:</strong> conservar la clavija macho tipo B con tierra de la extensión y retirar el extremo hembra para acceder a los tres conductores. <strong>No se hace ahora</strong> y queda sujeto a comprobar la extensión real, una toma colombiana de 120 V y 60 Hz con tierra funcional, y el procedimiento con una persona competente.</p>
+      <p class="decision todo"><strong>TODO de seguridad:</strong> fotografiar la fuente recibida por todos sus lados y sustituir estas referencias del anuncio si la disposición no coincide.</p>
+      <div class="page-footer">Comprobar en la pieza física antes de conectar.</div>
+    </section>
+
+    <section class="page" id="motor" aria-labelledby="motor-title">
+      <span class="page-number">Página 9</span>
+      <p class="eyebrow">Capítulo 0 · Mecánica</p>
+      <h2 id="motor-title">Kit del motor: decidido y pendiente</h2>
+      <p class="page-subtitle">El kit incluye piezas útiles y un disco dentado que no tendrá uso de sierra</p>
+
+      <div class="detail-gallery">
+        <figure><a href="assets/img/motor-775-medidas.webp" target="_blank" rel="noopener"><img src="assets/img/motor-775-medidas.webp" width="1200" height="1121" loading="lazy" alt="Diagrama de medidas de motor 775 con eje de 5 mm"></a><figcaption>Medidas del anuncio. Confirmar diámetro del eje y posiciones reales.</figcaption></figure>
+        <figure><a href="assets/img/soporte-motor-775.webp" target="_blank" rel="noopener"><img src="assets/img/soporte-motor-775.webp" width="1166" height="1200" loading="lazy" alt="Soporte metálico en L con medidas para motor"></a><figcaption>Soporte metálico en L. Presentar sobre el tablero antes de marcar agujeros.</figcaption></figure>
+        <figure><a href="assets/img/adaptador-eje-motor.webp" target="_blank" rel="noopener"><img src="assets/img/adaptador-eje-motor.webp" width="1200" height="1021" loading="lazy" alt="Adaptador M10-5 para eje de motor de 5 mm"></a><figcaption>Adaptador M10-5 del anuncio. Verificar rosca, diámetro y sistema de apriete.</figcaption></figure>
+        <figure><a href="assets/img/disco-incluido-no-usar.webp" target="_blank" rel="noopener"><img src="assets/img/disco-incluido-no-usar.webp" width="1200" height="1009" loading="lazy" alt="Disco dentado de 110 mm incluido con el kit que no se utilizará como sierra"></a><figcaption>Disco dentado incluido. Se identifica para apartarlo: NO se utilizará como sierra ni como rotor.</figcaption></figure>
+      </div>
+
+      <div class="grid-3">
+        <article class="box blue">
+          <span class="box-title">4 · Soporte metálico</span>
+          <p><strong>Qué es:</strong> una escuadra rígida en forma de L.</p>
+          <p><strong>Para qué sirve:</strong> sujetará el cuerpo del motor al tablero si sus medidas y rigidez resultan adecuadas.</p>
+          <p class="recognition"><strong>Cómo reconocerlo:</strong> pieza negra con un orificio circular grande, dos orificios pequeños y ranuras alargadas en la base.</p>
+          <span class="tag pending">Previsto: 26–31 ago</span>
+          <label class="observation" for="nota-soporte-motor">Observaciones<textarea id="nota-soporte-motor" data-note data-key="nota-soporte-motor" placeholder="Medidas reales, rigidez, deformaciones…"></textarea></label>
+        </article>
+        <article class="box blue">
+          <span class="box-title">5 · Adaptador de eje</span>
+          <p><strong>Qué es:</strong> una pieza que pasa del eje liso de 5 mm a una rosca M10.</p>
+          <p><strong>Para qué sirve:</strong> conecta el eje del motor con el sistema de apriete. No define por sí sola un rotor seguro.</p>
+          <p class="recognition"><strong>Cómo reconocerlo:</strong> cilindro negro con orificio de 5 mm, tornillo lateral y extremo roscado.</p>
+          <span class="tag pending">Medir al recibir</span>
+          <label class="observation" for="nota-adaptador-motor">Observaciones<textarea id="nota-adaptador-motor" data-note data-key="nota-adaptador-motor" placeholder="Diámetros, rosca, holgura, tornillo…"></textarea></label>
+        </article>
+        <article class="box blue">
+          <span class="box-title">6 · Platos y accesorios</span>
+          <p><strong>Qué son:</strong> platos, arandelas, tuercas, tornillo prisionero y llaves incluidos.</p>
+          <p><strong>Para qué sirven:</strong> forman el sistema de sujeción del kit; solo se usarán las piezas compatibles con el rotor final.</p>
+          <p class="recognition"><strong>Cómo reconocerlos:</strong> piezas circulares negras/metálicas y dos llaves. Contarlas antes de guardar.</p>
+          <span class="tag pending">Previsto con el kit</span>
+          <label class="observation" for="nota-accesorios-motor">Observaciones<textarea id="nota-accesorios-motor" data-note data-key="nota-accesorios-motor" placeholder="Piezas y cantidades recibidas…"></textarea></label>
+        </article>
+      </div>
+
+      <div class="grid-2">
+        <div class="box success">
+          <span class="box-title">Ya decidido</span>
+          <p class="decision"><strong>Motor:</strong> será el actuador del banco de pruebas.</p>
+          <p class="decision"><strong>Soporte:</strong> se evaluará para fijarlo al tablero.</p>
+          <p class="decision"><strong>Disco dentado:</strong> no se usa como sierra y tampoco se adopta como rotor.</p>
+          <p class="decision"><strong>Protección:</strong> el rotor final tendrá pantalla y primeras pruebas a baja velocidad.</p>
+        </div>
+        <div class="box warning">
+          <span class="box-title">Pendiente de medir</span>
+          <p class="decision pending"><strong>Rotor definitivo:</strong> material, diámetro y centro.</p>
+          <p class="decision pending"><strong>Idea inicial:</strong> CD o disco ligero y no metálico; evaluar después de medir el adaptador. No es todavía la solución final.</p>
+          <p class="decision pending"><strong>Adaptador:</strong> encaje real y sistema seguro de sujeción.</p>
+          <p class="decision pending"><strong>Configuraciones:</strong> 4, 6 y 8 imanes son hipótesis de ensayo, no rotores cerrados.</p>
+          <p class="decision pending"><strong>Bobina:</strong> forma y distancia ajustable frente al rotor.</p>
+        </div>
+      </div>
+
+      <div class="check-group">
+        <h3>Recepción del resto del kit</h3>
+        <label class="check-row" for="recibido-soporte"><input id="recibido-soporte" type="checkbox" data-checklist data-key="recibido-soporte"><span><strong>4. Soporte metálico:</strong> recibido sin deformaciones.</span></label>
+        <label class="check-row" for="recibido-adaptador"><input id="recibido-adaptador" type="checkbox" data-checklist data-key="recibido-adaptador"><span><strong>5. Adaptador para eje de 5 mm:</strong> recibido y medido.</span></label>
+        <label class="check-row" for="recibido-accesorios-motor"><input id="recibido-accesorios-motor" type="checkbox" data-checklist data-key="recibido-accesorios-motor"><span><strong>6. Platos, arandelas, llaves y accesorios:</strong> recibidos y contados.</span></label>
+        <label class="observation" for="nota-kit-motor">Observaciones del conjunto<textarea id="nota-kit-motor" data-note data-key="nota-kit-motor" placeholder="Medidas reales, piezas que faltan, holguras, roscas…"></textarea></label>
+      </div>
+      <div class="page-footer">No cerrar la mecánica con medidas del anuncio: medir el kit recibido.</div>
+    </section>
+
+    <section class="page" id="disponible" aria-labelledby="disponible-title">
+      <span class="page-number">Página 10</span>
+      <p class="eyebrow">Capítulo 0 · Material disponible</p>
+      <h2 id="disponible-title">Lo que ya teníamos</h2>
+      <p class="page-subtitle">También debe localizarse, fotografiarse y comprobarse</p>
+
+      <div class="inventory-grid">
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">17</span><div><h3>ESP32-S3 · 44 pines · USB-C</h3><div class="component-status"><span class="tag owned">Ya disponible</span><span class="tag reference">Foto oficial</span><span class="tag todo">TODO: comprobar placa</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/esp32-s3-devkitc-1-oficial.webp" target="_blank" rel="noopener"><img src="assets/img/esp32-s3-devkitc-1-oficial.webp" width="800" height="695" loading="lazy" alt="Fotografía oficial de referencia de una placa ESP32-S3-DevKitC-1 con dos filas de pines y dos conectores USB-C"></a><span class="zoom-hint">Abrir referencia</span></figure>
+          <div class="component-body"><p><strong>Qué es:</strong> el microcontrolador que leerá sensores y enviará datos al ordenador.</p><p class="recognition"><strong>Cómo reconocerlo:</strong> placa alargada con dos filas de pines, módulo metálico y conector USB-C. El pinout debe corresponder a esta placa concreta, no a otra ESP32.</p><label class="component-check" for="localizado-esp32"><input id="localizado-esp32" type="checkbox" data-checklist data-key="localizado-esp32"><span>ESP32-S3 y cable USB de datos localizados.</span></label><label class="observation" for="nota-esp32">Observaciones<textarea id="nota-esp32" data-note data-key="nota-esp32" placeholder="Texto exacto de la placa, número de pines, cable USB…"></textarea></label></div>
+          <p class="photo-note">Fotografía real de referencia publicada por Espressif para la familia ESP32-S3-DevKitC-1. No confirma la revisión, memoria ni pinout de la unidad disponible.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">18</span><div><h3>Cables Dupont</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: foto propia</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/cables-dupont-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cables-dupont-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de cables Dupont macho-macho, macho-hembra y hembra-hembra"></a><span class="zoom-hint">Abrir referencia</span></figure>
+          <div class="component-body"><p><strong>Qué son:</strong> cables finos de conexión rápida para protoboard, sensores y ESP32.</p><p class="recognition"><strong>Cómo reconocerlos:</strong> terminales cuadrados; pueden ser macho–macho, macho–hembra o hembra–hembra.</p><label class="component-check" for="localizados-dupont"><input id="localizados-dupont" type="checkbox" data-checklist data-key="localizados-dupont"><span>Cables M–M, M–H y H–H revisados.</span></label><label class="observation" for="nota-dupont">Observaciones<textarea id="nota-dupont" data-note data-key="nota-dupont" placeholder="Tipos y cantidades disponibles…"></textarea></label></div>
+          <p class="photo-note">Referencia fotográfica generada para distinguir terminales macho y hembra. Comprobar los tipos y cantidades realmente disponibles.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">19</span><div><h3>LEDs</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: foto propia</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/leds-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/leds-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de LEDs redondos de cinco milímetros en varios colores y con dos patillas"></a><span class="zoom-hint">Abrir referencia</span></figure>
+          <div class="component-body"><p><strong>Qué son:</strong> diodos que emiten luz.</p><p><strong>Para qué sirven:</strong> podrán actuar como indicadores controlados por la ESP32; no son la carga principal del generador.</p><p class="recognition"><strong>Cómo reconocerlos:</strong> cápsula transparente o coloreada y dos patillas. La polaridad se comprobará antes de usarlos.</p><label class="component-check" for="localizados-leds"><input id="localizados-leds" type="checkbox" data-checklist data-key="localizados-leds"><span>LEDs localizados y separados por tipo/color.</span></label><label class="observation" for="nota-leds">Observaciones<textarea id="nota-leds" data-note data-key="nota-leds" placeholder="Colores, tamaños, cantidad…"></textarea></label></div>
+          <p class="photo-note">Referencia fotográfica generada de LEDs genéricos de 5 mm. Los colores, tamaños y polaridad de las piezas reales deben comprobarse.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">20</span><div><h3>Sensor Hall KY-003</h3><div class="component-status"><span class="tag owned">Ya disponible</span><span class="tag">Plan B RPM</span></div></div></header>
+          <figure class="media-frame vertical"><a href="assets/img/ky003.webp" target="_blank" rel="noopener"><img src="assets/img/ky003.webp" width="620" height="644" loading="lazy" alt="Módulo sensor Hall KY-003 negro con tres pines"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body"><p><strong>Qué es:</strong> un sensor que detecta un campo magnético.</p><p><strong>Para qué sirve:</strong> alternativa para contar vueltas si el TCRT5000 no resulta fiable.</p><p class="recognition"><strong>Cómo reconocerlo:</strong> placa negra pequeña con sensor de tres patas y conector de tres pines. El orden de señal, positivo y negativo se leerá en la placa.</p><label class="component-check" for="localizado-ky003"><input id="localizado-ky003" type="checkbox" data-checklist data-key="localizado-ky003"><span>KY-003 localizado y sin patillas dobladas.</span></label><label class="observation" for="nota-ky003">Observaciones<textarea id="nota-ky003" data-note data-key="nota-ky003" placeholder="Texto de pines, aspecto de la placa…"></textarea></label></div>
+          <p class="photo-note">Imagen aportada del módulo KY-003. Confirmar el orden de pines en la unidad disponible.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">21</span><div><h3>30 imanes redondos de neodimio · 15×2 mm</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: medir y contar</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/imanes-redondos-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/imanes-redondos-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de treinta imanes redondos macizos sin orificio dispuestos en cinco filas de seis"></a><span class="zoom-hint">Abrir referencia</span></figure>
+          <div class="component-body"><p><strong>Qué son:</strong> discos magnéticos de neodimio, principales para el rotor experimental.</p><p class="recognition"><strong>Cómo reconocerlos:</strong> discos metálicos macizos, aproximadamente 15 mm de diámetro y 2 mm de grosor, sin orificio central. Deben mantenerse separados de electrónica y objetos sensibles.</p><label class="component-check" for="localizados-imanes-redondos"><input id="localizados-imanes-redondos" type="checkbox" data-checklist data-key="localizados-imanes-redondos"><span>30 imanes redondos localizados y contados.</span></label><label class="observation" for="nota-imanes-redondos">Observaciones<textarea id="nota-imanes-redondos" data-note data-key="nota-imanes-redondos" placeholder="Cantidad, medidas comprobadas, estado…"></textarea></label></div>
+          <p class="photo-note">Referencia fotográfica generada de 30 discos macizos. La foto incorrecta del ZIP sigue descartada: muestra piezas con orificio y no prueba la cantidad ni las medidas reales.</p>
+        </article>
+
+        <article class="component-card">
+          <header class="component-card-header"><span class="component-number">22</span><div><h3>Imanes rectangulares adicionales</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag">Familia separada</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/imanes-rectangulares.webp" target="_blank" rel="noopener"><img src="assets/img/imanes-rectangulares.webp" width="1500" height="1500" loading="lazy" alt="Conjunto de imanes rectangulares plateados con láminas adhesivas"></a><span class="zoom-hint">Abrir foto</span></figure>
+          <div class="component-body"><p><strong>Qué son:</strong> imanes con forma rectangular disponibles para pruebas auxiliares o variantes.</p><p class="recognition"><strong>Cómo reconocerlos:</strong> bloques rectangulares plateados. No deben mezclarse con los discos redondos en una misma comparación experimental.</p><label class="component-check" for="localizados-imanes-rectangulares"><input id="localizados-imanes-rectangulares" type="checkbox" data-checklist data-key="localizados-imanes-rectangulares"><span>Imanes rectangulares localizados y guardados por separado.</span></label><label class="observation" for="nota-imanes-rectangulares">Observaciones<textarea id="nota-imanes-rectangulares" data-note data-key="nota-imanes-rectangulares" placeholder="Cantidad y medidas disponibles…"></textarea></label></div>
+          <p class="photo-note">Foto original aportada. Son una familia distinta a los imanes redondos de 15×2 mm.</p>
+        </article>
+      </div>
+      <div class="page-footer">Material recuperado · No comprar de nuevo sin revisar cantidades</div>
+    </section>
+
+    <section class="page" id="faltantes" aria-labelledby="faltantes-title">
+      <span class="page-number">Página 11</span>
+      <p class="eyebrow">Capítulo 0 · Faltantes</p>
+      <h2 id="faltantes-title">Material auxiliar y herramientas</h2>
+      <p class="page-subtitle">Piezas pequeñas que pueden detener todo el montaje</p>
+
+      <div class="grid-2">
+        <div class="check-group">
+          <h3>Base y fijación</h3>
+          <label class="check-row" for="falta-tablero"><input id="falta-tablero" type="checkbox" data-checklist data-key="falta-tablero"><span><strong>Tablero DM/MDF</strong><small>Orientativo: 70×40 cm y 10–12 mm.</small></span></label>
+          <label class="check-row" for="falta-tornilleria"><input id="falta-tornilleria" type="checkbox" data-checklist data-key="falta-tornilleria"><span>Tornillos M3/M4, tuercas, arandelas y algunos tirafondos.<small>Medidas orientativas: confirmar con los orificios reales.</small></span></label>
+          <label class="check-row" for="falta-separadores"><input id="falta-separadores" type="checkbox" data-checklist data-key="falta-separadores"><span>Separadores, escuadras y soportes.</span></label>
+          <label class="check-row" for="falta-bridas"><input id="falta-bridas" type="checkbox" data-checklist data-key="falta-bridas"><span>Bridas, cinta aislante y cinta de doble cara.</span></label>
+          <label class="check-row" for="falta-etiquetas"><input id="falta-etiquetas" type="checkbox" data-checklist data-key="falta-etiquetas"><span>Etiquetas para cables y componentes.</span></label>
+          <label class="check-row" for="falta-pantalla"><input id="falta-pantalla" type="checkbox" data-checklist data-key="falta-pantalla"><span>Pantalla transparente para proteger el rotor.</span></label>
+        </div>
+
+        <div class="check-group">
+          <h3>Pegado y preparación</h3>
+          <label class="check-row" for="falta-epoxi"><input id="falta-epoxi" type="checkbox" data-checklist data-key="falta-epoxi"><span>Epoxi bicomponente fuerte.</span></label>
+          <label class="check-row" for="falta-alcohol"><input id="falta-alcohol" type="checkbox" data-checklist data-key="falta-alcohol"><span>Alcohol isopropílico para limpiar superficies.</span></label>
+          <label class="check-row" for="falta-carrocero"><input id="falta-carrocero" type="checkbox" data-checklist data-key="falta-carrocero"><span>Cinta de carrocero para marcar y sujetar temporalmente.</span></label>
+          <label class="check-row" for="falta-rotor"><input id="falta-rotor" type="checkbox" data-checklist data-key="falta-rotor"><span>Material de rotor seguro, pendiente de decidir tras medir el kit.</span></label>
+          <p><strong>No usar silicona caliente</strong> como fijación principal de imanes que van a girar.</p>
+        </div>
+
+        <div class="check-group">
+          <h3>Herramientas eléctricas</h3>
+          <label class="check-row" for="falta-multimetro"><input id="falta-multimetro" type="checkbox" data-checklist data-key="falta-multimetro"><span><strong>Multímetro</strong><small>Imprescindible: continuidad, polaridad y tensiones.</small></span></label>
+          <label class="check-row" for="falta-soldador"><input id="falta-soldador" type="checkbox" data-checklist data-key="falta-soldador"><span>Soldador, soporte, esponja y estaño.</span></label>
+          <label class="check-row" for="falta-pelacables"><input id="falta-pelacables" type="checkbox" data-checklist data-key="falta-pelacables"><span>Pelacables y alicate de corte.</span></label>
+          <label class="check-row" for="falta-crimpadora"><input id="falta-crimpadora" type="checkbox" data-checklist data-key="falta-crimpadora"><span>Crimpadora adecuada para los terminales.</span></label>
+        </div>
+
+        <div class="check-group">
+          <h3>Herramientas mecánicas</h3>
+          <label class="check-row" for="falta-destornilladores"><input id="falta-destornilladores" type="checkbox" data-checklist data-key="falta-destornilladores"><span>Destornilladores que ajusten bien en cada borne.</span></label>
+          <label class="check-row" for="falta-taladro"><input id="falta-taladro" type="checkbox" data-checklist data-key="falta-taladro"><span>Taladro y brocas para madera/metal según la pieza.</span></label>
+          <label class="check-row" for="falta-regla"><input id="falta-regla" type="checkbox" data-checklist data-key="falta-regla"><span>Regla, escuadra, lápiz y rotulador.</span></label>
+          <label class="check-row" for="falta-caja"><input id="falta-caja" type="checkbox" data-checklist data-key="falta-caja"><span>Caja pequeña para tornillos y arandelas.</span></label>
+        </div>
+      </div>
+
+      <aside class="notice success"><strong>Por qué el multímetro no es opcional:</strong> el INA219 medirá durante el experimento, pero el multímetro será la herramienta de diagnóstico durante el montaje.</aside>
+      <div class="page-footer">Una arandela sin caja suele descubrir una vocación artística debajo del sofá.</div>
+    </section>
+
+    <section class="page" id="tablero" aria-labelledby="tablero-title">
+      <span class="page-number">Página 12</span>
+      <p class="eyebrow">Capítulo 0 · Tablero</p>
+      <h2 id="tablero-title">La base de la maqueta</h2>
+      <p class="page-subtitle">Qué es el DM/MDF, para qué sirve y por qué no se taladra todavía</p>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Tablero DM/MDF</span>
+          <div class="big-number">≈ 70 × 40 cm</div>
+          <p>Es un tablero de fibras de madera prensadas. Funcionará como <strong>chasis</strong>: permitirá fijar fuente, PWM, motor, soportes, bobina y electrónica.</p>
+          <table class="spec-table">
+            <tbody>
+              <tr><th>Grosor orientativo</th><td>10–12 mm.</td></tr>
+              <tr><th>¿Medida exacta?</th><td>No. 60×40 u 80×40 pueden servir si las piezas caben con seguridad.</td></tr>
+              <tr><th>¿Taladrar ahora?</th><td><strong>NO.</strong></td></tr>
+              <tr><th>Ordenador</th><td>Quedará fuera del tablero, conectado a la ESP32 por USB.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="check-group">
+          <h3>Antes de hacer un agujero</h3>
+          <label class="check-row" for="tablero-esperar"><input id="tablero-esperar" type="checkbox" data-checklist data-key="tablero-esperar"><span>Esperar a tener las piezas grandes.</span></label>
+          <label class="check-row" for="tablero-presentar"><input id="tablero-presentar" type="checkbox" data-checklist data-key="tablero-presentar"><span>Presentarlas todas encima, sin fijarlas.</span></label>
+          <label class="check-row" for="tablero-cables"><input id="tablero-cables" type="checkbox" data-checklist data-key="tablero-cables"><span>Comprobar que los cables alcanzan sin cruzar zonas peligrosas.</span></label>
+          <label class="check-row" for="tablero-rotor"><input id="tablero-rotor" type="checkbox" data-checklist data-key="tablero-rotor"><span>Dejar espacio de seguridad alrededor del rotor.</span></label>
+          <label class="check-row" for="tablero-marcar"><input id="tablero-marcar" type="checkbox" data-checklist data-key="tablero-marcar"><span>Marcar con lápiz solo cuando la distribución convenza.</span></label>
+        </div>
+      </div>
+
+      <h3>Las cuatro zonas del tablero</h3>
+      <div class="zone-grid">
+        <div class="zone mains"><strong>A · RED</strong>Entrada y fuente 12 V<small>Peligro · protegida y separada</small></div>
+        <div class="zone motion"><strong>B · MOVIMIENTO</strong>PWM y motor 775<small>12 V DC</small></div>
+        <div class="zone generation"><strong>C · GENERACIÓN</strong>Rotor, imanes y bobina<small>Protección mecánica</small></div>
+        <div class="zone measurement"><strong>D · MEDIDA</strong>Rectificador, carga, INA219 y ESP32<small>Señales y USB</small></div>
+      </div>
+
+      <aside class="notice warning"><strong>Por qué esperar:</strong> taladrar primero y pensar después suele convertir la tabla en queso gruyère. Además, el motor y el adaptador pueden obligar a cambiar distancias, altura de bobina y protección.</aside>
+      <div class="page-footer">Las zonas se separan físicamente y también se etiquetan.</div>
+    </section>
+
+    <section class="page" id="decisiones" aria-labelledby="decisiones-title">
+      <span class="page-number">Página 13</span>
+      <p class="eyebrow">Capítulo 0 · Decisiones</p>
+      <h2 id="decisiones-title">Qué está decidido y qué no</h2>
+      <p class="page-subtitle">Una idea provisional no se presenta como una solución final</p>
+
+      <div class="grid-2">
+        <div class="box success">
+          <span class="box-title">Ya decidido</span>
+          <p class="decision"><strong>Alimentación:</strong> red → extensión con tierra → fuente 12 V.</p>
+          <p class="decision"><strong>Movimiento:</strong> fuente → PWM → motor 775 → rotor.</p>
+          <p class="decision"><strong>Rectificación:</strong> puente con 4 diodos 1N5818.</p>
+          <p class="decision"><strong>Medida:</strong> carga + INA219 + ESP32-S3.</p>
+          <p class="decision"><strong>Bobina:</strong> cobre esmaltado AWG28; se estudian tomas a 200/400/600/800 espiras.</p>
+          <p class="decision"><strong>Imanes principales:</strong> discos redondos de 15×2 mm.</p>
+          <p class="decision"><strong>Disco dentado:</strong> no se utiliza.</p>
+        </div>
+        <div class="box warning">
+          <span class="box-title">Pendiente</span>
+          <p class="decision pending"><strong>Rotor definitivo:</strong> medir motor y adaptador reales.</p>
+          <p class="decision pending"><strong>Número de imanes:</strong> 4, 6 y 8 son configuraciones previstas para comparar.</p>
+          <p class="decision pending"><strong>Molde de bobina:</strong> diseñarlo con la geometría real.</p>
+          <p class="decision pending"><strong>Distancia bobina–imán:</strong> debe ser ajustable y sin contacto.</p>
+          <p class="decision pending"><strong>Sensor RPM:</strong> comparar TCRT5000 y KY-003.</p>
+          <p class="decision pending"><strong>Pinout ESP32:</strong> fotografiar y documentar la placa de 44 pines concreta.</p>
+        </div>
+      </div>
+
+      <div class="box danger">
+        <span class="box-title">Problemas previstos</span>
+        <div class="grid-2">
+          <div>
+            <p><strong>Selector 110/220 mal interpretado.</strong><br>En Colombia se necesita el rango que incluya 120 V, 60 Hz; leer la unidad y su manual antes de enchufar.</p>
+            <p><strong>Bornes de red accesibles.</strong><br>Añadir protección física y revisión competente.</p>
+            <p><strong>INA219 sin montar.</strong><br>Practicar soldadura y revisar puentes/fríos.</p>
+            <p><strong>Rotor desequilibrado.</strong><br>Colocación simétrica, baja velocidad y pantalla.</p>
+          </div>
+          <div>
+            <p><strong>Imanes despegados.</strong><br>Preparar superficie, curar epoxi y contener el rotor.</p>
+            <p><strong>Bobina demasiado lejos.</strong><br>Soporte ajustable sin posibilidad de rozar.</p>
+            <p><strong>Lecturas extrañas.</strong><br>Comprobar primero con multímetro y por bloques.</p>
+            <p><strong>Cables confusos.</strong><br>Etiquetar desde el principio y separar circuitos.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="decision todo"><strong>TODO de inventario:</strong> las referencias permiten reconocer las piezas, pero todavía deben fotografiarse y verificarse el kit de resistencias, la ESP32-S3 concreta, los Dupont, los LEDs y los imanes redondos disponibles. La imagen incorrecta de “imanes redondos” del ZIP no se usa.</p>
+      <div class="page-footer">Decidido = se puede documentar · Pendiente = se debe medir o probar</div>
+    </section>
+
+    <section class="page" id="cierre" aria-labelledby="cierre-title">
+      <span class="page-number">Página 14</span>
+      <p class="eyebrow">Capítulo 0 · Cierre</p>
+      <h2 id="cierre-title">No pasar al Capítulo 1 hasta…</h2>
+      <p class="page-subtitle">Checklist final de salida</p>
+
+      <div class="grid-2">
+        <div class="check-group">
+          <h3>Inventario</h3>
+          <label class="check-row" for="final-reconocer"><input id="final-reconocer" type="checkbox" data-checklist data-key="final-reconocer"><span>Sabemos reconocer cada pieza principal.</span></label>
+          <label class="check-row" for="final-envios"><input id="final-envios" type="checkbox" data-checklist data-key="final-envios"><span>Los envíos y cantidades están controlados.</span></label>
+          <label class="check-row" for="final-imanes-esp32"><input id="final-imanes-esp32" type="checkbox" data-checklist data-key="final-imanes-esp32"><span>ESP32, imanes redondos e imanes rectangulares están localizados.</span></label>
+          <label class="check-row" for="final-faltantes"><input id="final-faltantes" type="checkbox" data-checklist data-key="final-faltantes"><span>Sabemos qué materiales y herramientas faltan.</span></label>
+        </div>
+        <div class="check-group">
+          <h3>Taller</h3>
+          <label class="check-row" for="final-tablero"><input id="final-tablero" type="checkbox" data-checklist data-key="final-tablero"><span>Tablero conseguido, todavía sin taladrar.</span></label>
+          <label class="check-row" for="final-multimetro"><input id="final-multimetro" type="checkbox" data-checklist data-key="final-multimetro"><span>Multímetro disponible y con pilas.</span></label>
+          <label class="check-row" for="final-soldador"><input id="final-soldador" type="checkbox" data-checklist data-key="final-soldador"><span>Soldador, soporte y estaño disponibles.</span></label>
+          <label class="check-row" for="final-herramientas"><input id="final-herramientas" type="checkbox" data-checklist data-key="final-herramientas"><span>Pelacables, crimpadora y destornilladores adecuados.</span></label>
+          <label class="check-row" for="final-fijacion"><input id="final-fijacion" type="checkbox" data-checklist data-key="final-fijacion"><span>Epoxi, tornillería, bridas, cinta y protección previstos.</span></label>
+        </div>
+      </div>
+
+      <div class="check-group box danger">
+        <span class="box-title">No continuar hasta</span>
+        <label class="check-row" for="final-fuente"><input id="final-fuente" type="checkbox" data-checklist data-key="final-fuente"><span><strong>Fuente recibida, inspeccionada y fotografiada.</strong></span></label>
+        <label class="check-row" for="final-bornes"><input id="final-bornes" type="checkbox" data-checklist data-key="final-bornes"><span><strong>L, N, tierra, V− y V+ identificados en la fuente real.</strong></span></label>
+        <label class="check-row" for="final-selector"><input id="final-selector" type="checkbox" data-checklist data-key="final-selector-colombia"><span><strong>Selector identificado y rango que incluye 120 V, 60 Hz, comprobado en el manual real, si existe.</strong></span></label>
+        <label class="check-row" for="final-cableado-red"><input id="final-cableado-red" type="checkbox" data-checklist data-key="final-cableado-red"><span><strong>Extensión tipo B con tierra, horquillas y herramientas de cableado disponibles.</strong></span></label>
+        <label class="check-row" for="final-revision-adulto"><input id="final-revision-adulto" type="checkbox" data-checklist data-key="final-revision-adulto"><span><strong>Una persona adulta o competente revisará la parte de red.</strong></span></label>
+      </div>
+
+      <div class="box success text-center">
+        <div class="big-number">Siguiente: Capítulo 1</div>
+        <p><strong>Del enchufe a los 12 voltios.</strong></p>
+        <p>Ese capítulo contiene las instrucciones supervisadas de red, protección de bornes, revisión y medida de la salida. <strong>Solo debe iniciarse cuando este checklist esté completo y haya una persona adulta competente.</strong></p>
+      </div>
+
+      <nav class="bottom-nav" aria-label="Navegación al final del capítulo">
+        <a href="index.html">← Volver a la portada</a>
+        <span class="is-disabled">Capítulo anterior: no existe</span>
+        <a href="capitulo-1.html">Capítulo 1: del enchufe a los 12 V →</a>
+        <button type="button" data-print>Imprimir / Guardar PDF</button>
+      </nav>
+      <div class="page-footer">Generador electromagnético experimental · Fin del Capítulo 0</div>
+    </section>
+  </main>
+  <script src="assets/js/checklist.js" defer></script>
+  <script src="assets/js/navigation.js" defer></script>
+</body>
+</html>
