@@ -111,17 +111,18 @@ El manual no se va a comprimir artificialmente. Cada operación tendrá el espac
 
 | Capítulo | Contenido | Estado |
 |---|---|---|
-| **0** | Preparación, inventario, tablero, herramientas y seguridad | 🟢 En revisión |
-| **1** | Cable de red → fuente → salida segura de 12 V | 🟡 Pendiente |
+| **0** | Preparación, inventario, tablero, herramientas y seguridad | 🟢 Disponible |
+| **1** | Cable de red → fuente → salida segura de 12 V | 🟡 En preparación |
 | **2** | PWM → motor 775 → primera puesta en movimiento | ⚪ Pendiente |
 | **3** | Rotor, imanes, equilibrado y protección | ⚪ Pendiente |
 | **4** | Construcción de la bobina y derivaciones | ⚪ Pendiente |
 | **5** | Puente rectificador en protoboard | ⚪ Pendiente |
 | **6** | Soldadura y conexión del INA219 | ⚪ Pendiente |
-| **7** | ESP32-S3 y sensor de RPM | ⚪ Pendiente |
+| **7** | Sensor de RPM: TCRT5000 o KY-003 | ⚪ Pendiente |
 | **8** | Software, calibración y registro de datos | ⚪ Pendiente |
 | **9** | Plan de ensayos y análisis de resultados | ⚪ Pendiente |
-| **10** | Fallos frecuentes, diagnóstico y presentación | ⚪ Pendiente |
+| **10** | Fallos frecuentes y diagnóstico | ⚪ Pendiente |
+| **11** | Presentación y defensa del proyecto | ⚪ Pendiente |
 
 ---
 
@@ -134,6 +135,22 @@ La versión visual del manual se publicará mediante **GitHub Pages**:
 El objetivo de la web es que pueda consultarse fácilmente desde móvil, tablet u ordenador mientras se monta la maqueta.
 
 Las listas de comprobación, fotografías, esquemas y capítulos irán actualizándose a medida que avance el proyecto.
+
+### Funciones disponibles en el Capítulo 0
+
+- Inventario visual en fichas grandes de dos columnas y una columna en móvil.
+- Fotografías ampliables y optimizadas como WebP, sin imágenes incrustadas en base64.
+- 64 comprobaciones con contador de progreso y persistencia en `localStorage`.
+- Campos de observaciones que también se conservan al cerrar el navegador.
+- Botón de borrado con confirmación previa.
+- Índice rápido, navegación a la portada e impresión / guardado en PDF.
+- Estilos específicos para móvil, tablet, escritorio e impresión.
+
+### Fotografías y trazabilidad
+
+Las imágenes actuales se seleccionaron del paquete de fotografías aportado para el proyecto. Se conservaron los originales fuera del sitio y se generaron copias WebP con nombres descriptivos dentro de `assets/img/`.
+
+No se ha rellenado ningún hueco con una imagen inventada. Permanecen marcadas como `TODO` las fotografías propias del kit de resistencias, ESP32-S3, cables Dupont, LEDs e imanes redondos. La imagen del paquete que estaba rotulada como «imanes redondos» fue descartada porque muestra anillos/adaptadores con orificio, no los discos macizos de 15 × 2 mm descritos en el proyecto.
 
 ---
 
@@ -161,8 +178,11 @@ Por eso:
 
 - la conexión de red se realiza siempre con la fuente **desenchufada**;
 - fase, neutro y tierra deben quedar correctamente identificados y protegidos;
+- la posición del selector 110/220, si existe, se comprueba en la fuente física y respecto a la red local;
+- una persona adulta o competente revisa la parte conectada a red antes del primer encendido;
 - la hoja de sierra incluida con el kit del motor **no se utilizará**;
-- el rotor experimental será ligero, no metálico y contará con protección;
+- la idea inicial es un rotor ligero y no metálico, pero su geometría se decidirá al medir el motor y el adaptador reales;
+- el rotor definitivo contará con protección;
 - las primeras pruebas se harán a **baja velocidad**;
 - antes de conectar el ESP32 se comprobarán tensiones y polaridades.
 
@@ -184,11 +204,19 @@ La pregunta experimental es, esencialmente:
 
 ```text
 generador/
-├── index.html          # Portada del manual web
-├── capitulo-0.html     # Capítulo 0
-├── README.md           # Este documento
-└── assets/             # Imágenes, estilos y recursos a medida que crezca la web
+├── index.html                 # Portada e índice de capítulos
+├── capitulo-0.html            # Preparación e inventario visual
+├── README.md                  # Este documento
+└── assets/
+    ├── css/
+    │   └── manual.css         # Identidad visual, responsive e impresión
+    ├── js/
+    │   ├── checklist.js       # Persistencia, progreso y borrado
+    │   └── navigation.js      # Impresión e índice rápido
+    └── img/                   # Fotografías WebP con nombres descriptivos
 ```
+
+El sitio no requiere compilación, dependencias de ejecución ni framework: GitHub Pages puede servir estos archivos directamente.
 
 ---
 
