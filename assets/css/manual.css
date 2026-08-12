@@ -1119,6 +1119,7 @@ a.chapter-card:hover {
 
   .page {
     padding: 55px 19px 42px;
+    scroll-margin-top: 158px;
   }
 
   .page-number {
