@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Capítulo 3 del manual del generador: medir el adaptador, definir el rotor no metálico, distribuir 4, 6 u 8 imanes, diseñar su retención, comprobar el equilibrado y cerrar el resguardo antes de cualquier giro motorizado.">
+  <title>Capítulo 3 · Rotor, adaptador e imanes</title>
+  <link rel="stylesheet" href="assets/css/manual.css">
+</head>
+<body data-storage-namespace="generador:capitulo-3:v1:" data-checklist-label="Capítulo 3">
+  <a class="skip-link" href="#capitulo">Saltar al capítulo</a>
+
+  <header class="toolbar" aria-label="Navegación del manual">
+    <strong class="toolbar-title">Manual del generador · Capítulo 3</strong>
+    <a href="index.html">← Portada</a>
+    <a href="capitulo-2.html">Anterior</a>
+    <span class="is-disabled" aria-label="El capítulo siguiente está en preparación">Siguiente</span>
+    <details class="quick-menu">
+      <summary>Índice rápido</summary>
+      <nav aria-label="Índice del Capítulo 3">
+        <a href="#alcance">1. Alcance y límite</a>
+        <a href="#piezas">2. Piezas y exclusiones</a>
+        <a href="#medidas">3. Medir eje y adaptador</a>
+        <a href="#especificacion">4. Especificar el rotor</a>
+        <a href="#configuraciones">5. Patrones 4, 6 y 8</a>
+        <a href="#imanes">6. Clasificar los imanes</a>
+        <a href="#plantilla">7. Plantilla y montaje en seco</a>
+        <a href="#retencion">8. Retención mecánica</a>
+        <a href="#acoplamiento">9. Acoplar sin energía</a>
+        <a href="#equilibrado">10. Equilibrado preliminar</a>
+        <a href="#resguardo">11. Envolvente y giro manual</a>
+        <a href="#cierre">12. Checklist final y fuentes</a>
+      </nav>
+    </details>
+    <button type="button" data-print>Imprimir / PDF</button>
+  </header>
+
+  <main class="manual-main" id="capitulo">
+    <section class="page" id="alcance" aria-labelledby="alcance-title">
+      <span class="page-number">Página 1</span>
+      <p class="eyebrow">Capítulo 3 · Mecánica del rotor</p>
+      <h1 id="alcance-title">Diseñar antes de hacerlo girar</h1>
+      <p class="page-subtitle">Medidas, geometría, retención, equilibrado y contención; nada de velocidad sin números.</p>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Resultado de este capítulo</span>
+          <p class="lead">Obtener un <strong>expediente de diseño verificable</strong>: medidas reales del eje y adaptador, dibujo del rotor, patrón 4/6/8, regla de polaridad, sistema de retención, límite de RPM, equilibrado y resguardo.</p>
+          <p>Cuando todos los TODO estén cerrados, una persona competente podrá fabricar e inspeccionar el conjunto y hacerlo girar únicamente a mano, sin energía.</p>
+        </div>
+        <div class="box danger">
+          <span class="box-title">Límite de esta etapa</span>
+          <p><strong>Este capítulo no autoriza una prueba motorizada del rotor.</strong> El PWM regula energía, pero no mide ni limita por sí solo las RPM.</p>
+          <p>Hasta definir una velocidad máxima y disponer de medida independiente, “mando bajo” o “baja velocidad” no son criterios de seguridad.</p>
+        </div>
+      </div>
+
+      <div class="role-grid" aria-label="Responsabilidades durante el capítulo">
+        <article class="role-card observer">
+          <strong>Sara</strong>
+          <span>Ordena y documenta</span>
+          <p>Puede completar fichas, dibujar plantillas y marcar imanes bajo supervisión, siempre con el motor desconectado.</p>
+        </article>
+        <article class="role-card competent">
+          <strong>Persona competente</strong>
+          <span>Diseña y valida</span>
+          <p>Selecciona materiales, calcula cargas, aprueba retención, acoplamiento, equilibrado, RPM y contención.</p>
+        </article>
+        <article class="role-card stop">
+          <strong>Cualquiera</strong>
+          <span>Puede ordenar parar</span>
+          <p>Ante imán dañado, holgura, grieta, roce, medida contradictoria o protección incompleta.</p>
+        </article>
+      </div>
+
+      <div class="progress-panel">
+        <div class="progress-copy">
+          <strong data-progress-text>0 comprobaciones realizadas</strong>
+          <div class="progress-track" role="progressbar" aria-label="Progreso del Capítulo 3" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"><span data-progress-bar></span></div>
+        </div>
+        <button class="reset-button" type="button" data-reset-checklist>Borrar progreso</button>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c3-cap2"><input id="c3-cap2" type="checkbox" data-checklist><span>El Capítulo 2 está terminado y el banco ha vuelto a quedar desenchufado, descargado y sin tensión.</span></label>
+        <label class="check-row" for="c3-no-energizar"><input id="c3-no-energizar" type="checkbox" data-checklist><span>Entendido: no se alimentará el motor con ningún rotor durante este capítulo.</span></label>
+        <label class="check-row" for="c3-limite-rpm"><input id="c3-limite-rpm" type="checkbox" data-checklist><span>Entendido: la primera prueba futura exige límite numérico de RPM y un medio independiente para medirlo.</span></label>
+      </div>
+
+      <aside class="notice danger"><strong>La energía de un fragmento aumenta rápidamente con la velocidad.</strong> Un imán, tornillo o trozo de disco desprendido puede convertirse en un proyectil.</aside>
+      <div class="page-footer">La primera decisión segura es no confundir “despacio” con una velocidad conocida.</div>
+    </section>
+
+    <section class="page" id="piezas" aria-labelledby="piezas-title">
+      <span class="page-number">Página 2</span>
+      <p class="eyebrow">Capítulo 3 · Inventario mecánico</p>
+      <h2 id="piezas-title">Qué entra y qué queda fuera</h2>
+      <p class="page-subtitle">Se conservan las decisiones del proyecto sin convertir candidatos en soluciones aprobadas.</p>
+
+      <div class="grid-2">
+        <div class="box success">
+          <span class="box-title">Decisiones conservadas</span>
+          <ul class="status-list">
+            <li>Rotor <strong>ligero y no metálico</strong> como dirección inicial.</li>
+            <li>Configuraciones previstas de <strong>4, 6 y 8 imanes</strong>.</li>
+            <li>Imanes principales descritos como discos de neodimio de <strong>15 × 2 mm</strong>, pendientes de medir físicamente.</li>
+            <li>Adaptador anunciado M10-5 para eje de 5 mm, pendiente de identificación real.</li>
+            <li>El rotor definitivo tendrá protección mecánica.</li>
+          </ul>
+        </div>
+        <div class="box danger">
+          <span class="box-title">Exclusiones</span>
+          <ul class="status-list">
+            <li>La hoja de sierra y su aro <strong>no se usan como sierra ni como rotor</strong>.</li>
+            <li>No se mezclan imanes redondos y rectangulares en una misma configuración.</li>
+            <li>No se perforan, lijan, cortan ni mecanizan los imanes de neodimio.</li>
+            <li>No se fija nada con cinta, plastilina, pegamento caliente o una solución improvisada.</li>
+            <li>No se ensaya un rotor sin resguardo cerrado.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="detail-gallery">
+        <figure>
+          <a href="assets/img/adaptador-eje-motor.webp" target="_blank" rel="noopener"><img src="assets/img/adaptador-eje-motor.webp" width="1200" height="1021" loading="lazy" alt="Imagen aportada de un adaptador anunciado M10-5 con orificio de 5 milímetros y tornillo lateral"></a>
+          <figcaption>Imagen del anuncio · Las dimensiones y la rosca se comprobarán en la pieza física.</figcaption>
+        </figure>
+        <figure>
+          <a href="assets/img/disco-incluido-no-usar.webp" target="_blank" rel="noopener"><img src="assets/img/disco-incluido-no-usar.webp" width="1200" height="1009" loading="lazy" alt="Imagen aportada de la hoja dentada incluida con el kit, identificada para no utilizarla"></a>
+          <figcaption>Pieza excluida · Se fotografía y aparta para que no pueda confundirse con el rotor experimental.</figcaption>
+        </figure>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c3-apartar-sierra"><input id="c3-apartar-sierra" type="checkbox" data-checklist><span>Hoja dentada, aro y accesorios de corte están etiquetados “NO USAR” y fuera del banco.</span></label>
+        <label class="check-row" for="c3-candidatos"><input id="c3-candidatos" type="checkbox" data-checklist><span>El CD u otro disco no metálico se registra como candidato, no como rotor aprobado.</span></label>
+        <label class="check-row" for="c3-imanes-separados"><input id="c3-imanes-separados" type="checkbox" data-checklist><span>Imanes redondos principales y rectangulares auxiliares están separados e identificados.</span></label>
+        <label class="check-row" for="c3-inventario-fisico"><input id="c3-inventario-fisico" type="checkbox" data-checklist><span>Motor, adaptador, arandelas, tuercas y tornillos reales están contados y fotografiados por ambas caras.</span></label>
+      </div>
+      <div class="page-footer">Una pieza incluida en el kit no es automáticamente adecuada para este experimento.</div>
+    </section>
+
+    <section class="page" id="medidas" aria-labelledby="medidas-title">
+      <span class="page-number">Página 3</span>
+      <p class="eyebrow">Capítulo 3 · Metrología</p>
+      <h2 id="medidas-title">Medir el eje y el adaptador reales</h2>
+      <p class="page-subtitle">La fotografía comercial sirve de referencia; la fabricación se basa en medidas repetidas.</p>
+
+      <div class="grid-2">
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">1</span>
+            <div><h3>Estación de inspección</h3><div class="component-status"><span class="tag reference">Referencia generada</span><span class="tag todo">Registrar valores reales</span></div></div>
+          </div>
+          <div class="media-frame">
+            <a href="assets/img/cap3-medicion-adaptador-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap3-medicion-adaptador-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia generada de motor y adaptador separados junto a calibre, galgas y una hoja de medidas sin valores"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">Referencia generada: muestra qué documentar sin afirmar dimensiones. El motor está desconectado y el adaptador, retirado.</p>
+        </article>
+        <div>
+          <ol class="step-list">
+            <li><strong>Separar todas las piezas.</strong> Motor sin alimentación, terminales aislados y adaptador en una bandeja no metálica.</li>
+            <li><strong>Verificar el instrumento.</strong> Limpiar las superficies, cerrar el calibre y comprobar su cero según el fabricante.</li>
+            <li><strong>Medir tres veces.</strong> Diámetro y longitud útil del eje; diámetro y profundidad del alojamiento; cuerpo, hombro y rosca del adaptador.</li>
+            <li><strong>Identificar la rosca.</strong> Medir diámetro y paso con galga; “M10” del anuncio no basta para elegir una tuerca.</li>
+            <li><strong>Inspeccionar la fijación lateral.</strong> Registrar tornillo, llave, punta, longitud útil y si el eje posee plano. No crear un plano todavía.</li>
+            <li><strong>Comprobar concentricidad.</strong> Una persona competente define cómo medir holgura y descentramiento antes de aprobar el adaptador.</li>
+          </ol>
+        </div>
+      </div>
+
+      <table class="spec-table">
+        <thead><tr><th>Dato real</th><th>Registro necesario</th></tr></thead>
+        <tbody>
+          <tr><th>Eje del motor</th><td>Diámetro en varios puntos, longitud útil, hombro, estado superficial y presencia/ausencia de plano.</td></tr>
+          <tr><th>Alojamiento</th><td>Diámetro, profundidad, holgura sobre el eje y superficie de apoyo.</td></tr>
+          <tr><th>Rosca exterior</th><td>Diámetro, paso, sentido, longitud útil y elementos compatibles comprobados.</td></tr>
+          <tr><th>Tornillo lateral</th><td>Tipo, rosca, punta, herramienta, par y método de bloqueo declarados por fabricante o diseño competente.</td></tr>
+          <tr><th>Concentricidad</th><td>Método, instrumento, descentramiento observado y tolerancia aprobada para la velocidad máxima.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="check-group">
+        <label class="check-row" for="c3-medir-eje"><input id="c3-medir-eje" type="checkbox" data-checklist><span>Diámetro y longitud útil del eje se han medido tres veces y registrado.</span></label>
+        <label class="check-row" for="c3-medir-adaptador"><input id="c3-medir-adaptador" type="checkbox" data-checklist><span>Alojamiento, cuerpo, hombro y rosca del adaptador se han medido físicamente.</span></label>
+        <label class="check-row" for="c3-identificar-rosca"><input id="c3-identificar-rosca" type="checkbox" data-checklist><span>Diámetro, paso y sentido de la rosca están verificados; no se copiaron del anuncio.</span></label>
+        <label class="check-row" for="c3-tornillo"><input id="c3-tornillo" type="checkbox" data-checklist><span>Tornillo lateral y posible plano del eje están documentados sin modificar la pieza.</span></label>
+        <label class="check-row" for="c3-concentricidad"><input id="c3-concentricidad" type="checkbox" data-checklist><span>Existe un método aprobado para comprobar holgura y concentricidad del conjunto.</span></label>
+      </div>
+
+      <label class="observation" for="c3-registro-medidas">Ficha dimensional real
+        <textarea id="c3-registro-medidas" data-note placeholder="Instrumento/fecha · eje Ø y longitud · alojamiento Ø/profundidad · rosca Ø/paso/sentido · tornillo · holgura · método de concentricidad."></textarea>
+      </label>
+      <div class="page-footer">Si una medida contradice el anuncio, manda la pieza física y la contradicción queda documentada.</div>
+    </section>
+
+    <section class="page" id="especificacion" aria-labelledby="especificacion-title">
+      <span class="page-number">Página 4</span>
+      <p class="eyebrow">Capítulo 3 · Diseño</p>
+      <h2 id="especificacion-title">Convertir la idea del disco en una especificación</h2>
+      <p class="page-subtitle">“Ligero y no metálico” orienta el diseño, pero todavía no define un rotor.</p>
+
+      <div class="grid-2">
+        <div class="box warning">
+          <span class="box-title">Candidato conservado</span>
+          <p>Un CD u otro disco ligero y no metálico permanece como <strong>idea inicial</strong>. No se elimina esta decisión.</p>
+          <p>Sin embargo, un CD doméstico no aporta por sí solo resistencia declarada, tolerancia del orificio, retención de imanes ni velocidad máxima. Por eso no se autoriza todavía como pieza giratoria.</p>
+        </div>
+        <div class="box danger">
+          <span class="box-title">TODO de ingeniería</span>
+          <p class="decision todo"><strong>Material y procedencia:</strong> ficha técnica, espesor, estado, mecanizado permitido y resistencia.</p>
+          <p class="decision todo"><strong>Geometría:</strong> diámetro exterior, orificio, espesor, planitud, radio de imanes y holguras.</p>
+          <p class="decision todo"><strong>Velocidad máxima:</strong> valor numérico de diseño con margen de seguridad y método de medida.</p>
+          <p class="decision todo"><strong>Interfaz:</strong> cubos, platos, arandelas y apriete que sujetarán el disco sin agrietarlo.</p>
+        </div>
+      </div>
+
+      <table class="spec-table">
+        <thead><tr><th>Requisito</th><th>Pregunta que debe contestar el plano</th></tr></thead>
+        <tbody>
+          <tr><th>Centro</th><td>¿Cómo queda el eje geométrico del disco alineado con el eje de giro y cómo se mide?</td></tr>
+          <tr><th>Rigidez</th><td>¿El material permanece plano bajo apriete, masa magnética, temperatura y velocidad previstas?</td></tr>
+          <tr><th>Retención</th><td>¿Qué elemento mecánico impide que cada imán salga radial o axialmente si falla el adhesivo?</td></tr>
+          <tr><th>Repetibilidad</th><td>¿Cómo se intercambian 4, 6 y 8 imanes sin cambiar radio, entrehierro o masa de forma no controlada?</td></tr>
+          <tr><th>Inspección</th><td>¿Qué grietas, deformaciones, holguras o daños obligan a retirar la pieza?</td></tr>
+        </tbody>
+      </table>
+
+      <aside class="notice warning"><strong>No cortar el rotor definitivo hasta aprobar un dibujo acotado.</strong> Primero se fabrican plantillas de papel/cartón sin función estructural para comprobar espacio y geometría.</aside>
+
+      <div class="check-group">
+        <label class="check-row" for="c3-material"><input id="c3-material" type="checkbox" data-checklist><span>Material, espesor, procedencia y propiedades relevantes están identificados.</span></label>
+        <label class="check-row" for="c3-geometria"><input id="c3-geometria" type="checkbox" data-checklist><span>Plano acotado define diámetro, centro, espesor, radio de imanes y envolvente de giro.</span></label>
+        <label class="check-row" for="c3-rpm-diseno"><input id="c3-rpm-diseno" type="checkbox" data-checklist><span>Velocidad máxima de diseño y margen se han fijado numéricamente por una persona competente.</span></label>
+        <label class="check-row" for="c3-interfaz"><input id="c3-interfaz" type="checkbox" data-checklist><span>La interfaz adaptador–rotor está dibujada con piezas, apoyos, roscas y aprietes reales.</span></label>
+      </div>
+      <label class="observation" for="c3-especificacion-rotor">Versión del diseño y decisiones
+        <textarea id="c3-especificacion-rotor" data-note placeholder="Material · diámetro · espesor · centro · radio magnético · masa prevista · RPM máxima · margen · autor/revisor · versión del plano."></textarea>
+      </label>
+      <div class="page-footer">Un objeto redondo no es todavía un rotor.</div>
+    </section>
+
+    <section class="page" id="configuraciones" aria-labelledby="configuraciones-title">
+      <span class="page-number">Página 5</span>
+      <p class="eyebrow">Capítulo 3 · Geometría experimental</p>
+      <h2 id="configuraciones-title">Distribuir 4, 6 u 8 imanes con simetría</h2>
+      <p class="page-subtitle">Cambiar el número de imanes sin cambiar inadvertidamente otras variables.</p>
+
+      <div class="rotor-pattern-grid" aria-label="Patrones geométricos de cuatro, seis y ocho posiciones equidistantes">
+        <article class="pattern-card">
+          <div class="rotor-pattern" aria-label="Cuatro posiciones separadas 90 grados">
+            <span class="rotor-center"></span>
+            <span class="magnet-marker" style="--angle:0deg"></span><span class="magnet-marker" style="--angle:90deg"></span><span class="magnet-marker" style="--angle:180deg"></span><span class="magnet-marker" style="--angle:270deg"></span>
+          </div>
+          <h3>4 imanes</h3><p>Separación angular: 90°.</p>
+        </article>
+        <article class="pattern-card">
+          <div class="rotor-pattern" aria-label="Seis posiciones separadas 60 grados">
+            <span class="rotor-center"></span>
+            <span class="magnet-marker" style="--angle:0deg"></span><span class="magnet-marker" style="--angle:60deg"></span><span class="magnet-marker" style="--angle:120deg"></span><span class="magnet-marker" style="--angle:180deg"></span><span class="magnet-marker" style="--angle:240deg"></span><span class="magnet-marker" style="--angle:300deg"></span>
+          </div>
+          <h3>6 imanes</h3><p>Separación angular: 60°.</p>
+        </article>
+        <article class="pattern-card">
+          <div class="rotor-pattern" aria-label="Ocho posiciones separadas 45 grados">
+            <span class="rotor-center"></span>
+            <span class="magnet-marker" style="--angle:0deg"></span><span class="magnet-marker" style="--angle:45deg"></span><span class="magnet-marker" style="--angle:90deg"></span><span class="magnet-marker" style="--angle:135deg"></span><span class="magnet-marker" style="--angle:180deg"></span><span class="magnet-marker" style="--angle:225deg"></span><span class="magnet-marker" style="--angle:270deg"></span><span class="magnet-marker" style="--angle:315deg"></span>
+          </div>
+          <h3>8 imanes</h3><p>Separación angular: 45°.</p>
+        </article>
+      </div>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Variables que permanecen iguales</span>
+          <ul>
+            <li>Mismo rotor o diseños equivalentes documentados.</li>
+            <li>Mismo radio desde el centro hasta el centro de cada imán.</li>
+            <li>Mismo modelo, dimensiones, orientación y método de retención.</li>
+            <li>Mismo entrehierro con la bobina y misma velocidad medida durante la comparación.</li>
+          </ul>
+        </div>
+        <div class="box warning">
+          <span class="box-title">Polaridad todavía abierta</span>
+          <p>El proyecto no ha decidido si las caras hacia la bobina serán iguales o alternarán A/B. Esa elección cambia el flujo y la forma de onda.</p>
+          <p class="decision todo"><strong>TODO:</strong> definir una regla de polaridad, justificarla y mantenerla idéntica en las configuraciones comparables.</p>
+        </div>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c3-patron-angular"><input id="c3-patron-angular" type="checkbox" data-checklist><span>La plantilla seleccionada divide exactamente 360° entre 4, 6 u 8 posiciones.</span></label>
+        <label class="check-row" for="c3-radio-comun"><input id="c3-radio-comun" type="checkbox" data-checklist><span>Todos los centros magnéticos de una configuración comparten el mismo radio documentado.</span></label>
+        <label class="check-row" for="c3-regla-polaridad"><input id="c3-regla-polaridad" type="checkbox" data-checklist><span>La regla de caras A/B está decidida, justificada y dibujada sin ambigüedad.</span></label>
+        <label class="check-row" for="c3-variable-unica"><input id="c3-variable-unica" type="checkbox" data-checklist><span>La tabla experimental identifica qué cambia y qué debe permanecer constante entre 4, 6 y 8.</span></label>
+      </div>
+      <div class="page-footer">Simetría geométrica no garantiza por sí sola equilibrio de masas.</div>
+    </section>
+
+    <section class="page" id="imanes" aria-labelledby="imanes-title">
+      <span class="page-number">Página 6</span>
+      <p class="eyebrow">Capítulo 3 · Imanes de neodimio</p>
+      <h2 id="imanes-title">Medir, inspeccionar y marcar sin golpes</h2>
+      <p class="page-subtitle">Los discos se mantienen separados; una referencia generada no prueba las piezas recibidas.</p>
+
+      <div class="grid-2">
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">2</span>
+            <div><h3>Clasificación segura</h3><div class="component-status"><span class="tag reference">Referencia generada</span><span class="tag todo">Sustituir por foto real</span></div></div>
+          </div>
+          <div class="media-frame">
+            <a href="assets/img/cap3-clasificacion-imanes-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap3-clasificacion-imanes-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia generada de ocho imanes redondos separados en una bandeja, calibre, gafas y hoja de registro"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">Referencia generada: representa orden y separación. No confirma que los imanes reales sean 15 × 2 mm, su grado, magnetización, revestimiento o masa.</p>
+        </article>
+        <div>
+          <div class="box danger">
+            <span class="box-title">Riesgos específicos</span>
+            <ul>
+              <li>El neodimio es fuerte pero frágil: un choque puede astillarlo y lanzar fragmentos.</li>
+              <li>Puede pellizcar piel y afectar marcapasos, desfibriladores u otros dispositivos implantados.</li>
+              <li>Puede dañar medios magnéticos y atraer herramientas o virutas inesperadamente.</li>
+              <li>Un revestimiento levantado, grieta o corrosión obliga a retirar el imán.</li>
+            </ul>
+          </div>
+          <ol class="step-list">
+            <li>Usar protección ocular y una bandeja con compartimentos no metálicos.</li>
+            <li>Separar los imanes deslizando con espaciadores; nunca dejar que salten entre sí.</li>
+            <li>Medir diámetro, espesor y masa individual con instrumentos adecuados.</li>
+            <li>Inspeccionar caras, canto y revestimiento bajo aumento.</li>
+            <li>Con método aprobado, marcar las caras como A/B; no llamarlas N/S hasta verificar esa convención.</li>
+          </ol>
+        </div>
+      </div>
+
+      <aside class="notice danger"><strong>Si alguien utiliza un marcapasos, desfibrilador u otro implante, no se establece una distancia por intuición.</strong> Se consulta al fabricante del dispositivo y al profesional sanitario antes de manipular los imanes.</aside>
+
+      <div class="check-group">
+        <label class="check-row" for="c3-iman-foto"><input id="c3-iman-foto" type="checkbox" data-checklist><span>Existe una fotografía real de los imanes recibidos, separados y con escala.</span></label>
+        <label class="check-row" for="c3-iman-medidas"><input id="c3-iman-medidas" type="checkbox" data-checklist><span>Diámetro, espesor y masa de cada imán están registrados; 15 × 2 mm no se da por supuesto.</span></label>
+        <label class="check-row" for="c3-iman-integridad"><input id="c3-iman-integridad" type="checkbox" data-checklist><span>No hay grietas, desconchados, corrosión ni revestimiento levantado.</span></label>
+        <label class="check-row" for="c3-iman-caras"><input id="c3-iman-caras" type="checkbox" data-checklist><span>Las caras A/B están marcadas de forma consistente mediante un método documentado.</span></label>
+        <label class="check-row" for="c3-iman-almacen"><input id="c3-iman-almacen" type="checkbox" data-checklist><span>Los imanes vuelven a compartimentos separados, lejos de electrónica, tarjetas, herramientas e implantes.</span></label>
+      </div>
+      <label class="observation" for="c3-registro-imanes">Registro del lote real
+        <textarea id="c3-registro-imanes" data-note placeholder="Cantidad · dimensiones y masas individuales · método A/B · daños/rechazos · almacenamiento · advertencias médicas aplicables."></textarea>
+      </label>
+      <div class="page-footer">No se intenta “arreglar” un imán agrietado.</div>
+    </section>
+
+    <section class="page" id="plantilla" aria-labelledby="plantilla-title">
+      <span class="page-number">Página 7</span>
+      <p class="eyebrow">Capítulo 3 · Montaje en seco</p>
+      <h2 id="plantilla-title">Probar la geometría sin adhesivo ni motor</h2>
+      <p class="page-subtitle">La plantilla detecta conflictos antes de fabricar una pieza estructural.</p>
+
+      <ol class="step-list">
+        <li><strong>Imprimir o trazar a escala 1:1.</strong> Incluir centro, diámetro exterior, círculo de centros magnéticos y patrón 4/6/8.</li>
+        <li><strong>Comprobar la escala.</strong> Medir una cota de control impresa; no confiar en “ajustar a página”.</li>
+        <li><strong>Recortar una maqueta inerte.</strong> Papel o cartón sirven para verificar espacio, nunca para girar.</li>
+        <li><strong>Usar fichas no magnéticas.</strong> Representar los imanes con piezas de la misma huella y espesor, sin colocar todavía neodimio.</li>
+        <li><strong>Presentar el adaptador separado.</strong> Comprobar centro, apoyos, arandelas, tuerca, herramientas y acceso sin montar en el motor.</li>
+        <li><strong>Verificar envolvente.</strong> Revisar motor, soporte, futura bobina, resguardo y acceso de mantenimiento.</li>
+      </ol>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Control geométrico</span>
+          <ul>
+            <li>Distancia centro–centro igual en todas las posiciones.</li>
+            <li>Margen al borde exterior definido por el diseño competente.</li>
+            <li>Ninguna cavidad invade el cubo, arandela o zona de apriete.</li>
+            <li>La cara activa de todos los imanes queda en el mismo plano.</li>
+            <li>El entrehierro futuro puede medirse y ajustarse sin contacto.</li>
+          </ul>
+        </div>
+        <div class="box warning">
+          <span class="box-title">Configuraciones intercambiables</span>
+          <p>No rellenar “huecos” de un rotor de ocho con pesos improvisados para obtener cuatro o seis. Cada configuración necesita masas, simetría y equilibrado definidos.</p>
+          <p class="decision todo"><strong>TODO:</strong> decidir si habrá tres rotores completos o un sistema modular cuya retención y equilibrio hayan sido diseñados específicamente.</p>
+        </div>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c3-plantilla-escala"><input id="c3-plantilla-escala" type="checkbox" data-checklist><span>La plantilla 1:1 supera una medida de control con el instrumento previsto.</span></label>
+        <label class="check-row" for="c3-plantilla-centro"><input id="c3-plantilla-centro" type="checkbox" data-checklist><span>Centro, diámetro, círculo magnético y posiciones están definidos desde un mismo origen.</span></label>
+        <label class="check-row" for="c3-plantilla-fichas"><input id="c3-plantilla-fichas" type="checkbox" data-checklist><span>La prueba usa fichas inertes, no imanes ni piezas destinadas a girar.</span></label>
+        <label class="check-row" for="c3-plantilla-interfaz"><input id="c3-plantilla-interfaz" type="checkbox" data-checklist><span>Cubo, arandelas, tuerca y herramientas no interfieren con posiciones magnéticas.</span></label>
+        <label class="check-row" for="c3-plantilla-configuracion"><input id="c3-plantilla-configuracion" type="checkbox" data-checklist><span>Se ha decidido y documentado cómo se implementarán por separado 4, 6 y 8 imanes.</span></label>
+      </div>
+      <div class="page-footer">Una plantilla puede demostrar que algo no cabe; no demuestra que resista.</div>
+    </section>
+
+    <section class="page" id="retencion" aria-labelledby="retencion-title">
+      <span class="page-number">Página 8</span>
+      <p class="eyebrow">Capítulo 3 · Retención</p>
+      <h2 id="retencion-title">Diseñar para que ningún imán pueda salir</h2>
+      <p class="page-subtitle">La atracción magnética y el adhesivo del anuncio no sustituyen una retención para rotación.</p>
+
+      <div class="box danger">
+        <span class="box-title">Carga radial</span>
+        <p>La fuerza centrífuga de cada masa puede expresarse como <strong>F = m · r · ω²</strong>. Depende de la masa <em>m</em>, el radio <em>r</em> y el cuadrado de la velocidad angular <em>ω</em>.</p>
+        <p>Sin masa real, radio, RPM máxima y propiedades de materiales no se puede aprobar adhesivo, cavidad, tapa ni margen de seguridad.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="box blue">
+          <span class="box-title">Retención radial</span>
+          <p>Una pared, cavidad, aro o elemento equivalente impide el desplazamiento hacia el exterior incluso ante degradación del adhesivo.</p>
+        </div>
+        <div class="box blue">
+          <span class="box-title">Retención axial</span>
+          <p>Una tapa o solución equivalente impide que el imán salga hacia la bobina o hacia la cara posterior.</p>
+        </div>
+        <div class="box warning">
+          <span class="box-title">Contención externa</span>
+          <p>El resguardo rodea el plano de giro y contiene fragmentos si fallan rotor o retención.</p>
+        </div>
+      </div>
+
+      <table class="spec-table">
+        <thead><tr><th>Decisión</th><th>Evidencia exigida antes de fabricar</th></tr></thead>
+        <tbody>
+          <tr><th>Adhesivo, si se usa</th><td>Compatibilidad con revestimiento y sustrato, preparación superficial, espesor, curado, temperatura, envejecimiento y cargas. No se selecciona solo por “epoxi”.</td></tr>
+          <tr><th>Retención secundaria</th><td>Dibujo, material, sección, montaje y prueba que no dañe los imanes ni se desprenda.</td></tr>
+          <tr><th>Margen de diseño</th><td>Cargas calculadas a la RPM máxima y factor/margen aprobado por persona competente.</td></tr>
+          <tr><th>Inspección</th><td>Criterios de aceptación y retirada antes y después de cada prueba.</td></tr>
+          <tr><th>Trazabilidad</th><td>Lote, fecha de preparación, mezcla/curado, responsable y versión del rotor.</td></tr>
+        </tbody>
+      </table>
+
+      <aside class="notice danger"><strong>No envolver con cinta ni cubrir con resina sin cálculo.</strong> Una envoltura puede ocultar grietas, introducir desequilibrio o fallar a velocidad.</aside>
+
+      <div class="check-group">
+        <label class="check-row" for="c3-carga"><input id="c3-carga" type="checkbox" data-checklist><span>Cargas por imán calculadas con masa, radio y RPM máxima reales.</span></label>
+        <label class="check-row" for="c3-retencion-radial"><input id="c3-retencion-radial" type="checkbox" data-checklist><span>El diseño incluye retención radial independiente de la atracción magnética.</span></label>
+        <label class="check-row" for="c3-retencion-axial"><input id="c3-retencion-axial" type="checkbox" data-checklist><span>El diseño incluye retención axial y conserva un plano magnético repetible.</span></label>
+        <label class="check-row" for="c3-adhesivo"><input id="c3-adhesivo" type="checkbox" data-checklist><span>Cualquier adhesivo está especificado y validado para ambos materiales, carga, temperatura y proceso.</span></label>
+        <label class="check-row" for="c3-trazabilidad"><input id="c3-trazabilidad" type="checkbox" data-checklist><span>El proceso de fabricación e inspección tiene registro y criterios de rechazo.</span></label>
+      </div>
+      <label class="observation" for="c3-memoria-retencion">Memoria de retención
+        <textarea id="c3-memoria-retencion" data-note placeholder="m · r · RPM/ω · carga calculada · margen · retención radial/axial · adhesivo/proceso si aplica · contención · responsable."></textarea>
+      </label>
+      <div class="page-footer">La contención externa no convierte una retención deficiente en aceptable.</div>
+    </section>
+
+    <section class="page" id="acoplamiento" aria-labelledby="acoplamiento-title">
+      <span class="page-number">Página 9</span>
+      <p class="eyebrow">Capítulo 3 · Interfaz con el eje</p>
+      <h2 id="acoplamiento-title">Montar el adaptador únicamente sin energía</h2>
+      <p class="page-subtitle">Rosca, sentido de giro y fijación lateral deben trabajar juntos, no soltarse entre sí.</p>
+
+      <div class="grid-2">
+        <div>
+          <ol class="step-list">
+            <li><strong>Demostrar cero energía.</strong> Corte DC abierto, clavija fuera, descarga esperada y motor sin cables de salida.</li>
+            <li><strong>Limpiar e inspeccionar.</strong> Eje y alojamiento sin rebabas, grasa, corrosión, grietas ni tornillos dañados.</li>
+            <li><strong>Presentar a mano.</strong> El adaptador debe entrar hasta su apoyo previsto sin golpes, palancas ni forzado.</li>
+            <li><strong>Alinear la fijación.</strong> Si el diseño exige un plano y el eje no lo tiene, se detiene: no se lima el eje sin autorización del fabricante/diseño competente.</li>
+            <li><strong>Aplicar el método aprobado.</strong> Tornillo, par y bloqueo de rosca solo según documentación compatible con desmontaje, temperatura y vibración.</li>
+            <li><strong>Montar la interfaz del rotor.</strong> Arandelas, platos y tuerca en el orden dibujado; ninguna pieza apoya sobre una zona frágil no prevista.</li>
+          </ol>
+        </div>
+        <div>
+          <div class="box warning">
+            <span class="box-title">Sentido de la rosca</span>
+            <p>Una rosca puede tender a aflojarse según el sentido de giro y la forma de transmitir el par. No se presupone que “apretar fuerte” lo resuelva.</p>
+            <p class="decision todo"><strong>TODO:</strong> documentar sentido de giro aprobado, rosca, método de bloqueo, par y retención adicional.</p>
+          </div>
+          <div class="box danger">
+            <span class="box-title">No improvisar</span>
+            <p>No golpear el adaptador, no usar alicates sobre la rosca, no apilar arandelas para compensar una pieza incorrecta y no reutilizar un tornillo dañado.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c3-acople-cero"><input id="c3-acople-cero" type="checkbox" data-checklist><span>Motor físicamente aislado de cualquier alimentación durante todo el montaje.</span></label>
+        <label class="check-row" for="c3-acople-ajuste"><input id="c3-acople-ajuste" type="checkbox" data-checklist><span>Adaptador entra sin forzar, apoya donde indica el plano y no presenta holgura no prevista.</span></label>
+        <label class="check-row" for="c3-acople-par"><input id="c3-acople-par" type="checkbox" data-checklist><span>Fijación lateral, rosca, par y bloqueo proceden de documentación o cálculo aprobado.</span></label>
+        <label class="check-row" for="c3-acople-sentido"><input id="c3-acople-sentido" type="checkbox" data-checklist><span>Se ha demostrado que el sentido de giro no afloja la interfaz y existe retención frente a pérdida.</span></label>
+      </div>
+      <aside class="notice danger"><strong>Esta página permite montaje e inspección sin energía; no autoriza girar con el motor.</strong></aside>
+      <div class="page-footer">El adaptador transmite todo el par: una pieza pequeña concentra una decisión grande.</div>
+    </section>
+
+    <section class="page" id="equilibrado" aria-labelledby="equilibrado-title">
+      <span class="page-number">Página 10</span>
+      <p class="eyebrow">Capítulo 3 · Equilibrado</p>
+      <h2 id="equilibrado-title">Comprobar masa, descentramiento y equilibrio</h2>
+      <p class="page-subtitle">La simetría del dibujo es solo el principio; la tolerancia depende de la velocidad.</p>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Comprobaciones preliminares</span>
+          <ol class="step-list">
+            <li>Pesar rotor, cubo y cada imán con resolución adecuada y registrar posiciones.</li>
+            <li>Comprobar planitud, centro y descentramiento con el método aprobado.</li>
+            <li>Usar un útil de equilibrado separado del motor, de baja fricción y con eje compatible.</li>
+            <li>Dejar que el conjunto se detenga varias veces desde posiciones distintas, sin impulsarlo.</li>
+            <li>Si una zona baja se repite, detener y diagnosticar geometría, masa o montaje.</li>
+          </ol>
+        </div>
+        <div class="box warning">
+          <span class="box-title">Corrección controlada</span>
+          <p>No añadir cinta, masilla, pegamento o arandelas sueltas. Una corrección debe formar parte del diseño, quedar retenida para la RPM máxima y volver a verificarse.</p>
+          <p>Si el desequilibrio es grande o variable, se desmonta y reconstruye; no se “compensa” un defecto de centro o una grieta.</p>
+        </div>
+      </div>
+
+      <table class="spec-table">
+        <tbody>
+          <tr><th>Equilibrio estático</th><td>Sirve como control preliminar de tendencia a quedar con una zona pesada abajo.</td></tr>
+          <tr><th>Equilibrio dinámico</th><td>Puede requerir uno o más planos y equipo especializado; el equilibrio estático no lo sustituye.</td></tr>
+          <tr><th>Tolerancia</th><td>No existe un único valor universal: depende de masa, geometría, comportamiento rígido/flexible, velocidad y aplicación.</td></tr>
+          <tr><th>Descentramiento</th><td>Se mide por separado; un rotor excéntrico puede estar “equilibrado” en reposo y seguir siendo inaceptable.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="box danger">
+        <span class="box-title">TODO bloqueante</span>
+        <p class="decision todo"><strong>Criterio de equilibrado:</strong> seleccionar procedimiento, calidad/tolerancia y equipo aplicables al rotor real y a su RPM máxima.</p>
+        <p class="decision todo"><strong>Criterio de descentramiento:</strong> definir valor máximo y punto de medición.</p>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c3-masas"><input id="c3-masas" type="checkbox" data-checklist><span>Masas individuales, posición y masa total del conjunto están registradas.</span></label>
+        <label class="check-row" for="c3-descentramiento"><input id="c3-descentramiento" type="checkbox" data-checklist><span>Centro, planitud y descentramiento cumplen valores aprobados.</span></label>
+        <label class="check-row" for="c3-estatico"><input id="c3-estatico" type="checkbox" data-checklist><span>La comprobación estática se repitió desde varias posiciones en un útil independiente.</span></label>
+        <label class="check-row" for="c3-dinamico"><input id="c3-dinamico" type="checkbox" data-checklist><span>La necesidad y el método de equilibrado dinámico están resueltos para la RPM máxima.</span></label>
+        <label class="check-row" for="c3-correccion"><input id="c3-correccion" type="checkbox" data-checklist><span>Cualquier corrección es trazable, queda retenida y supera una nueva inspección completa.</span></label>
+      </div>
+      <label class="observation" for="c3-registro-equilibrado">Acta de equilibrado preliminar
+        <textarea id="c3-registro-equilibrado" data-note placeholder="Útil/instrumentos · masas · descentramiento · posiciones de reposo · criterio/tolerancia · correcciones · resultado · responsable."></textarea>
+      </label>
+      <div class="page-footer">ISO 21940 aporta procedimientos y tolerancias; este manual no asigna una clase sin conocer el rotor.</div>
+    </section>
+
+    <section class="page" id="resguardo" aria-labelledby="resguardo-title">
+      <span class="page-number">Página 11</span>
+      <p class="eyebrow">Capítulo 3 · Contención</p>
+      <h2 id="resguardo-title">Cerrar la envolvente y comprobar solo a mano</h2>
+      <p class="page-subtitle">Primero se valida el espacio con una plantilla inerte separada del motor.</p>
+
+      <div class="grid-2">
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">3</span>
+            <div><h3>Maqueta de envolvente</h3><div class="component-status"><span class="tag reference">Referencia generada</span><span class="tag todo">No es diseño final</span></div></div>
+          </div>
+          <div class="media-frame">
+            <a href="assets/img/cap3-maqueta-resguardo-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap3-maqueta-resguardo-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia generada de una plantilla circular inerte separada del eje dentro de una envolvente transparente atornillada, con el adaptador retirado"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">Referencia generada: la pieza gris es una plantilla sin imanes y no está unida al eje. Material, espesor, fijaciones y capacidad de contención del resguardo real siguen como TODO.</p>
+        </article>
+        <div>
+          <div class="box blue">
+            <span class="box-title">El resguardo debe resolver</span>
+            <ul>
+              <li>Rodear el plano completo de giro, laterales y caras expuestas.</li>
+              <li>Impedir introducir dedos u objetos en la zona peligrosa.</li>
+              <li>Soportarse independientemente sin rozar el rotor ni el motor.</li>
+              <li>Permanecer cerrado con fijaciones que exijan herramienta o con enclavamiento validado.</li>
+              <li>Permitir inspección sin convertirse en una fuente de fragmentos.</li>
+            </ul>
+          </div>
+          <div class="box danger">
+            <span class="box-title">TODO de contención</span>
+            <p>Una persona competente debe definir material, espesor, uniones, base, distancia al rotor y capacidad frente al peor fragmento previsto.</p>
+            <p>La imagen transparente comunica geometría; no certifica policarbonato, espesor ni resistencia.</p>
+          </div>
+        </div>
+      </div>
+
+      <ol class="step-list">
+        <li>Con una plantilla inerte separada, comprobar volumen, apertura, herramientas y futuras posiciones de bobina.</li>
+        <li>Instalar el resguardo real aprobado sobre una base fijada y verificar cada tornillo.</li>
+        <li>Montar el rotor inspeccionado con el motor aún aislado de toda energía.</li>
+        <li>Cerrar el resguardo y girar el conjunto lentamente a mano desde un punto externo previsto por el diseño.</li>
+        <li>Comprobar una vuelta completa: cero roce, enganche, flexión, holgura cambiante o contacto.</li>
+        <li>Detener en varias posiciones y repetir inspección de retención, interfaz y distancia.</li>
+      </ol>
+
+      <div class="check-group">
+        <label class="check-row" for="c3-resguardo-diseno"><input id="c3-resguardo-diseno" type="checkbox" data-checklist><span>Material, espesor, uniones y capacidad de contención tienen justificación aprobada.</span></label>
+        <label class="check-row" for="c3-resguardo-cerrado"><input id="c3-resguardo-cerrado" type="checkbox" data-checklist><span>El plano de giro queda cerrado por caras y perímetro sin aberturas alcanzables.</span></label>
+        <label class="check-row" for="c3-resguardo-independiente"><input id="c3-resguardo-independiente" type="checkbox" data-checklist><span>El resguardo está fijado independientemente y no puede flexar hasta tocar el rotor.</span></label>
+        <label class="check-row" for="c3-giro-manual"><input id="c3-giro-manual" type="checkbox" data-checklist><span>Una vuelta manual completa no produce roce, contacto, enganche ni cambio de holgura.</span></label>
+        <label class="check-row" for="c3-reinspeccion"><input id="c3-reinspeccion" type="checkbox" data-checklist><span>Tras el giro manual, imanes, retención, adaptador y fijaciones siguen sin desplazamiento ni daño.</span></label>
+      </div>
+      <aside class="notice danger"><strong>Superar el giro manual no autoriza conectar el motor.</strong> Siguen siendo obligatorios RPM medibles, límite aprobado, balance dinámico si aplica y protocolo de prueba remota.</aside>
+      <div class="page-footer">El resguardo se valida cerrado; una pantalla abierta por un lado no contiene una trayectoria de fragmentos.</div>
+    </section>
+
+    <section class="page" id="cierre" aria-labelledby="cierre-title">
+      <span class="page-number">Página 12</span>
+      <p class="eyebrow">Capítulo 3 · Cierre</p>
+      <h2 id="cierre-title">No energizar el rotor hasta…</h2>
+      <p class="page-subtitle">El capítulo termina con documentación y cero energía.</p>
+
+      <div class="grid-2">
+        <div class="check-group">
+          <h3>Rotor e imanes</h3>
+          <label class="check-row" for="c3-final-plano"><input id="c3-final-plano" type="checkbox" data-checklist><span>Plano acotado y versionado define material, centro, geometría e interfaz.</span></label>
+          <label class="check-row" for="c3-final-imanes"><input id="c3-final-imanes" type="checkbox" data-checklist><span>Imanes reales medidos, pesados, inspeccionados y marcados A/B.</span></label>
+          <label class="check-row" for="c3-final-patron"><input id="c3-final-patron" type="checkbox" data-checklist><span>Patrón 4/6/8 y regla de polaridad están inequívocamente documentados.</span></label>
+          <label class="check-row" for="c3-final-retencion"><input id="c3-final-retencion" type="checkbox" data-checklist><span>Retención radial/axial calculada y proceso de fabricación trazable.</span></label>
+        </div>
+        <div class="check-group">
+          <h3>Conjunto y protección</h3>
+          <label class="check-row" for="c3-final-acople"><input id="c3-final-acople" type="checkbox" data-checklist><span>Adaptador, rosca, par, sentido y bloqueo están verificados.</span></label>
+          <label class="check-row" for="c3-final-equilibrio"><input id="c3-final-equilibrio" type="checkbox" data-checklist><span>Descentramiento y equilibrado cumplen criterios ligados a la RPM máxima.</span></label>
+          <label class="check-row" for="c3-final-resguardo"><input id="c3-final-resguardo" type="checkbox" data-checklist><span>Resguardo cerrado y fijado tiene capacidad de contención justificada.</span></label>
+          <label class="check-row" for="c3-final-manual"><input id="c3-final-manual" type="checkbox" data-checklist><span>Giro manual superado y banco finalmente aislado de toda alimentación.</span></label>
+        </div>
+      </div>
+
+      <div class="box danger">
+        <span class="box-title">Bloqueos que permanecen</span>
+        <p class="decision todo"><strong>Rotor:</strong> no se ha confirmado todavía material, dimensiones, resistencia ni interfaz física del candidato real.</p>
+        <p class="decision todo"><strong>Imanes:</strong> la foto disponible es generada; faltan fotografía, medidas, masas, grado, revestimiento y magnetización del lote real.</p>
+        <p class="decision todo"><strong>Velocidad:</strong> falta RPM máxima aprobada, medición independiente y un método que evite sobrevelocidad.</p>
+        <p class="decision todo"><strong>Validación:</strong> faltan criterios de balance/descentramiento y capacidad de contención del resguardo.</p>
+      </div>
+
+      <section class="source-panel" aria-labelledby="fuentes-title">
+        <h3 id="fuentes-title">Fuentes técnicas consultadas</h3>
+        <ul>
+          <li><a href="https://www.iso.org/standard/54074.html" target="_blank" rel="noopener">ISO 21940-11:2016 · Procedimientos y tolerancias para rotores rígidos</a>: confirma que el desequilibrio residual, planos de corrección y errores de equilibrado requieren un procedimiento y tolerancias definidos. No asigna automáticamente una clase a este proyecto.</li>
+          <li><a href="https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.212" target="_blank" rel="noopener">OSHA 1910.212 · Requisitos generales de resguardo</a>: principios comparables para proteger frente a partes giratorias y proyectiles y para fijar el resguardo sin crear otro peligro.</li>
+          <li><a href="https://www.kjmagnetics.com/neodymium-magnet-safety.asp" target="_blank" rel="noopener">K&amp;J Magnetics · Seguridad con imanes de neodimio</a>: fragilidad, proyección de fragmentos, protección ocular e interferencia con dispositivos implantados.</li>
+          <li><a href="https://www.supermagnete.de/spa/safety-neodymium" target="_blank" rel="noopener">supermagnete · Advertencias para imanes de neodimio</a>: pellizcos, astillas, revestimiento, almacenamiento, dispositivos médicos y prohibición de mecanizado sin medios adecuados.</li>
+        </ul>
+        <p><strong>Alcance:</strong> son referencias de principios, no una certificación del rotor. La norma aplicable, tolerancias y diseño final corresponden al conjunto real y al contexto de Colombia.</p>
+      </section>
+
+      <div class="box success text-center">
+        <div class="big-number">Siguiente: Capítulo 4</div>
+        <p><strong>Construcción de la bobina.</strong></p>
+        <p>Podrá comenzar con el rotor inmóvil: molde, AWG28, conteo de espiras, derivaciones, continuidad y soporte ajustable.</p>
+      </div>
+
+      <nav class="bottom-nav" aria-label="Navegación al final del capítulo">
+        <a href="index.html">← Volver a la portada</a>
+        <a href="capitulo-2.html">← Capítulo 2</a>
+        <span class="is-disabled">Capítulo 4: en preparación</span>
+        <button type="button" data-print>Imprimir / Guardar PDF</button>
+      </nav>
+      <div class="page-footer">Generador electromagnético experimental · Fin del Capítulo 3</div>
+    </section>
+  </main>
+  <script src="assets/js/checklist.js" defer></script>
+  <script src="assets/js/navigation.js" defer></script>
+</body>
+</html>

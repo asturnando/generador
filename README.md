@@ -114,7 +114,7 @@ El manual no se va a comprimir artificialmente. Cada operación tendrá el espac
 | **0** | Preparación, inventario, tablero, herramientas y seguridad | 🟢 Disponible |
 | **1** | Cable de red → fuente → salida segura de 12 V | 🟢 Disponible |
 | **2** | Fuente → protección/corte DC → PWM → motor 775 → primera rotación sin rotor | 🟢 Disponible |
-| **3** | Rotor, imanes, equilibrado y protección | ⚪ Pendiente |
+| **3** | Rotor, patrones 4/6/8, retención, equilibrado y protección | 🟢 Disponible |
 | **4** | Construcción de la bobina y derivaciones | ⚪ Pendiente |
 | **5** | Puente rectificador en protoboard | ⚪ Pendiente |
 | **6** | Soldadura y conexión del INA219 | ⚪ Pendiente |
@@ -136,7 +136,7 @@ El objetivo de la web es que pueda consultarse fácilmente desde móvil, tablet 
 
 Las listas de comprobación, fotografías, esquemas y capítulos irán actualizándose a medida que avance el proyecto.
 
-### Funciones disponibles en los capítulos 0, 1 y 2
+### Funciones disponibles en los capítulos 0, 1, 2 y 3
 
 - Inventario visual en fichas grandes de dos columnas y una columna en móvil.
 - Fotografías ampliables y optimizadas como WebP, sin imágenes incrustadas en base64.
@@ -163,6 +163,8 @@ El proyecto se realizará en **Colombia**. El Capítulo 1 utiliza como referenci
 Las imágenes disponibles de la fuente proceden del material/anuncio y no identifican de forma suficiente fabricante o modelo. Por ello el manual conserva como `TODO` bloqueantes la placa real, el manual exacto, la terminación permitida, la longitud de pelado, el par de apriete, la ventilación y el tiempo de descarga. No se autoriza el primer encendido hasta resolverlos.
 
 Las imágenes del PWM tampoco permiten leer con fiabilidad qué bornes son entrada y salida. El Capítulo 2 conserva como `TODO` bloqueantes esa asignación, las corrientes reales del controlador y el motor, el comportamiento de arranque, la protección y el corte DC, la validez del AWG18 y los terminales. La primera prueba se limita al motor desnudo, fijado y con el eje completamente resguardado; el rotor sigue fuera.
+
+El Capítulo 3 conserva el rotor ligero y no metálico como dirección inicial y las configuraciones de 4, 6 y 8 imanes, pero no convierte un CD doméstico ni el adaptador del anuncio en piezas aprobadas. Añade tres referencias generadas y rotuladas —medición del adaptador, clasificación segura de imanes y maqueta inerte del resguardo—. La geometría angular se representa con diagramas HTML deterministas. La prueba motorizada queda bloqueada hasta fijar RPM máxima, medida independiente, retención, equilibrado y capacidad de contención.
 
 La imagen del paquete que estaba rotulada como «imanes redondos» sigue descartada porque muestra anillos/adaptadores con orificio, no los discos macizos de 15 × 2 mm descritos en el proyecto.
 
@@ -223,6 +225,7 @@ generador/
 ├── capitulo-0.html            # Preparación e inventario visual
 ├── capitulo-1.html            # Cable de red, fuente protegida y prueba de 12 V
 ├── capitulo-2.html            # Protección DC, PWM, motor y primera rotación sin rotor
+├── capitulo-3.html            # Rotor, imanes, retención, equilibrado y resguardo
 ├── README.md                  # Este documento
 └── assets/
     ├── css/

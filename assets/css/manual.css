@@ -747,6 +747,67 @@ a.chapter-card:hover {
   min-width: 0;
 }
 
+.rotor-pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 22px 0;
+}
+
+.pattern-card {
+  padding: 18px;
+  border: 2px solid #82add0;
+  border-radius: var(--radius);
+  background: #f8fcff;
+  text-align: center;
+}
+
+.pattern-card h3 {
+  margin-top: 14px;
+}
+
+.pattern-card p {
+  margin: 0;
+}
+
+.rotor-pattern {
+  position: relative;
+  width: min(100%, 210px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border: 5px solid var(--navy);
+  border-radius: 50%;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 1px), #a9c8df calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(transparent calc(50% - 1px), #a9c8df calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)),
+    var(--white);
+}
+
+.rotor-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22%;
+  aspect-ratio: 1;
+  border: 3px solid var(--blue);
+  border-radius: 50%;
+  background: var(--pale);
+  transform: translate(-50%, -50%);
+}
+
+.magnet-marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 17%;
+  aspect-ratio: 1;
+  border: 2px solid #586879;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #f8fbfd, #9ca9b4);
+  box-shadow: 0 2px 4px rgb(6 31 72 / 22%);
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-205%) rotate(calc(-1 * var(--angle)));
+}
+
 .status-list {
   margin: 0;
   padding-left: 20px;
@@ -1209,7 +1270,8 @@ a.chapter-card:hover {
   .grid-3,
   .grid-4,
   .zone-grid,
-  .terminal-map {
+  .terminal-map,
+  .rotor-pattern-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1254,7 +1316,8 @@ a.chapter-card:hover {
   .zone-grid,
   .detail-gallery,
   .role-grid,
-  .terminal-map {
+  .terminal-map,
+  .rotor-pattern-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1317,6 +1380,24 @@ a.chapter-card:hover {
   .page {
     padding: 55px 19px 42px;
     scroll-margin-top: 158px;
+  }
+
+  .page > *,
+  .page .box,
+  .page .role-card,
+  .page .pattern-card,
+  .page .component-card,
+  .page .check-group {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .page p,
+  .page li,
+  .page label,
+  .page th,
+  .page td {
+    overflow-wrap: anywhere;
   }
 
   .manual-main {
