@@ -19,26 +19,17 @@
         <p class="lead"><strong>Esta web es el manual vivo del proyecto.</strong> Cada capítulo se incorpora cuando sus piezas, decisiones y comprobaciones están suficientemente claras para que Sara no tenga que adivinar el siguiente paso.</p>
         <div class="status-box">
           <strong>Estado actual</strong><br>
-          Capítulo 0: disponible y en revisión con fotografías reales.<br>
-          Capítulo 1: en preparación; todavía no se realizan conexiones de red.
+          Capítulo 0: disponible y en revisión con fotografías reales y referencias generadas identificadas.<br>
+          Capítulo 1: adaptado a Colombia (120 V, 60 Hz y clavija tipo B con tierra); el primer encendido sigue bloqueado hasta verificar la fuente física, su manual y las protecciones.<br>
+          Capítulo 2: procedimiento de baja tensión disponible; la primera rotación queda bloqueada hasta identificar el PWM y el motor reales y dimensionar protección, corte y cable.
         </div>
       </div>
-      <div class="hero-visual" aria-label="Ilustración de una placa ESP32-S3">
-        <svg viewBox="0 0 190 170" role="img" aria-labelledby="esp32-title">
-          <title id="esp32-title">Representación simplificada de una placa ESP32-S3</title>
-          <rect x="35" y="12" width="120" height="145" rx="10" fill="#20262b"/>
-          <rect x="60" y="28" width="70" height="55" rx="4" fill="#c9ced2"/>
-          <rect x="79" y="137" width="34" height="14" rx="4" fill="#dfe2e4"/>
-          <rect x="68" y="94" width="54" height="30" rx="4" fill="#111"/>
-          <g stroke="#c7c7c7" stroke-width="3">
-            <line x1="29" y1="25" x2="38" y2="25"/><line x1="29" y1="40" x2="38" y2="40"/>
-            <line x1="29" y1="55" x2="38" y2="55"/><line x1="29" y1="70" x2="38" y2="70"/>
-            <line x1="152" y1="25" x2="161" y2="25"/><line x1="152" y1="40" x2="161" y2="40"/>
-            <line x1="152" y1="55" x2="161" y2="55"/><line x1="152" y1="70" x2="161" y2="70"/>
-          </g>
-          <text x="95" y="113" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="700" font-size="14">ESP32-S3</text>
-        </svg>
-      </div>
+      <figure class="hero-visual">
+        <a href="https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html" target="_blank" rel="noopener">
+          <img src="assets/img/esp32-s3-devkitc-1-oficial.webp" width="800" height="695" alt="Fotografía oficial de referencia de una placa ESP32-S3-DevKitC-1">
+        </a>
+        <figcaption>ESP32-S3-DevKitC-1 · fotografía oficial de referencia de Espressif</figcaption>
+      </figure>
     </div>
 
     <section aria-labelledby="capitulos-title">
@@ -50,18 +41,18 @@
           <p>Reconocer las piezas, controlar envíos, preparar el tablero y separar lo decidido de lo pendiente.</p>
           <span class="badge available">Disponible</span>
         </a>
-        <article class="chapter-card preparing">
+        <a class="chapter-card available" href="capitulo-1.html">
           <span class="chapter-number">Capítulo 1</span>
           <h2>Del enchufe a los 12 V</h2>
           <p>Extensión, entrada de red, bornes de la fuente, protección y comprobaciones antes del primer encendido.</p>
-          <span class="badge preparing">En preparación</span>
-        </article>
-        <article class="chapter-card pending">
+          <span class="badge available">Disponible</span>
+        </a>
+        <a class="chapter-card available" href="capitulo-2.html">
           <span class="chapter-number">Capítulo 2</span>
           <h2>Fuente → PWM → motor</h2>
-          <p>Cableado de baja tensión, control de velocidad y primera puesta en movimiento.</p>
-          <span class="badge">Pendiente</span>
-        </article>
+          <p>Protección DC, cableado de baja tensión, resguardo y primera puesta en movimiento sin rotor.</p>
+          <span class="badge available">Disponible</span>
+        </a>
         <article class="chapter-card pending">
           <span class="chapter-number">Capítulo 3</span>
           <h2>Rotor, disco e imanes</h2>
@@ -120,7 +111,7 @@
     </section>
 
     <aside class="notice warning">
-      <strong>Seguridad:</strong> la fuente abierta conectada a la red se tratará siempre como una zona separada, protegida y revisada por una persona adulta o competente. El Capítulo 0 no autoriza a enchufar, cortar ni cablear nada.
+      <strong>Seguridad:</strong> la fuente abierta conectada a la red se tratará siempre como una zona separada, protegida y revisada por una persona adulta competente. El Capítulo 1 controla la entrada de red y el Capítulo 2 exige protección y corte DC, motor fijo, eje resguardado y una primera rotación sin rotor.
     </aside>
   </main>
 </body>

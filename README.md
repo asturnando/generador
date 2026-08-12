@@ -112,8 +112,8 @@ El manual no se va a comprimir artificialmente. Cada operación tendrá el espac
 | Capítulo | Contenido | Estado |
 |---|---|---|
 | **0** | Preparación, inventario, tablero, herramientas y seguridad | 🟢 Disponible |
-| **1** | Cable de red → fuente → salida segura de 12 V | 🟡 En preparación |
-| **2** | PWM → motor 775 → primera puesta en movimiento | ⚪ Pendiente |
+| **1** | Cable de red → fuente → salida segura de 12 V | 🟢 Disponible |
+| **2** | Fuente → protección/corte DC → PWM → motor 775 → primera rotación sin rotor | 🟢 Disponible |
 | **3** | Rotor, imanes, equilibrado y protección | ⚪ Pendiente |
 | **4** | Construcción de la bobina y derivaciones | ⚪ Pendiente |
 | **5** | Puente rectificador en protoboard | ⚪ Pendiente |
@@ -136,11 +136,11 @@ El objetivo de la web es que pueda consultarse fácilmente desde móvil, tablet 
 
 Las listas de comprobación, fotografías, esquemas y capítulos irán actualizándose a medida que avance el proyecto.
 
-### Funciones disponibles en el Capítulo 0
+### Funciones disponibles en los capítulos 0, 1 y 2
 
 - Inventario visual en fichas grandes de dos columnas y una columna en móvil.
 - Fotografías ampliables y optimizadas como WebP, sin imágenes incrustadas en base64.
-- 64 comprobaciones con contador de progreso y persistencia en `localStorage`.
+- Listas independientes de comprobación con contador de progreso y persistencia en `localStorage`.
 - Campos de observaciones que también se conservan al cerrar el navegador.
 - Botón de borrado con confirmación previa.
 - Índice rápido, navegación a la portada e impresión / guardado en PDF.
@@ -148,9 +148,23 @@ Las listas de comprobación, fotografías, esquemas y capítulos irán actualiz�
 
 ### Fotografías y trazabilidad
 
-Las imágenes actuales se seleccionaron del paquete de fotografías aportado para el proyecto. Se conservaron los originales fuera del sitio y se generaron copias WebP con nombres descriptivos dentro de `assets/img/`.
+Las imágenes principales se seleccionaron del paquete de fotografías aportado para el proyecto. Se conservaron los originales fuera del sitio y se generaron copias WebP con nombres descriptivos dentro de `assets/img/`.
 
-No se ha rellenado ningún hueco con una imagen inventada. Permanecen marcadas como `TODO` las fotografías propias del kit de resistencias, ESP32-S3, cables Dupont, LEDs e imanes redondos. La imagen del paquete que estaba rotulada como «imanes redondos» fue descartada porque muestra anillos/adaptadores con orificio, no los discos macizos de 15 × 2 mm descritos en el proyecto.
+La ESP32-S3 utiliza una fotografía real de referencia procedente de la [documentación oficial de Espressif](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html). No se considera prueba de la revisión, memoria o pinout de la placa disponible.
+
+Los cuatro huecos restantes incluyen referencias fotográficas generadas y rotuladas como tales: kit de resistencias, cables Dupont, LEDs e imanes redondos. Sirven para reconocer el tipo de componente, pero no sustituyen la comprobación ni la fotografía de las piezas reales. Esos `TODO` se conservan.
+
+El Capítulo 1 combina las fotografías aportadas del alargador, la fuente, sus bornes, el selector y las horquillas con cuatro referencias generadas: preparación de la mesa, aspecto de los tres conductores, terminaciones crimpadas y concepto de envolvente. Todas están rotuladas como referencias y no se presentan como prueba del montaje real.
+
+El Capítulo 2 utiliza las fotografías aportadas del PWM, motor 775, soporte, medidas anunciadas y cable AWG18. Añade tres referencias generadas y rotuladas —distribución del banco sin cablear, motor sujeto con el eje encerrado y PWM protegido— para explicar principios mecánicos sin presentarlos como montajes reales ni inventar el orden de los bornes.
+
+El proyecto se realizará en **Colombia**. El Capítulo 1 utiliza como referencia una toma doméstica de **120 V AC, 60 Hz**, clavija tipo B con tierra y el código de conductores del [RETIE vigente](https://www.minenergia.gov.co/documents/15921/Libro-3-Resolucion-40284-23-06-2026.pdf) para ese sistema: negro para fase, blanco para neutro y verde para protección. La [Superintendencia de Industria y Comercio](https://www.sic.gov.co/informacion-de-Interes-sobre-congreso-internacional-derecho-de-los-mercados) también identifica 120 V, 60 Hz y clavijas tipo A/B como referencias de uso en Colombia. Las imágenes generadas se corrigieron para mostrar tipo B con tierra y no una clavija europea.
+
+Las imágenes disponibles de la fuente proceden del material/anuncio y no identifican de forma suficiente fabricante o modelo. Por ello el manual conserva como `TODO` bloqueantes la placa real, el manual exacto, la terminación permitida, la longitud de pelado, el par de apriete, la ventilación y el tiempo de descarga. No se autoriza el primer encendido hasta resolverlos.
+
+Las imágenes del PWM tampoco permiten leer con fiabilidad qué bornes son entrada y salida. El Capítulo 2 conserva como `TODO` bloqueantes esa asignación, las corrientes reales del controlador y el motor, el comportamiento de arranque, la protección y el corte DC, la validez del AWG18 y los terminales. La primera prueba se limita al motor desnudo, fijado y con el eje completamente resguardado; el rotor sigue fuera.
+
+La imagen del paquete que estaba rotulada como «imanes redondos» sigue descartada porque muestra anillos/adaptadores con orificio, no los discos macizos de 15 × 2 mm descritos en el proyecto.
 
 ---
 
@@ -178,7 +192,8 @@ Por eso:
 
 - la conexión de red se realiza siempre con la fuente **desenchufada**;
 - fase, neutro y tierra deben quedar correctamente identificados y protegidos;
-- la posición del selector 110/220, si existe, se comprueba en la fuente física y respecto a la red local;
+- la posición del selector, si existe, se comprueba en la fuente física y en su manual para el rango que incluya los **120 V, 60 Hz de Colombia**;
+- se utiliza una toma tipo B compatible y con tierra funcional, sin adaptadores que eliminen la protección;
 - una persona adulta o competente revisa la parte conectada a red antes del primer encendido;
 - la hoja de sierra incluida con el kit del motor **no se utilizará**;
 - la idea inicial es un rotor ligero y no metálico, pero su geometría se decidirá al medir el motor y el adaptador reales;
@@ -206,6 +221,8 @@ La pregunta experimental es, esencialmente:
 generador/
 ├── index.html                 # Portada e índice de capítulos
 ├── capitulo-0.html            # Preparación e inventario visual
+├── capitulo-1.html            # Cable de red, fuente protegida y prueba de 12 V
+├── capitulo-2.html            # Protección DC, PWM, motor y primera rotación sin rotor
 ├── README.md                  # Este documento
 └── assets/
     ├── css/

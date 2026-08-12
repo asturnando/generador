@@ -1,7 +1,9 @@
 (() => {
   "use strict";
 
-  const namespace = "generador:capitulo-0:v2:";
+  const chapter = document.body.dataset.checklistLabel || "este capítulo";
+  const namespace = document.body.dataset.storageNamespace || "generador:capitulo-0:v2:";
+  const isLegacyChapterZero = namespace === "generador:capitulo-0:v2:";
   const migrationKey = `${namespace}legacy-migrated`;
   const checkboxes = [...document.querySelectorAll("input[data-checklist]")];
   const notes = [...document.querySelectorAll("[data-note]")];
@@ -80,6 +82,7 @@
   }
 
   function migrateLegacyState() {
+    if (!isLegacyChapterZero) return;
     if (getItem(migrationKey) === "1") return;
 
     let legacyArray = [];
@@ -141,7 +144,7 @@
 
   function resetState() {
     const confirmed = window.confirm(
-      "¿Borrar todas las casillas y observaciones guardadas del Capítulo 0? Esta acción no se puede deshacer."
+      `¿Borrar todas las casillas y observaciones guardadas del ${chapter}? Esta acción no se puede deshacer.`
     );
     if (!confirmed) return;
 
@@ -157,11 +160,13 @@
       removeItem(storageKey("note", key));
     });
 
-    for (let index = 0; index < 100; index += 1) {
-      removeItem(`gen-c0-${index}`);
+    if (isLegacyChapterZero) {
+      for (let index = 0; index < 100; index += 1) {
+        removeItem(`gen-c0-${index}`);
+      }
+      removeItem("generador-cap0");
+      setItem(migrationKey, "1");
     }
-    removeItem("generador-cap0");
-    setItem(migrationKey, "1");
     updateProgress();
   }
 

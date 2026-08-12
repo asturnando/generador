@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Capítulo 1 del manual del generador electromagnético en Colombia: preparar la entrada de 120 V y 60 Hz, proteger la fuente y comprobar su salida de 12 V con supervisión competente.">
+  <title>Capítulo 1 · Del enchufe a los 12 V</title>
+  <link rel="stylesheet" href="assets/css/manual.css">
+</head>
+<body data-storage-namespace="generador:capitulo-1:v2:" data-checklist-label="Capítulo 1">
+  <a class="skip-link" href="#capitulo">Saltar al capítulo</a>
+
+  <header class="toolbar" aria-label="Navegación del manual">
+    <strong class="toolbar-title">Manual del generador · Capítulo 1</strong>
+    <a href="index.html">← Portada</a>
+    <a href="capitulo-0.html">Anterior</a>
+    <a href="capitulo-2.html">Siguiente</a>
+    <details class="quick-menu">
+      <summary>Índice rápido</summary>
+      <nav aria-label="Índice del Capítulo 1">
+        <a href="#alcance">1. Alcance y responsabilidades</a>
+        <a href="#frontera">2. De 120 V a 12 V</a>
+        <a href="#bloqueos">3. Antes de tocar nada</a>
+        <a href="#alargador">4. Revisar el alargador</a>
+        <a href="#corte">5. Cortar el extremo hembra</a>
+        <a href="#conductores">6. Identificar los conductores</a>
+        <a href="#terminales">7. Pelar y crimpar</a>
+        <a href="#proteccion">8. Montar y proteger la fuente</a>
+        <a href="#bornes">9. Conectar L, N y tierra</a>
+        <a href="#selector">10. Configurar la entrada</a>
+        <a href="#prueba">11. Primera medida de 12 V</a>
+        <a href="#cierre">12. Checklist final y fuentes</a>
+      </nav>
+    </details>
+    <button type="button" data-print>Imprimir / PDF</button>
+  </header>
+
+  <main class="manual-main" id="capitulo">
+    <section class="page" id="alcance" aria-labelledby="alcance-title">
+      <span class="page-number">Página 1</span>
+      <p class="eyebrow">Capítulo 1 · Alimentación</p>
+      <h1 id="alcance-title">Del enchufe a los 12 voltios</h1>
+      <p class="page-subtitle">Preparar, proteger, revisar y medir; nunca improvisar con la red.</p>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Resultado buscado</span>
+          <p class="lead">Dejar una fuente de 12 V <strong>mecánicamente protegida</strong>, con el cable sujeto por su cubierta exterior, los bornes de red inaccesibles y una primera medida registrada.</p>
+          <p>El PWM y el motor permanecen desconectados durante todo este capítulo.</p>
+        </div>
+        <div class="box danger">
+          <span class="box-title">Límite de seguridad</span>
+          <p><strong>120 V AC pueden causar lesiones graves o la muerte.</strong> Sara puede reconocer piezas, leer etiquetas, fotografiar y completar el registro con todo desenchufado.</p>
+          <p>El corte, pelado, crimpado, conexión, revisión y primer encendido corresponden a una <strong>persona adulta competente</strong>.</p>
+        </div>
+      </div>
+
+      <div class="role-grid" aria-label="Responsabilidades durante el capítulo">
+        <article class="role-card observer">
+          <strong>Sara</strong>
+          <span>Observa y documenta</span>
+          <p>No manipula bornes de red ni una fuente energizada.</p>
+        </article>
+        <article class="role-card competent">
+          <strong>Persona competente</strong>
+          <span>Ejecuta y verifica</span>
+          <p>Selecciona materiales, realiza conexiones y controla la primera prueba.</p>
+        </article>
+        <article class="role-card stop">
+          <strong>Cualquiera</strong>
+          <span>Puede ordenar parar</span>
+          <p>Ante una duda, daño, olor, ruido, calor, chispa o disparo de protección.</p>
+        </article>
+      </div>
+
+      <div class="progress-panel">
+        <div class="progress-copy">
+          <strong data-progress-text>0 comprobaciones realizadas</strong>
+          <div class="progress-track" role="progressbar" aria-label="Progreso del Capítulo 1" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
+            <span data-progress-bar></span>
+          </div>
+        </div>
+        <button class="reset-button" type="button" data-reset-checklist>Borrar progreso</button>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c1-regla-desenchufado"><input id="c1-regla-desenchufado" type="checkbox" data-checklist><span>Entendido: cualquier cambio se hace con el enchufe físicamente fuera de la toma.</span></label>
+        <label class="check-row" for="c1-regla-adulto"><input id="c1-regla-adulto" type="checkbox" data-checklist><span>Una persona adulta competente ha aceptado realizar y revisar la parte de red.</span></label>
+        <label class="check-row" for="c1-regla-sin-carga"><input id="c1-regla-sin-carga" type="checkbox" data-checklist><span>PWM, motor, ESP32 y resto del experimento seguirán desconectados.</span></label>
+      </div>
+
+      <aside class="notice warning">
+        <strong>Este capítulo no sustituye el manual del fabricante ni una inspección eléctrica.</strong> Cuando falta un dato del modelo real se conserva como TODO y el primer encendido queda bloqueado.
+      </aside>
+      <div class="page-footer">La seguridad no es una casilla decorativa: cada bloqueo debe poder demostrarse.</div>
+    </section>
+
+    <section class="page" id="frontera" aria-labelledby="frontera-title">
+      <span class="page-number">Página 2</span>
+      <p class="eyebrow">Capítulo 1 · Mapa</p>
+      <h2 id="frontera-title">La frontera entre red y baja tensión</h2>
+      <p class="page-subtitle">Solo la fuente cruza de una zona a la otra.</p>
+
+      <div class="flow-diagram" aria-label="Red colombiana de 120 voltios y 60 hercios, cable protegido, fuente y salida de 12 voltios">
+        <div class="flow-node mains-node">Red 120 V · 60 Hz</div><span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-node mains-node">Enchufe + cable</div><span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-node protected-node">Fuente protegida</div><span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-node low-voltage-node">V− / V+ · 12 V DC</div><span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-node muted-node">PWM · Capítulo 2</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="box danger">
+          <span class="box-title">Zona de red</span>
+          <ul>
+            <li>Enchufe, cable y bornes L, N y tierra.</li>
+            <li>Selector de rango 110/220, si la unidad lo incorpora.</li>
+            <li>Debe quedar cerrada, sujeta y fuera del alcance.</li>
+          </ul>
+        </div>
+        <div class="box success">
+          <span class="box-title">Zona de 12 V</span>
+          <ul>
+            <li>Bornes V− y V+ de salida continua.</li>
+            <li>Se comprueba primero sin PWM ni motor.</li>
+            <li>No es la zona de red, pero un cortocircuito sigue siendo peligroso.</li>
+          </ul>
+        </div>
+      </div>
+
+      <table class="spec-table">
+        <tbody>
+          <tr><th>Red local</th><td>En Colombia, la toma doméstica prevista para este proyecto es de <strong>120 V AC, 60 Hz</strong>. Existen sistemas con 208 V entre fases o 240 V entre conductores activos: <strong>no se utilizarán</strong> para esta fuente configurada en rango bajo.</td></tr>
+          <tr><th>Fuente anunciada</th><td>12 V, 10 A, 120 W. Son datos del material recibido/anuncio; deben confirmarse en la placa de características física.</td></tr>
+          <tr><th>Clavija y toma</th><td>La fotografía aportada muestra una clavija <strong>tipo B</strong>: dos láminas planas y un pin redondo de tierra. Solo se usará una toma compatible, con tierra funcional y sin adaptadores que anulen ese pin.</td></tr>
+          <tr><th>Conductores esperados</th><td>Para 120 V según RETIE: <strong>negro = fase, blanco = neutro y verde = protección</strong>. Los colores deben comprobarse en el cable físico; no se presuponen por la fotografía.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="check-group">
+        <label class="check-row" for="c1-mapa-zonas"><input id="c1-mapa-zonas" type="checkbox" data-checklist><span>Podemos señalar qué queda en la zona de red y qué queda en la salida de 12 V.</span></label>
+        <label class="check-row" for="c1-mapa-sin-pwm"><input id="c1-mapa-sin-pwm" type="checkbox" data-checklist><span>El PWM y el motor están apartados para evitar una conexión accidental.</span></label>
+      </div>
+
+      <aside class="notice danger"><strong>No usar el color como única prueba.</strong> Si el cable no contiene exactamente tres conductores reconocibles o sus colores no coinciden, se detiene el trabajo y lo revisa un especialista.</aside>
+      <div class="page-footer">La carcasa metálica perforada no convierte por sí sola la fuente en un equipo terminado y seguro.</div>
+    </section>
+
+    <section class="page" id="bloqueos" aria-labelledby="bloqueos-title">
+      <span class="page-number">Página 3</span>
+      <p class="eyebrow">Capítulo 1 · Puerta de entrada</p>
+      <h2 id="bloqueos-title">Antes de tocar nada</h2>
+      <p class="page-subtitle">Preparar una mesa segura y resolver los datos que todavía faltan.</p>
+
+      <div class="grid-2">
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">1</span>
+            <div><h3>Mesa de trabajo prevista</h3><div class="component-status"><span class="tag reference">Referencia generada</span><span class="tag todo">Verificar material real</span></div></div>
+          </div>
+          <div class="media-frame">
+            <a href="assets/img/cap1-mesa-trabajo-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap1-mesa-trabajo-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia generada de una mesa con alargador desenchufado, fuente, multímetro y herramientas"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">Referencia generada adaptada a Colombia con extensión tipo B. No demuestra que las herramientas, toma ni protecciones reales sean adecuadas.</p>
+        </article>
+        <div>
+          <div class="box warning">
+            <span class="box-title">TODO bloqueantes</span>
+            <p class="decision todo"><strong>Fuente física:</strong> anotar fabricante, modelo y fotografiar completa su placa de características.</p>
+            <p class="decision todo"><strong>Manual real:</strong> confirmar rango de entrada, selector, sección de cable, tipo de terminal, longitud de pelado y par de apriete.</p>
+            <p class="decision todo"><strong>Protección:</strong> definir envolvente, cubrebornes, prensaestopa, ventilación y protección aguas arriba compatibles.</p>
+            <p class="decision todo"><strong>Horquillas:</strong> confirmar que el borne del modelo admite ese terminal. Tenerlas no demuestra compatibilidad.</p>
+          </div>
+          <aside class="notice danger"><strong>Mientras quede cualquiera de estos TODO sin resolver, se puede preparar y documentar con todo desenchufado, pero no realizar el primer encendido.</strong></aside>
+        </div>
+      </div>
+
+      <div class="check-group">
+        <h3>Preparación comprobable</h3>
+        <label class="check-row" for="c1-mesa-seca"><input id="c1-mesa-seca" type="checkbox" data-checklist><span>Mesa seca, despejada, estable y sin objetos metálicos sueltos.</span></label>
+        <label class="check-row" for="c1-herramientas"><input id="c1-herramientas" type="checkbox" data-checklist><span>Pelacables, cortacables, crimpadora y destornillador son adecuados y están en buen estado.</span></label>
+        <label class="check-row" for="c1-multimetro"><input id="c1-multimetro" type="checkbox" data-checklist><span>Multímetro, puntas y fusibles internos han sido revisados por la persona competente.</span></label>
+        <label class="check-row" for="c1-foto-etiqueta"><input id="c1-foto-etiqueta" type="checkbox" data-checklist><span>Fabricante, modelo y placa de características de la fuente real están fotografiados y legibles.</span></label>
+        <label class="check-row" for="c1-manual-real"><input id="c1-manual-real" type="checkbox" data-checklist><span>Se dispone del manual correspondiente exactamente a ese modelo.</span></label>
+      </div>
+
+      <label class="observation" for="c1-datos-fuente">Fabricante, modelo y enlace o referencia del manual
+        <textarea id="c1-datos-fuente" data-note placeholder="No copiar el nombre del anuncio: escribir lo leído en la fuente física."></textarea>
+      </label>
+      <div class="page-footer">Una fotografía genérica sirve para reconocer; la placa real decide.</div>
+    </section>
+
+    <section class="page" id="alargador" aria-labelledby="alargador-title">
+      <span class="page-number">Página 4</span>
+      <p class="eyebrow">Capítulo 1 · Cable</p>
+      <h2 id="alargador-title">Revisar el alargador real</h2>
+      <p class="page-subtitle">Conservaremos el enchufe macho y retiraremos después el extremo hembra.</p>
+
+      <div class="grid-2">
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">2</span>
+            <div><h3>Alargador tipo B con toma de tierra</h3><div class="component-status"><span class="tag owned">Foto del material aportado</span></div></div>
+          </div>
+          <div class="media-frame vertical">
+            <a href="assets/img/alargador-con-tierra.webp" target="_blank" rel="noopener"><img src="assets/img/alargador-con-tierra.webp" width="1084" height="1199" loading="lazy" alt="Alargador blanco con enchufe y base múltiple con contactos de tierra"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">Fotografía del paquete aportado: la forma corresponde a tipo B con tierra usada en Colombia. Antes de modificarlo se inspeccionará la unidad física y su marcación.</p>
+        </article>
+        <div>
+          <ol class="step-list">
+            <li><strong>Sacar el enchufe de la pared.</strong> La persona competente mantiene a la vista los dos extremos.</li>
+            <li><strong>Desenrollar todo el cable.</strong> No trabajar con el alargador enrollado ni conectado a otra regleta.</li>
+            <li><strong>Leer sus marcas.</strong> Fotografiar tensión, corriente, sección, certificaciones y cualquier advertencia.</li>
+            <li><strong>Inspeccionar palmo a palmo.</strong> Buscar cortes, aplastamientos, calentamiento, empalmes, rigidez o decoloración.</li>
+            <li><strong>Comprobar la toma de tierra.</strong> El enchufe y la base deben tener contactos de protección y el cable deberá revelar tres conductores.</li>
+            <li><strong>Marcar qué se conserva.</strong> Etiqueta “CONSERVAR” junto al enchufe macho; etiqueta “CORTAR” junto a la base hembra.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="check-group box danger">
+        <span class="box-title">No continuar hasta</span>
+        <label class="check-row" for="c1-alargador-desenchufado"><input id="c1-alargador-desenchufado" type="checkbox" data-checklist><span>Ambos extremos están a la vista y el enchufe macho está fuera de cualquier toma.</span></label>
+        <label class="check-row" for="c1-alargador-sano"><input id="c1-alargador-sano" type="checkbox" data-checklist><span>No hay daños, empalmes, marcas de calor ni deformaciones.</span></label>
+        <label class="check-row" for="c1-alargador-marca"><input id="c1-alargador-marca" type="checkbox" data-checklist><span>Las especificaciones del cable se han fotografiado y la persona competente las considera adecuadas.</span></label>
+        <label class="check-row" for="c1-alargador-etiquetas"><input id="c1-alargador-etiquetas" type="checkbox" data-checklist><span>Los extremos “CONSERVAR” y “CORTAR” están inequívocamente marcados.</span></label>
+      </div>
+
+      <aside class="notice warning"><strong>Descartar el cable completo</strong> si está dañado, si no tiene tierra, si no aparecen sus características o si la persona competente no puede confirmar que sea apropiado.</aside>
+      <div class="page-footer">Decisión conservada del Capítulo 0: se mantiene el enchufe macho y se retira la base hembra.</div>
+    </section>
+
+    <section class="page" id="corte" aria-labelledby="corte-title">
+      <span class="page-number">Página 5</span>
+      <p class="eyebrow">Capítulo 1 · Preparación del cable</p>
+      <h2 id="corte-title">Cortar el extremo hembra</h2>
+      <p class="page-subtitle">Esta operación la realiza la persona adulta competente, siempre sin tensión.</p>
+
+      <div class="grid-2">
+        <div>
+          <ol class="step-list">
+            <li><strong>Verificar otra vez el desenchufado.</strong> No basta con apagar un interruptor: el enchufe debe estar sobre la mesa.</li>
+            <li><strong>Cortar únicamente el extremo marcado.</strong> Hacer un corte limpio en cable sano, próximo a la base hembra pero sin afectar a la longitud útil prevista.</li>
+            <li><strong>Separar la base cortada.</strong> No podrá volver a utilizarse como alargador; etiquetarla y retirarla del banco.</li>
+            <li><strong>Examinar la sección.</strong> Deben verse exactamente tres conductores aislados dentro de la cubierta exterior.</li>
+            <li><strong>No pelar todavía “a ojo”.</strong> La longitud exterior dependerá del recorrido dentro de la envolvente y la individual dependerá del borne/manual real.</li>
+          </ol>
+          <aside class="notice danger"><strong>Parar:</strong> dos conductores, colores inesperados, aislamiento cortado, cobre ennegrecido, humedad o relleno deteriorado obligan a sustituir el cable.</aside>
+        </div>
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">3</span>
+            <div><h3>Aspecto esperado tras abrir la cubierta</h3><div class="component-status"><span class="tag reference">Referencia generada</span></div></div>
+          </div>
+          <div class="media-frame">
+            <a href="assets/img/cap1-conductores-sin-pelar-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap1-conductores-sin-pelar-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia generada de un cable blanco abierto con tres conductores aislados negro, blanco y verde, sin cobre visible"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">Referencia generada. La fotografía real del corte debe añadirse al registro antes de continuar.</p>
+        </article>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c1-corte-adulto"><input id="c1-corte-adulto" type="checkbox" data-checklist><span>El corte lo ha realizado la persona competente con el enchufe a la vista y desenchufado.</span></label>
+        <label class="check-row" for="c1-corte-tres"><input id="c1-corte-tres" type="checkbox" data-checklist><span>La sección muestra tres conductores aislados y ninguno presenta daños.</span></label>
+        <label class="check-row" for="c1-corte-foto"><input id="c1-corte-foto" type="checkbox" data-checklist><span>Se ha tomado una foto real, nítida y de cerca del extremo cortado.</span></label>
+      </div>
+
+      <label class="observation" for="c1-observacion-cable">Marcas leídas en el cable y observaciones del corte
+        <textarea id="c1-observacion-cable" data-note placeholder="Tensión, corriente, sección, estado y ruta prevista dentro de la caja."></textarea>
+      </label>
+      <div class="page-footer">No hay una longitud universal de pelado: la define la combinación cable–borne–terminal del modelo real.</div>
+    </section>
+
+    <section class="page" id="conductores" aria-labelledby="conductores-title">
+      <span class="page-number">Página 6</span>
+      <p class="eyebrow">Capítulo 1 · Identificación</p>
+      <h2 id="conductores-title">Identificar y verificar los tres conductores</h2>
+      <p class="page-subtitle">Los colores orientan; las etiquetas y comprobaciones confirman.</p>
+
+      <div class="wire-map" aria-label="Código de colores previsto para los conductores">
+        <div class="wire-row"><span class="wire-swatch phase-black" aria-hidden="true"></span><strong>Negro</strong><span>Conductor de fase → borne <strong>L</strong> de la fuente</span></div>
+        <div class="wire-row"><span class="wire-swatch neutral-white" aria-hidden="true"></span><strong>Blanco</strong><span>Conductor neutro → borne <strong>N</strong> de la fuente</span></div>
+        <div class="wire-row"><span class="wire-swatch earth-green" aria-hidden="true"></span><strong>Verde</strong><span>Tierra de protección → borne con símbolo de tierra / FG / PE</span></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Comprobación sin tensión</span>
+          <ol class="step-list">
+            <li>La persona competente confirma que el cable sigue separado de la fuente y de la red.</li>
+            <li>Usa el multímetro en continuidad siguiendo su manual, nunca en una toma energizada.</li>
+            <li>Verifica que tierra llega a los contactos de protección del enchufe.</li>
+            <li>Comprueba continuidad de los otros dos conductores hasta los dos pines y ausencia de cortos entre conductores.</li>
+            <li>Coloca etiquetas permanentes L, N y PE cerca del extremo, sin dañar el aislamiento.</li>
+          </ol>
+        </div>
+        <div class="box warning">
+          <span class="box-title">Matiz importante</span>
+          <p>La clavija tipo B está diseñada con dos láminas y un pin de tierra, pero la fotografía no demuestra el cableado interno ni el estado de la toma. La continuidad permite verificar cada hilo y detectar fallos sin energizar.</p>
+          <p>La conexión prevista respeta el código colombiano verificado: negro a L, blanco a N y verde exclusivamente a protección. Si los colores reales difieren, <strong>se detiene el trabajo</strong> y lo revisa una persona competente.</p>
+        </div>
+      </div>
+
+      <div class="check-group">
+        <label class="check-row" for="c1-colores"><input id="c1-colores" type="checkbox" data-checklist><span>Los tres colores coinciden con el código previsto; si no, el cable se ha descartado.</span></label>
+        <label class="check-row" for="c1-continuidad-tierra"><input id="c1-continuidad-tierra" type="checkbox" data-checklist><span>Continuidad de tierra comprobada hasta los contactos de protección del enchufe.</span></label>
+        <label class="check-row" for="c1-sin-cortos"><input id="c1-sin-cortos" type="checkbox" data-checklist><span>No existe continuidad entre conductores distintos.</span></label>
+        <label class="check-row" for="c1-etiquetas"><input id="c1-etiquetas" type="checkbox" data-checklist><span>L, N y PE han quedado etiquetados sin cubrir daños ni pelar aislamiento.</span></label>
+      </div>
+
+      <aside class="notice danger"><strong>La tierra nunca se reutiliza como conductor activo.</strong> Si su continuidad falla, no se puentea ni se “arregla” omitiéndola: se sustituye el cable.</aside>
+      <div class="page-footer">Las pruebas de continuidad descritas se realizan exclusivamente con el conjunto desenchufado.</div>
+    </section>
+
+    <section class="page" id="terminales" aria-labelledby="terminales-title">
+      <span class="page-number">Página 7</span>
+      <p class="eyebrow">Capítulo 1 · Terminación</p>
+      <h2 id="terminales-title">Pelar y crimpar sin dejar cobre suelto</h2>
+      <p class="page-subtitle">Primero se confirma el terminal admitido; después se prepara el conductor.</p>
+
+      <div class="detail-gallery">
+        <figure>
+          <a href="assets/img/terminales-horquilla.webp" target="_blank" rel="noopener"><img src="assets/img/terminales-horquilla.webp" width="1200" height="793" loading="lazy" alt="Terminales de horquilla aislados rojos del material aportado"></a>
+          <figcaption>Foto aportada · Horquillas disponibles. Su presencia no confirma que encajen o estén autorizadas por el borne real.</figcaption>
+        </figure>
+        <figure>
+          <a href="assets/img/cap1-terminales-crimpados-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap1-terminales-crimpados-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia generada de tres conductores negro, verde y blanco terminados con horquillas aisladas sin cobre visible"></a>
+          <figcaption>Referencia generada · Aspecto visual buscado si el fabricante admite horquilla: aislamiento íntegro, terminal completo y ningún hilo suelto.</figcaption>
+        </figure>
+      </div>
+
+      <div class="box warning">
+        <span class="box-title">Decisión pendiente</span>
+        <p class="decision todo"><strong>TODO:</strong> confirmar en el manual del modelo real si el borne acepta horquilla, conductor flexible directo o puntera/férula; confirmar sección, longitud de pelado, tamaño de terminal, matriz de crimpado y par de apriete.</p>
+        <p>Los terminales disponibles se mantienen en el plan del proyecto, pero <strong>no se fuerzan</strong> si el fabricante exige otra terminación.</p>
+      </div>
+
+      <ol class="step-list">
+        <li>La persona competente decide la terminación a partir del manual y de la geometría real del borne.</li>
+        <li>Mide el recorrido dentro de la caja: no debe quedar tirante ni acercarse a bordes o ventilación.</li>
+        <li>Retira solo la cubierta y el aislamiento indicados, sin cortar ni marcar los hilos de cobre.</li>
+        <li>Introduce todos los hilos hasta el fondo del terminal compatible y realiza el crimpado con la matriz adecuada.</li>
+        <li>Hace una prueba de tracción moderada a cada terminal y una inspección ampliada: cero hilos fuera y cero cobre visible más allá de lo admitido.</li>
+        <li>Si un crimpado falla, corta ese terminal y repite con uno nuevo; no lo “refuerza” con estaño salvo instrucción expresa del fabricante.</li>
+      </ol>
+
+      <div class="check-group">
+        <label class="check-row" for="c1-terminal-compatible"><input id="c1-terminal-compatible" type="checkbox" data-checklist><span>Tipo y tamaño de terminal confirmados en documentación del modelo real.</span></label>
+        <label class="check-row" for="c1-pelado-medida"><input id="c1-pelado-medida" type="checkbox" data-checklist><span>Longitud de pelado tomada del fabricante, no estimada a partir de una fotografía.</span></label>
+        <label class="check-row" for="c1-crimp-tres"><input id="c1-crimp-tres" type="checkbox" data-checklist><span>Los tres terminales superan tracción e inspección visual; no hay hilos sueltos ni cobre indebido.</span></label>
+      </div>
+      <div class="page-footer">Un terminal bonito en una foto puede ser mecánica y eléctricamente incorrecto; manda la especificación.</div>
+    </section>
+
+    <section class="page" id="proteccion" aria-labelledby="proteccion-title">
+      <span class="page-number">Página 8</span>
+      <p class="eyebrow">Capítulo 1 · Protección física</p>
+      <h2 id="proteccion-title">Montar y proteger la fuente</h2>
+      <p class="page-subtitle">La carcasa perforada necesita una instalación final que impida el contacto accidental.</p>
+
+      <div class="grid-2">
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">4</span>
+            <div><h3>Concepto de envolvente segura</h3><div class="component-status"><span class="tag reference">Referencia generada</span><span class="tag todo">Diseño por validar</span></div></div>
+          </div>
+          <div class="media-frame">
+            <a href="assets/img/cap1-proteccion-fuente-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap1-proteccion-fuente-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia generada de una fuente fijada en caja transparente con cubrebornes opacos, prensaestopa y enchufe fuera de la toma"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">Referencia conceptual generada con clavija tipo B para Colombia: no define dimensiones, ventilación, material, conformidad RETIE ni cableado interno del montaje real.</p>
+        </article>
+        <div>
+          <div class="box blue">
+            <span class="box-title">La protección debe resolver</span>
+            <ul class="status-list">
+              <li><strong>Fijación:</strong> la fuente y la caja no se desplazan al tirar del cable.</li>
+              <li><strong>Contacto:</strong> dedos, herramientas y piezas sueltas no alcanzan bornes ni partes de red.</li>
+              <li><strong>Tracción:</strong> el prensaestopa aprieta la cubierta exterior, nunca los tres hilos interiores.</li>
+              <li><strong>Bordes:</strong> el cable no roza chapa ni cantos cortantes.</li>
+              <li><strong>Ventilación:</strong> se respetan orientación, distancias y flujo exigidos por el fabricante.</li>
+              <li><strong>Tierra:</strong> la protección PE llega al punto previsto; cualquier pieza metálica accesible se trata según el manual/diseño competente.</li>
+            </ul>
+          </div>
+          <aside class="notice warning"><strong>No copiar literalmente la imagen.</strong> Es una referencia visual de los principios. La envolvente real se decide al medir la fuente y leer su manual.</aside>
+        </div>
+      </div>
+
+      <div class="check-group box danger">
+        <span class="box-title">No continuar hasta</span>
+        <label class="check-row" for="c1-fijacion"><input id="c1-fijacion" type="checkbox" data-checklist><span>Fuente y envolvente están fijadas de forma estable con elementos adecuados.</span></label>
+        <label class="check-row" for="c1-prensaestopa"><input id="c1-prensaestopa" type="checkbox" data-checklist><span>El prensaestopa sujeta la cubierta exterior y el cable supera una prueba de tracción controlada.</span></label>
+        <label class="check-row" for="c1-cubrebornes"><input id="c1-cubrebornes" type="checkbox" data-checklist><span>Bornes y partes de red quedan protegidos frente al contacto accidental.</span></label>
+        <label class="check-row" for="c1-ventilacion"><input id="c1-ventilacion" type="checkbox" data-checklist><span>Ventilación y distancias coinciden con las instrucciones del modelo real.</span></label>
+        <label class="check-row" for="c1-proteccion-arriba"><input id="c1-proteccion-arriba" type="checkbox" data-checklist><span>La persona competente ha definido toma, diferencial/RCD y protección contra sobrecorriente aplicables.</span></label>
+      </div>
+      <div class="page-footer">Cubrir bornes sin resolver fijación, tracción y ventilación no completa la protección.</div>
+    </section>
+
+    <section class="page" id="bornes" aria-labelledby="bornes-title">
+      <span class="page-number">Página 9</span>
+      <p class="eyebrow">Capítulo 1 · Conexión desenchufada</p>
+      <h2 id="bornes-title">Conectar L, N y tierra en la fuente real</h2>
+      <p class="page-subtitle">La fotografía orienta; las marcas grabadas en la unidad deciden.</p>
+
+      <div class="detail-gallery">
+        <figure>
+          <a href="assets/img/fuente-bornes.webp" target="_blank" rel="noopener"><img src="assets/img/fuente-bornes.webp" width="788" height="764" loading="lazy" alt="Fotografía aportada de referencia de los bornes L, N, tierra, V negativo y V positivo de una fuente"></a>
+          <figcaption>Foto aportada/anuncio · Presenta el orden L, N, tierra, V− y V+. Debe compararse con la fuente física.</figcaption>
+        </figure>
+        <figure>
+          <a href="assets/img/fuente-12v-10a-vista.webp" target="_blank" rel="noopener"><img src="assets/img/fuente-12v-10a-vista.webp" width="966" height="690" loading="lazy" alt="Vista aportada de una fuente conmutada metálica perforada de 12 voltios"></a>
+          <figcaption>Foto aportada/anuncio · Ayuda a reconocer la fuente, pero no confirma fabricante, modelo ni aprietes.</figcaption>
+        </figure>
+      </div>
+
+      <div class="terminal-map" aria-label="Correspondencia prevista de conductores y bornes">
+        <div><span class="wire-swatch phase-black" aria-hidden="true"></span><strong>Negro verificado</strong><span aria-hidden="true">→</span><strong>L</strong></div>
+        <div><span class="wire-swatch neutral-white" aria-hidden="true"></span><strong>Blanco verificado</strong><span aria-hidden="true">→</span><strong>N</strong></div>
+        <div><span class="wire-swatch earth-green" aria-hidden="true"></span><strong>Verde verificado</strong><span aria-hidden="true">→</span><strong>PE / FG / símbolo de tierra</strong></div>
+      </div>
+
+      <ol class="step-list">
+        <li>La persona competente vuelve a comprobar que el enchufe está fuera de la toma y que no hay otra alimentación conectada.</li>
+        <li>Lee, ilumina y fotografía las marcas L, N y tierra de la fuente física; si no son inequívocas, se detiene.</li>
+        <li>Introduce cada terminación compatible completamente en su borne, sin cruzar cables ni invadir los bornes V−/V+.</li>
+        <li>Aprieta con la herramienta y el par especificados por el fabricante del modelo real.</li>
+        <li>Realiza una prueba de tracción individual, inspecciona que todos los hilos estén dentro y vuelve a colocar el cubrebornes.</li>
+        <li>Deja V− y V+ sin carga. Solo se prepararán los puntos de medida protegidos de la página 11.</li>
+      </ol>
+
+      <div class="check-group">
+        <label class="check-row" for="c1-bornes-reales"><input id="c1-bornes-reales" type="checkbox" data-checklist><span>L, N y tierra están identificados directamente en la fuente física.</span></label>
+        <label class="check-row" for="c1-bornes-mapa"><input id="c1-bornes-mapa" type="checkbox" data-checklist><span>Negro→L, blanco→N y verde→protección coinciden con el cable físico, el RETIE y el manual verificados.</span></label>
+        <label class="check-row" for="c1-par"><input id="c1-par" type="checkbox" data-checklist><span>El apriete se ha realizado al valor del fabricante con herramienta adecuada.</span></label>
+        <label class="check-row" for="c1-bornes-cerrados"><input id="c1-bornes-cerrados" type="checkbox" data-checklist><span>No hay cobre ni hilos fuera, la tracción es correcta y el cubrebornes está colocado.</span></label>
+      </div>
+
+      <aside class="notice danger"><strong>Si el orden de la fuente real contradice la imagen del anuncio, manda la fuente real y su manual.</strong> No se cambia la conexión para hacerla coincidir con esta página: se documenta la diferencia como TODO.</aside>
+      <div class="page-footer">La conexión se revisa cerrada y desenchufada antes de pensar en energizar.</div>
+    </section>
+
+    <section class="page" id="selector" aria-labelledby="selector-title">
+      <span class="page-number">Página 10</span>
+      <p class="eyebrow">Capítulo 1 · Configuración de entrada</p>
+      <h2 id="selector-title">Configurar el rango de red</h2>
+      <p class="page-subtitle">En Colombia la toma prevista es 120 V AC, 60 Hz; el selector físico y el manual deben coincidir.</p>
+
+      <div class="grid-2">
+        <article class="component-card">
+          <div class="component-card-header">
+            <span class="component-number">5</span>
+            <div><h3>Selector mostrado en el anuncio</h3><div class="component-status"><span class="tag reference">Referencia aportada</span><span class="tag todo">Verificar en la unidad</span></div></div>
+          </div>
+          <div class="media-frame">
+            <a href="assets/img/fuente-selector-tension.webp" target="_blank" rel="noopener"><img src="assets/img/fuente-selector-tension.webp" width="1200" height="1200" loading="lazy" alt="Imagen aportada de un selector de tensión de entrada con posiciones 110 y 220"></a>
+            <span class="zoom-hint">Abrir imagen</span>
+          </div>
+          <p class="photo-note">La imagen del anuncio indica posiciones 110/220, pero no demuestra la orientación ni el estado de la fuente recibida.</p>
+        </article>
+        <div>
+          <ol class="step-list">
+            <li><strong>Localizar el selector real, si existe.</strong> Algunas fuentes son de rango automático y no lo incorporan.</li>
+            <li><strong>Leer las marcas sin suponer izquierda/derecha.</strong> Compararlas con el manual exacto y la placa de características.</li>
+            <li><strong>Con la fuente desenchufada,</strong> la persona competente sitúa el selector en el rango bajo que incluya 120 V. Si el mando dice 110/220, la posición candidata es 110, pero solo el manual exacto puede confirmarlo.</li>
+            <li><strong>Marcar la posición validada.</strong> Fotografiar selector, marca y placa en la misma sesión.</li>
+            <li><strong>No volver a moverlo.</strong> Un cambio accidental obliga a repetir toda la revisión previa.</li>
+          </ol>
+          <div class="box danger">
+            <span class="box-title">Peligro</span>
+            <p>Este proyecto no se conectará entre fases ni a 208/240 V. Hacerlo con el selector en rango bajo 110/115 puede destruir la fuente y provocar humo, incendio o exposición eléctrica. La posición 220 tampoco convierte una toma de 120 V en una alimentación correcta.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="check-group box danger">
+        <span class="box-title">No continuar hasta</span>
+        <label class="check-row" for="c1-red-local"><input id="c1-red-local" type="checkbox" data-checklist><span>La persona competente ha confirmado las características de la red y la toma que se utilizarán.</span></label>
+        <label class="check-row" for="c1-selector-real"><input id="c1-selector-real" type="checkbox" data-checklist><span>El selector real, o la ausencia de selector por rango automático, está documentado.</span></label>
+        <label class="check-row" for="c1-selector-rango"><input id="c1-selector-rango" type="checkbox" data-checklist><span>La configuración coincide con un rango de entrada que incluye 120 V, 60 Hz, según el manual exacto.</span></label>
+        <label class="check-row" for="c1-selector-foto"><input id="c1-selector-foto" type="checkbox" data-checklist><span>La posición final y la placa de características están fotografiadas con nitidez.</span></label>
+      </div>
+
+      <label class="observation" for="c1-dato-selector">Rango indicado por el manual y posición física confirmada
+        <textarea id="c1-dato-selector" data-note placeholder="Ejemplo de registro, no de decisión: “manual pág. __; selector observado en __; revisado por __”."></textarea>
+      </label>
+      <div class="page-footer">“110” o “115” suele nombrar el rango bajo que puede incluir 120 V; la aceptación exacta se verifica en el manual del modelo.</div>
+    </section>
+
+    <section class="page" id="prueba" aria-labelledby="prueba-title">
+      <span class="page-number">Página 11</span>
+      <p class="eyebrow">Capítulo 1 · Primera energización</p>
+      <h2 id="prueba-title">Medir la salida antes de conectar una carga</h2>
+      <p class="page-subtitle">Solo la persona competente energiza; las manos quedan fuera durante la medida.</p>
+
+      <div class="box danger">
+        <span class="box-title">Puerta de seguridad</span>
+        <p><strong>Este paso no se ejecuta</strong> hasta completar todos los TODO de modelo, manual, terminales, apriete, envolvente, cubrebornes, prensaestopa, ventilación y protección de la instalación.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <span class="box-title">Preparar sin tensión</span>
+          <ol class="step-list">
+            <li>Mantener PWM, motor y cualquier carga separados de V− y V+.</li>
+            <li>Configurar el multímetro para tensión continua en un rango superior a 12 V y comprobar que las puntas están en las entradas correctas.</li>
+            <li>Con el enchufe aún fuera, la persona competente conecta o fija puntas aisladas a V− y V+ sin dejar metal accesible.</li>
+            <li>Cerrar las protecciones, ordenar el cable y dejar libres ventilación y recorrido para desenchufar.</li>
+          </ol>
+        </div>
+        <div class="box success">
+          <span class="box-title">Energizar y registrar</span>
+          <ol class="step-list continued">
+            <li>Todos apartan las manos; la persona competente conecta a la toma protegida definida.</li>
+            <li>Lee la polaridad y la tensión en el multímetro sin abrir ni tocar el montaje.</li>
+            <li>Registra el valor estable. Se espera una salida nominal próxima a 12 V; la tolerancia aceptable la fija el manual real.</li>
+            <li>Desenchufa, espera el tiempo de descarga indicado por el fabricante y confirma ausencia de tensión antes de retirar puntas o modificar nada.</li>
+          </ol>
+        </div>
+      </div>
+
+      <aside class="notice warning"><strong>No ajustar V ADJ durante esta primera prueba.</strong> Si el valor necesita ajuste, se consulta el procedimiento del fabricante y lo realiza una persona competente con el método y herramienta indicados.</aside>
+      <aside class="notice danger"><strong>Desenchufar inmediatamente</strong> ante polaridad inesperada, tensión fuera de lo previsto, olor, humo, ruido anormal, calentamiento rápido, chispa o disparo del diferencial/fusible. No reintentar hasta diagnosticar con todo sin tensión.</aside>
+
+      <div class="check-group">
+        <label class="check-row" for="c1-prueba-carga"><input id="c1-prueba-carga" type="checkbox" data-checklist><span>V− y V+ no alimentan PWM, motor ni otra carga.</span></label>
+        <label class="check-row" for="c1-prueba-puntas"><input id="c1-prueba-puntas" type="checkbox" data-checklist><span>Puntas, rango DC, polaridad y conexiones protegidas han sido revisados antes de enchufar.</span></label>
+        <label class="check-row" for="c1-prueba-personas"><input id="c1-prueba-personas" type="checkbox" data-checklist><span>La persona competente controla la toma; las demás personas mantienen distancia.</span></label>
+        <label class="check-row" for="c1-prueba-resultado"><input id="c1-prueba-resultado" type="checkbox" data-checklist><span>La medida es estable, tiene polaridad correcta y entra en la tolerancia del manual real.</span></label>
+        <label class="check-row" for="c1-prueba-descarga"><input id="c1-prueba-descarga" type="checkbox" data-checklist><span>Tras desenchufar se ha respetado el tiempo de descarga y verificado ausencia de tensión.</span></label>
+      </div>
+
+      <label class="observation" for="c1-registro-medida">Registro de la primera prueba
+        <textarea id="c1-registro-medida" data-note placeholder="Fecha · responsable · toma/protección · tensión V+ respecto a V− · tolerancia del manual · incidencias."></textarea>
+      </label>
+      <div class="page-footer">No se considera “funciona” hasta que la medida y las condiciones de prueba quedan registradas.</div>
+    </section>
+
+    <section class="page" id="cierre" aria-labelledby="cierre-title">
+      <span class="page-number">Página 12</span>
+      <p class="eyebrow">Capítulo 1 · Cierre</p>
+      <h2 id="cierre-title">No pasar al Capítulo 2 hasta…</h2>
+      <p class="page-subtitle">Checklist de salida y trazabilidad técnica.</p>
+
+      <div class="grid-2">
+        <div class="check-group">
+          <h3>Construcción sin tensión</h3>
+          <label class="check-row" for="c1-final-cable"><input id="c1-final-cable" type="checkbox" data-checklist><span>Cable real adecuado, sano, de tres conductores y con continuidad de tierra.</span></label>
+          <label class="check-row" for="c1-final-terminales"><input id="c1-final-terminales" type="checkbox" data-checklist><span>Terminaciones y aprietes compatibles con el modelo y sin cobre expuesto.</span></label>
+          <label class="check-row" for="c1-final-proteccion"><input id="c1-final-proteccion" type="checkbox" data-checklist><span>Fuente fija, bornes cubiertos, cable retenido y ventilación resuelta.</span></label>
+          <label class="check-row" for="c1-final-tierra"><input id="c1-final-tierra" type="checkbox" data-checklist><span>Tierra de protección conectada y verificada de extremo a extremo.</span></label>
+        </div>
+        <div class="check-group">
+          <h3>Validación</h3>
+          <label class="check-row" for="c1-final-manual"><input id="c1-final-manual" type="checkbox" data-checklist><span>Fabricante, modelo, placa y manual exacto archivados.</span></label>
+          <label class="check-row" for="c1-final-selector"><input id="c1-final-selector" type="checkbox" data-checklist><span>Entrada configurada para el rango local y fotografiada.</span></label>
+          <label class="check-row" for="c1-final-medida"><input id="c1-final-medida" type="checkbox" data-checklist><span>Salida V+/V− medida sin carga, con polaridad y tolerancia correctas.</span></label>
+          <label class="check-row" for="c1-final-registro"><input id="c1-final-registro" type="checkbox" data-checklist><span>Responsable, medida, condiciones e incidencias han quedado registradas.</span></label>
+        </div>
+      </div>
+
+      <div class="box danger">
+        <span class="box-title">Estado técnico actual</span>
+        <p>Las fotos disponibles permiten reconocer una fuente genérica y sus bornes, pero <strong>no demuestran fabricante, modelo, terminal admitido, longitud de pelado, par, ventilación ni tiempo de descarga</strong>.</p>
+        <p class="decision todo"><strong>TODO bloqueante del proyecto:</strong> completar esos datos con la fuente física y su manual antes de ejecutar el encendido descrito.</p>
+      </div>
+
+      <section class="source-panel" aria-labelledby="fuentes-title">
+        <h3 id="fuentes-title">Fuentes técnicas consultadas</h3>
+        <ul>
+          <li><a href="https://www.minenergia.gov.co/documents/15921/Libro-3-Resolucion-40284-23-06-2026.pdf" target="_blank" rel="noopener">Ministerio de Minas y Energía · RETIE vigente, Resolución 40284 de 2026, Libro 3</a>: 120 V fase-tierra, 60 Hz, código negro/blanco/verde y requisitos de puesta a tierra.</li>
+          <li><a href="https://www.sic.gov.co/informacion-de-Interes-sobre-congreso-internacional-derecho-de-los-mercados" target="_blank" rel="noopener">Superintendencia de Industria y Comercio · Información sobre electricidad en Colombia</a>: 120 V, 60 Hz y clavijas tipo A/B; para este montaje se exige tipo B con tierra.</li>
+          <li><a href="https://gestornormativo.creg.gov.co/gestor/entorno/docs/concepto_creg_0006068_2025.htm" target="_blank" rel="noopener">CREG · Concepto 6068 de 2025</a>: referencia regulatoria de 108–132 V para suministro residencial nominal de 120 V. La fuente real debe admitir el suministro local.</li>
+          <li><a href="https://www.meanwell.com/Upload/PDF/Enclosed_Type_SP.pdf" target="_blank" rel="noopener">Mean Well · Manual de instalación de fuentes cerradas</a>: guía comparable sobre desconexión, selector, tierra, apriete, envolvente y ventilación.</li>
+          <li><a href="https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF" target="_blank" rel="noopener">Mean Well · Especificación LRS-150</a>: ejemplo comparable de rangos de selector y bornes; <strong>no identifica la fuente del proyecto</strong>.</li>
+          <li><a href="https://assets.phoenixcontact.com/file/d62f9337-3fc6-4a22-84ba-d5658474fd17/media/original?7904.pdf=" target="_blank" rel="noopener">Phoenix Contact · Ferrules and crimp connections</a>: la terminación del conductor flexible depende del borne y de lo declarado por su fabricante.</li>
+        </ul>
+      </section>
+
+      <div class="box success text-center">
+        <div class="big-number">Siguiente: Capítulo 2</div>
+        <p><strong>Fuente → PWM → motor 775.</strong></p>
+        <p>Ya está documentado. Solo se ejecutará cuando la salida segura de 12 V de este capítulo esté demostrada.</p>
+      </div>
+
+      <nav class="bottom-nav" aria-label="Navegación al final del capítulo">
+        <a href="index.html">← Volver a la portada</a>
+        <a href="capitulo-0.html">← Capítulo 0</a>
+        <a href="capitulo-2.html">Capítulo 2 →</a>
+        <button type="button" data-print>Imprimir / Guardar PDF</button>
+      </nav>
+      <div class="page-footer">Generador electromagnético experimental · Fin del Capítulo 1</div>
+    </section>
+  </main>
+  <script src="assets/js/checklist.js" defer></script>
+  <script src="assets/js/navigation.js" defer></script>
+</body>
+</html>

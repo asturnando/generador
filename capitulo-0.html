@@ -7,14 +7,14 @@
   <title>Capítulo 0 · Preparación, inventario y materiales pendientes</title>
   <link rel="stylesheet" href="assets/css/manual.css">
 </head>
-<body>
+<body data-storage-namespace="generador:capitulo-0:v2:" data-checklist-label="Capítulo 0">
   <a class="skip-link" href="#capitulo">Saltar al capítulo</a>
 
   <header class="toolbar" aria-label="Navegación del manual">
     <strong class="toolbar-title">Manual del generador · Capítulo 0</strong>
     <a href="index.html">← Portada</a>
     <span class="is-disabled" aria-label="No hay capítulo anterior">Anterior</span>
-    <span class="is-disabled" aria-label="El capítulo siguiente está en preparación">Siguiente</span>
+    <a href="capitulo-1.html">Siguiente</a>
     <details class="quick-menu">
       <summary>Índice rápido</summary>
       <nav aria-label="Índice del Capítulo 0">
@@ -247,8 +247,8 @@
         </article>
 
         <article class="component-card">
-          <header class="component-card-header"><span class="component-number">15</span><div><h3>Kit de resistencias</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag todo">TODO: foto propia</span></div></div></header>
-          <div class="media-placeholder"><div><strong>FOTO REAL PENDIENTE</strong>El ZIP no contiene una imagen inequívoca del kit de resistencias. Añadirla al abrir el paquete.</div></div>
+          <header class="component-card-header"><span class="component-number">15</span><div><h3>Kit de resistencias</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: foto propia</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/kit-resistencias-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/kit-resistencias-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de un kit genérico de resistencias axiales en organizador"></a><span class="zoom-hint">Abrir referencia</span></figure>
           <div class="component-body">
             <p><strong>Qué es:</strong> una colección de resistencias de distintos valores, normalmente agrupadas y etiquetadas.</p>
             <p><strong>Para qué sirve:</strong> pruebas auxiliares, LEDs y adaptación de señales en capítulos posteriores.</p>
@@ -256,7 +256,7 @@
             <label class="component-check" for="recibido-kit-resistencias"><input id="recibido-kit-resistencias" type="checkbox" data-checklist data-key="recibido-kit-resistencias"><span>Kit recibido y valores/etiquetas legibles.</span></label>
             <label class="observation" for="nota-kit-resistencias">Observaciones<textarea id="nota-kit-resistencias" data-note data-key="nota-kit-resistencias" placeholder="Rango de valores, presentación, cantidades…"></textarea></label>
           </div>
-          <p class="photo-note">No se usa una foto genérica para evitar confundir el surtido real.</p>
+          <p class="photo-note">Referencia fotográfica generada para reconocer el tipo de componente. No representa el surtido comprado: comprobar valores, cantidades y presentación al recibirlo.</p>
         </article>
       </div>
       <div class="page-footer">Electrónica comprada · Identificar ahora, conectar más adelante</div>
@@ -393,7 +393,7 @@
       <div class="detail-gallery">
         <figure><a href="assets/img/fuente-12v-10a-vista.webp" target="_blank" rel="noopener"><img src="assets/img/fuente-12v-10a-vista.webp" width="966" height="690" loading="lazy" alt="Vista de la fuente con la fila de bornes y sus símbolos"></a><figcaption>Vista del anuncio: posición aproximada de L, N, tierra, V− y V+. La pieza real manda.</figcaption></figure>
         <figure><a href="assets/img/fuente-bornes.webp" target="_blank" rel="noopener"><img src="assets/img/fuente-bornes.webp" width="788" height="764" loading="lazy" alt="Primer plano de los bornes de una fuente 12 V 10 A 120 W"></a><figcaption>Detalle de bornes. La fotografía no autoriza ninguna conexión.</figcaption></figure>
-        <figure><a href="assets/img/fuente-selector-tension.webp" target="_blank" rel="noopener"><img src="assets/img/fuente-selector-tension.webp" width="1200" height="1200" loading="lazy" alt="Imagen de referencia de un selector de tensión 110 y 220 voltios"></a><figcaption>Referencia del anuncio para localizar un posible selector 110/220.</figcaption></figure>
+        <figure><a href="assets/img/fuente-selector-tension.webp" target="_blank" rel="noopener"><img src="assets/img/fuente-selector-tension.webp" width="1200" height="1200" loading="lazy" alt="Imagen de referencia de un selector de tensión 110 y 220 voltios"></a><figcaption>Referencia del anuncio para localizar un posible selector 110/220. En Colombia se verificará el rango bajo que incluya 120 V, 60 Hz.</figcaption></figure>
         <figure><a href="assets/img/pwm-vista.webp" target="_blank" rel="noopener"><img src="assets/img/pwm-vista.webp" width="1200" height="886" loading="lazy" alt="Segunda vista del PWM con mando, tuerca y cuatro bornes"></a><figcaption>Segunda vista del PWM: pertenece a 12 V DC y se mantiene separado de la red.</figcaption></figure>
       </div>
 
@@ -407,7 +407,7 @@
           <li>Pedir revisión a una persona adulta o competente antes del primer encendido.</li>
         </ul>
       </aside>
-      <p class="decision pending"><strong>Plan registrado para el Capítulo 1:</strong> conservar el enchufe macho de la extensión y retirar el extremo hembra para acceder a los tres conductores. <strong>No se hace ahora</strong> y queda sujeto a comprobar la extensión real, la red local y el procedimiento con una persona competente.</p>
+      <p class="decision pending"><strong>Plan registrado para el Capítulo 1:</strong> conservar la clavija macho tipo B con tierra de la extensión y retirar el extremo hembra para acceder a los tres conductores. <strong>No se hace ahora</strong> y queda sujeto a comprobar la extensión real, una toma colombiana de 120 V y 60 Hz con tierra funcional, y el procedimiento con una persona competente.</p>
       <p class="decision todo"><strong>TODO de seguridad:</strong> fotografiar la fuente recibida por todos sus lados y sustituir estas referencias del anuncio si la disposición no coincide.</p>
       <div class="page-footer">Comprobar en la pieza física antes de conectar.</div>
     </section>
@@ -488,21 +488,24 @@
 
       <div class="inventory-grid">
         <article class="component-card">
-          <header class="component-card-header"><span class="component-number">17</span><div><h3>ESP32-S3 · 44 pines · USB-C</h3><div class="component-status"><span class="tag owned">Ya disponible</span><span class="tag todo">TODO: foto propia</span></div></div></header>
-          <div class="media-placeholder"><div><strong>FOTO REAL PENDIENTE</strong>Fotografiar la cara superior de la placa, el conector USB-C y los textos de los pines.</div></div>
+          <header class="component-card-header"><span class="component-number">17</span><div><h3>ESP32-S3 · 44 pines · USB-C</h3><div class="component-status"><span class="tag owned">Ya disponible</span><span class="tag reference">Foto oficial</span><span class="tag todo">TODO: comprobar placa</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/esp32-s3-devkitc-1-oficial.webp" target="_blank" rel="noopener"><img src="assets/img/esp32-s3-devkitc-1-oficial.webp" width="800" height="695" loading="lazy" alt="Fotografía oficial de referencia de una placa ESP32-S3-DevKitC-1 con dos filas de pines y dos conectores USB-C"></a><span class="zoom-hint">Abrir referencia</span></figure>
           <div class="component-body"><p><strong>Qué es:</strong> el microcontrolador que leerá sensores y enviará datos al ordenador.</p><p class="recognition"><strong>Cómo reconocerlo:</strong> placa alargada con dos filas de pines, módulo metálico y conector USB-C. El pinout debe corresponder a esta placa concreta, no a otra ESP32.</p><label class="component-check" for="localizado-esp32"><input id="localizado-esp32" type="checkbox" data-checklist data-key="localizado-esp32"><span>ESP32-S3 y cable USB de datos localizados.</span></label><label class="observation" for="nota-esp32">Observaciones<textarea id="nota-esp32" data-note data-key="nota-esp32" placeholder="Texto exacto de la placa, número de pines, cable USB…"></textarea></label></div>
+          <p class="photo-note">Fotografía real de referencia publicada por Espressif para la familia ESP32-S3-DevKitC-1. No confirma la revisión, memoria ni pinout de la unidad disponible.</p>
         </article>
 
         <article class="component-card">
-          <header class="component-card-header"><span class="component-number">18</span><div><h3>Cables Dupont</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag todo">TODO: foto propia</span></div></div></header>
-          <div class="media-placeholder"><div><strong>FOTO REAL PENDIENTE</strong>Extender varios cables para distinguir extremos macho y hembra.</div></div>
+          <header class="component-card-header"><span class="component-number">18</span><div><h3>Cables Dupont</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: foto propia</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/cables-dupont-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cables-dupont-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de cables Dupont macho-macho, macho-hembra y hembra-hembra"></a><span class="zoom-hint">Abrir referencia</span></figure>
           <div class="component-body"><p><strong>Qué son:</strong> cables finos de conexión rápida para protoboard, sensores y ESP32.</p><p class="recognition"><strong>Cómo reconocerlos:</strong> terminales cuadrados; pueden ser macho–macho, macho–hembra o hembra–hembra.</p><label class="component-check" for="localizados-dupont"><input id="localizados-dupont" type="checkbox" data-checklist data-key="localizados-dupont"><span>Cables M–M, M–H y H–H revisados.</span></label><label class="observation" for="nota-dupont">Observaciones<textarea id="nota-dupont" data-note data-key="nota-dupont" placeholder="Tipos y cantidades disponibles…"></textarea></label></div>
+          <p class="photo-note">Referencia fotográfica generada para distinguir terminales macho y hembra. Comprobar los tipos y cantidades realmente disponibles.</p>
         </article>
 
         <article class="component-card">
-          <header class="component-card-header"><span class="component-number">19</span><div><h3>LEDs</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag todo">TODO: foto propia</span></div></div></header>
-          <div class="media-placeholder"><div><strong>FOTO REAL PENDIENTE</strong>Fotografiar los LEDs disponibles y sus colores junto a una regla.</div></div>
+          <header class="component-card-header"><span class="component-number">19</span><div><h3>LEDs</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: foto propia</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/leds-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/leds-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de LEDs redondos de cinco milímetros en varios colores y con dos patillas"></a><span class="zoom-hint">Abrir referencia</span></figure>
           <div class="component-body"><p><strong>Qué son:</strong> diodos que emiten luz.</p><p><strong>Para qué sirven:</strong> podrán actuar como indicadores controlados por la ESP32; no son la carga principal del generador.</p><p class="recognition"><strong>Cómo reconocerlos:</strong> cápsula transparente o coloreada y dos patillas. La polaridad se comprobará antes de usarlos.</p><label class="component-check" for="localizados-leds"><input id="localizados-leds" type="checkbox" data-checklist data-key="localizados-leds"><span>LEDs localizados y separados por tipo/color.</span></label><label class="observation" for="nota-leds">Observaciones<textarea id="nota-leds" data-note data-key="nota-leds" placeholder="Colores, tamaños, cantidad…"></textarea></label></div>
+          <p class="photo-note">Referencia fotográfica generada de LEDs genéricos de 5 mm. Los colores, tamaños y polaridad de las piezas reales deben comprobarse.</p>
         </article>
 
         <article class="component-card">
@@ -513,10 +516,10 @@
         </article>
 
         <article class="component-card">
-          <header class="component-card-header"><span class="component-number">21</span><div><h3>30 imanes redondos de neodimio · 15×2 mm</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag todo">TODO: foto correcta</span></div></div></header>
-          <div class="media-placeholder"><div><strong>FOTO DEL ZIP DESCARTADA</strong>El archivo rotulado como “imanes redondos” muestra anillos/adaptadores con orificio de 10 mm, no discos macizos de 15×2 mm. Fotografiar los 30 imanes reales.</div></div>
+          <header class="component-card-header"><span class="component-number">21</span><div><h3>30 imanes redondos de neodimio · 15×2 mm</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: medir y contar</span></div></div></header>
+          <figure class="media-frame"><a href="assets/img/imanes-redondos-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/imanes-redondos-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de treinta imanes redondos macizos sin orificio dispuestos en cinco filas de seis"></a><span class="zoom-hint">Abrir referencia</span></figure>
           <div class="component-body"><p><strong>Qué son:</strong> discos magnéticos de neodimio, principales para el rotor experimental.</p><p class="recognition"><strong>Cómo reconocerlos:</strong> discos metálicos macizos, aproximadamente 15 mm de diámetro y 2 mm de grosor, sin orificio central. Deben mantenerse separados de electrónica y objetos sensibles.</p><label class="component-check" for="localizados-imanes-redondos"><input id="localizados-imanes-redondos" type="checkbox" data-checklist data-key="localizados-imanes-redondos"><span>30 imanes redondos localizados y contados.</span></label><label class="observation" for="nota-imanes-redondos">Observaciones<textarea id="nota-imanes-redondos" data-note data-key="nota-imanes-redondos" placeholder="Cantidad, medidas comprobadas, estado…"></textarea></label></div>
-          <p class="photo-note">No se ha sustituido la foto incorrecta por una imagen inventada. Queda marcado como TODO.</p>
+          <p class="photo-note">Referencia fotográfica generada de 30 discos macizos. La foto incorrecta del ZIP sigue descartada: muestra piezas con orificio y no prueba la cantidad ni las medidas reales.</p>
         </article>
 
         <article class="component-card">
@@ -650,7 +653,7 @@
         <span class="box-title">Problemas previstos</span>
         <div class="grid-2">
           <div>
-            <p><strong>Selector 110/220 mal interpretado.</strong><br>Leer la unidad y la red local antes de enchufar.</p>
+            <p><strong>Selector 110/220 mal interpretado.</strong><br>En Colombia se necesita el rango que incluya 120 V, 60 Hz; leer la unidad y su manual antes de enchufar.</p>
             <p><strong>Bornes de red accesibles.</strong><br>Añadir protección física y revisión competente.</p>
             <p><strong>INA219 sin montar.</strong><br>Practicar soldadura y revisar puentes/fríos.</p>
             <p><strong>Rotor desequilibrado.</strong><br>Colocación simétrica, baja velocidad y pantalla.</p>
@@ -664,7 +667,7 @@
         </div>
       </div>
 
-      <p class="decision todo"><strong>TODO de inventario:</strong> sustituir los cinco huecos sin foto (kit de resistencias, ESP32-S3, Dupont, LEDs e imanes redondos) por fotografías propias. La imagen incorrecta de “imanes redondos” del ZIP no se usa.</p>
+      <p class="decision todo"><strong>TODO de inventario:</strong> las referencias permiten reconocer las piezas, pero todavía deben fotografiarse y verificarse el kit de resistencias, la ESP32-S3 concreta, los Dupont, los LEDs y los imanes redondos disponibles. La imagen incorrecta de “imanes redondos” del ZIP no se usa.</p>
       <div class="page-footer">Decidido = se puede documentar · Pendiente = se debe medir o probar</div>
     </section>
 
@@ -696,21 +699,21 @@
         <span class="box-title">No continuar hasta</span>
         <label class="check-row" for="final-fuente"><input id="final-fuente" type="checkbox" data-checklist data-key="final-fuente"><span><strong>Fuente recibida, inspeccionada y fotografiada.</strong></span></label>
         <label class="check-row" for="final-bornes"><input id="final-bornes" type="checkbox" data-checklist data-key="final-bornes"><span><strong>L, N, tierra, V− y V+ identificados en la fuente real.</strong></span></label>
-        <label class="check-row" for="final-selector"><input id="final-selector" type="checkbox" data-checklist data-key="final-selector"><span><strong>Selector 110/220 identificado y posición correcta comprobada, si existe.</strong></span></label>
-        <label class="check-row" for="final-cableado-red"><input id="final-cableado-red" type="checkbox" data-checklist data-key="final-cableado-red"><span><strong>Extensión, horquillas y herramientas de cableado disponibles.</strong></span></label>
+        <label class="check-row" for="final-selector"><input id="final-selector" type="checkbox" data-checklist data-key="final-selector-colombia"><span><strong>Selector identificado y rango que incluye 120 V, 60 Hz, comprobado en el manual real, si existe.</strong></span></label>
+        <label class="check-row" for="final-cableado-red"><input id="final-cableado-red" type="checkbox" data-checklist data-key="final-cableado-red"><span><strong>Extensión tipo B con tierra, horquillas y herramientas de cableado disponibles.</strong></span></label>
         <label class="check-row" for="final-revision-adulto"><input id="final-revision-adulto" type="checkbox" data-checklist data-key="final-revision-adulto"><span><strong>Una persona adulta o competente revisará la parte de red.</strong></span></label>
       </div>
 
       <div class="box success text-center">
         <div class="big-number">Siguiente: Capítulo 1</div>
         <p><strong>Del enchufe a los 12 voltios.</strong></p>
-        <p>Ese capítulo contendrá las instrucciones de red, protección de bornes, revisión y medida de la salida. <strong>Todavía está en preparación y esta página no autoriza a realizar esas conexiones.</strong></p>
+        <p>Ese capítulo contiene las instrucciones supervisadas de red, protección de bornes, revisión y medida de la salida. <strong>Solo debe iniciarse cuando este checklist esté completo y haya una persona adulta competente.</strong></p>
       </div>
 
       <nav class="bottom-nav" aria-label="Navegación al final del capítulo">
         <a href="index.html">← Volver a la portada</a>
         <span class="is-disabled">Capítulo anterior: no existe</span>
-        <span class="is-disabled">Capítulo 1: en preparación</span>
+        <a href="capitulo-1.html">Capítulo 1: del enchufe a los 12 V →</a>
         <button type="button" data-print>Imprimir / Guardar PDF</button>
       </nav>
       <div class="page-footer">Generador electromagnético experimental · Fin del Capítulo 0</div>
