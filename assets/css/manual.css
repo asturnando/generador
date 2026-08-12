@@ -935,21 +935,17 @@ a.chapter-card:hover {
 }
 
 .progress-panel {
-  position: sticky;
-  bottom: 12px;
-  z-index: 20;
-  width: min(760px, calc(100vw - 32px));
+  width: 100%;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 14px;
   align-items: center;
-  margin: 18px auto;
+  margin: 22px 0 10px;
   padding: 14px 16px;
   border: 1px solid #8db5d6;
   border-radius: 14px;
   background: rgb(255 255 255 / 96%);
-  box-shadow: 0 9px 28px rgb(6 31 72 / 18%);
-  backdrop-filter: blur(8px);
+  box-shadow: 0 7px 20px rgb(6 31 72 / 12%);
 }
 
 .progress-copy strong {
@@ -1182,7 +1178,6 @@ a.chapter-card:hover {
   }
 
   .progress-panel {
-    bottom: 8px;
     grid-template-columns: 1fr;
   }
 

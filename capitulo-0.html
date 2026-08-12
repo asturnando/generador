@@ -34,7 +34,7 @@
         <a href="#cierre">14. Checklist final</a>
       </nav>
     </details>
-    <button type="button" onclick="window.print()">Imprimir / PDF</button>
+    <button type="button" data-print>Imprimir / PDF</button>
   </header>
 
   <main class="manual-main" id="capitulo">
@@ -65,6 +65,14 @@
         <p>La fuente tiene bornes conectados a la red y una carcasa abierta. En este capítulo permanece <strong>desenchufada</strong>. Las conexiones de red se harán más adelante, con los bornes protegidos y bajo revisión de una persona adulta o competente.</p>
         <p><strong>Nunca deduciremos L, N, tierra, V−, V+ ni la posición 110/220 solo por una foto.</strong> Se leerán las marcas de la unidad recibida y se comprobarán antes de conectar.</p>
       </aside>
+
+      <div class="progress-panel" aria-label="Progreso del Capítulo 0">
+        <div class="progress-copy">
+          <strong data-progress-text aria-live="polite">0 comprobaciones realizadas</strong>
+          <div class="progress-track" role="progressbar" aria-label="Progreso de comprobaciones" aria-valuemin="0" aria-valuenow="0" aria-valuemax="64"><span data-progress-bar></span></div>
+        </div>
+        <button class="reset-button" type="button" data-reset-checklist>Borrar checklist</button>
+      </div>
 
       <div class="page-footer">Generador electromagnético experimental · Preparación e inventario</div>
     </section>
@@ -703,10 +711,12 @@
         <a href="index.html">← Volver a la portada</a>
         <span class="is-disabled">Capítulo anterior: no existe</span>
         <span class="is-disabled">Capítulo 1: en preparación</span>
-        <button type="button" onclick="window.print()">Imprimir / Guardar PDF</button>
+        <button type="button" data-print>Imprimir / Guardar PDF</button>
       </nav>
       <div class="page-footer">Generador electromagnético experimental · Fin del Capítulo 0</div>
     </section>
   </main>
+  <script src="assets/js/checklist.js" defer></script>
+  <script src="assets/js/navigation.js" defer></script>
 </body>
 </html>
