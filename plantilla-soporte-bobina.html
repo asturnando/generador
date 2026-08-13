@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calculadora del soporte ajustable de la bobina frente al CD, basada en las medidas de la bobina terminada.">
+  <title>Plano del soporte de bobina · Manual del generador</title>
+  <link rel="stylesheet" href="assets/css/manual.css">
+</head>
+<body class="template-tool-page">
+  <a class="skip-link" href="#plantilla">Saltar a la herramienta</a>
+  <header class="toolbar" aria-label="Navegación del manual">
+    <strong class="toolbar-title">Manual del generador · Soporte de bobina</strong>
+    <a href="index.html">← Portada</a><a href="capitulo-4.html#instalacion">← Capítulo 4</a>
+    <button type="button" data-print>Imprimir / PDF</button>
+  </header>
+  <main class="manual-main" id="plantilla">
+    <section class="page">
+      <span class="page-number">Herramienta</span><p class="eyebrow">Capítulo 4 · Soporte ajustable</p>
+      <h1>Plano acotado del portabobina</h1>
+      <p class="page-subtitle">Genera la placa vertical, la base deslizante y dos cartabones a partir de la bobina ya terminada. Los orificios de las bridas se calcan sobre la pieza real.</p>
+      <div class="box danger"><span class="box-title">Solo para la prueba manual</span><p>El motor permanece desenchufado. La galga inicial es rígida, no magnética y de 10 mm; se retira antes de girar el CD a mano. Este soporte no autoriza giro motorizado.</p></div>
+      <section class="template-builder" data-coil-support aria-labelledby="support-title">
+        <h2 id="support-title">Medir, escribir y calcular</h2>
+        <div class="template-controls">
+          <label for="support-coil-width">Ancho exterior de la bobina (mm)<input id="support-coil-width" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Medir la bobina terminada"></label>
+          <label for="support-coil-height">Alto exterior de la bobina (mm)<input id="support-coil-height" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Medir la bobina terminada"></label>
+          <label for="support-base-depth">Fondo disponible para la base (mm)<input id="support-base-depth" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Medir corredera y sargentos"></label>
+          <label for="support-gusset-base">Pata horizontal del cartabón (mm)<input id="support-gusset-base" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Debe caber en la base"></label>
+          <label for="support-gusset-height">Pata vertical del cartabón (mm)<input id="support-gusset-height" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Debe caber en la placa"></label>
+          <label for="support-thickness">Espesor real del tablero (mm)<input id="support-thickness" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Medir con regla o calibre"></label>
+        </div>
+        <div class="template-actions"><button type="button" data-support-render>Calcular plano</button><button type="button" data-support-download disabled>Descargar SVG 1:1</button></div>
+        <div class="template-preview"><svg class="rotor-template-svg coil-jig-svg" data-support-svg viewBox="0 0 210 297" role="img" aria-label="Plano a la espera de las medidas"><text x="50%" y="50%" text-anchor="middle" class="template-placeholder">Introduce las seis medidas reales</text></svg></div>
+        <p class="template-message" data-support-message>La placa añade 30 mm libres a cada lado del contorno medido. La base y los cartabones se calculan con las cotas que escribas.</p>
+      </section>
+      <div class="grid-2">
+        <div class="box blue"><span class="box-title">Cuatro piezas</span><ul><li><strong>Placa vertical:</strong> bobina + 30 mm por cada lado.</li><li><strong>Base:</strong> mismo ancho y el fondo medido.</li><li><strong>Dos cartabones:</strong> triángulos rectángulos iguales.</li><li><strong>Galga separada:</strong> plástico o cartón laminado de 10 mm, nunca acero.</li></ul></div>
+        <div class="box warning"><span class="box-title">Transferir los orificios</span><ol><li>Centrar la bobina sobre la placa cortada.</li><li>Dibujar el contorno sin comprimirla.</li><li>Marcar cuatro parejas de orificios fuera del cobre.</li><li>Verificar ventana, derivaciones e hilo.</li><li>Taladrar después de esta inspección.</li></ol></div>
+      </div>
+      <nav class="bottom-nav" aria-label="Navegación al final"><a href="capitulo-4.html#instalacion">← Volver al Capítulo 4</a><button type="button" data-print>Imprimir / Guardar PDF</button></nav>
+      <div class="page-footer">Generador electromagnético experimental · Plano del soporte ajustable</div>
+    </section>
+  </main>
+  <script src="assets/js/navigation.js" defer></script><script src="assets/js/coil-support-template.js" defer></script>
+</body>
+</html>

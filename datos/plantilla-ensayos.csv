@@ -1,0 +1,2 @@
+ensayo_id,fecha_hora,operador,rotor_id,numero_imanes,bobina_id,espiras,rpm_objetivo,rpm_media,rpm_min,rpm_max,entrehierro_mm,carga_ohm,voltaje_medio_V,corriente_media_mA,potencia_media_mW,temp_bobina_inicial_C,temp_bobina_final_C,temp_ambiente_C,firmware_version,valido,motivo_invalido,notas
+EJEMPLO_NO_USAR,,,,,,,,,,,,,,,,,,,,NO,Fila de ejemplo sin datos,

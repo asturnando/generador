@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Generador imprimible a escala 1:1 para marcar configuraciones simétricas de 4, 6 u 8 imanes en el rotor experimental.">
+  <title>Plantilla 1:1 del rotor · Manual del generador</title>
+  <link rel="stylesheet" href="assets/css/manual.css">
+</head>
+<body class="template-tool-page">
+  <a class="skip-link" href="#plantilla">Saltar a la plantilla</a>
+  <header class="toolbar" aria-label="Navegación del manual">
+    <strong class="toolbar-title">Manual del generador · Plantilla del rotor</strong>
+    <a href="index.html">← Portada</a>
+    <a href="capitulo-3.html#configuraciones">← Capítulo 3</a>
+    <button type="button" data-print>Imprimir / PDF</button>
+  </header>
+
+  <main class="manual-main" id="plantilla">
+    <section class="page">
+      <span class="page-number">Herramienta</span>
+      <p class="eyebrow">Capítulo 3 · Geometría imprimible</p>
+      <h1>Plantilla 1:1 del rotor</h1>
+      <p class="page-subtitle">Dibuja 4, 6 u 8 huellas equidistantes sin inventar las medidas del conjunto real.</p>
+
+      <div class="box danger">
+        <span class="box-title">No es un plano estructural</span>
+        <p>Esta herramienta solo resuelve la geometría plana sobre el CD. No aprueba su estado, el pegado, la unión central, el equilibrio, las RPM ni el resguardo.</p>
+      </div>
+
+      <section class="template-builder" data-rotor-template aria-labelledby="builder-title">
+        <h2 id="builder-title">Introduce las medidas verificadas</h2>
+        <p>Mide el diámetro exterior y el agujero central del CD real; usa el agujero como referencia geométrica del centro. El diámetro del imán también debe medirse físicamente y “15 mm” no se carga como valor por defecto. Esta versión cabe en una sola hoja A4 y admite rotores de hasta 150 mm.</p>
+        <div class="template-controls">
+          <label for="c3-template-count">Número de imanes
+            <select id="c3-template-count"><option value="4">4 posiciones · 90°</option><option value="6">6 posiciones · 60°</option><option value="8" selected>8 posiciones · 45°</option></select>
+          </label>
+          <label for="c3-template-rotor">Diámetro del rotor (mm)
+            <input id="c3-template-rotor" type="number" inputmode="decimal" min="1" max="150" step="0.1" placeholder="Escribir diámetro medido">
+          </label>
+          <label for="c3-template-center">Diámetro del centro/cubo (mm)
+            <input id="c3-template-center" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Escribir centro medido">
+          </label>
+          <label for="c3-template-magnet">Diámetro real del imán (mm)
+            <input id="c3-template-magnet" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Escribir imán medido; no asumir 15">
+          </label>
+          <label for="c3-template-radius">Radio al centro del imán (mm)
+            <input id="c3-template-radius" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Escribir radio comprobado con plantilla">
+          </label>
+          <label for="c3-template-polarity">Marcas de cara
+            <select id="c3-template-polarity"><option value="numbered" selected>Numerar 1…N · sin decidir</option><option value="same-a">Todas A · solo si se aprueba</option><option value="alternate">Alternar A/B · solo si se aprueba</option></select>
+          </label>
+        </div>
+        <div class="template-actions">
+          <button type="button" data-template-render>Dibujar plantilla</button>
+          <button type="button" data-template-download disabled>Descargar SVG 1:1</button>
+        </div>
+        <div class="template-preview">
+          <svg class="rotor-template-svg" data-template-svg viewBox="0 0 210 150" role="img" aria-label="Vista previa pendiente de introducir medidas"><text x="50%" y="50%" text-anchor="middle" class="template-placeholder">Introduce medidas verificadas para dibujar</text></svg>
+        </div>
+        <p class="template-message" data-template-message>La plantilla permanece vacía para no inventar el tamaño del rotor, el centro o el radio magnético.</p>
+      </section>
+
+      <div class="grid-2">
+        <div class="box blue"><span class="box-title">Impresión correcta</span><ol><li>Descargar el SVG calculado.</li><li>Imprimir a 100 % o “tamaño real”.</li><li>Desactivar “ajustar a página”.</li><li>Medir la regla de control.</li><li>Descartar la hoja si la medida no coincide.</li></ol></div>
+        <div class="box warning"><span class="box-title">Antes de marcar el CD</span><p>Confirmar el centro, el radio común, el margen al borde y la unión con el adaptador. Hacer primero una prueba con fichas inertes. No colocar imanes hasta aprobar el adhesivo y la necesidad —o no— de una retención adicional.</p></div>
+      </div>
+
+      <nav class="bottom-nav" aria-label="Navegación al final de la herramienta"><a href="capitulo-3.html#configuraciones">← Volver al Capítulo 3</a><button type="button" data-print>Imprimir / Guardar PDF</button></nav>
+      <div class="page-footer">Generador electromagnético experimental · Plantilla geométrica</div>
+    </section>
+  </main>
+  <script src="assets/js/navigation.js" defer></script>
+  <script src="assets/js/rotor-template.js" defer></script>
+</body>
+</html>

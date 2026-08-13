@@ -128,7 +128,7 @@
           <li><strong>Construir el circuito de movimiento.</strong><br>Será materia de los Capítulos 1 y 2, con la red separada y protegida.</li>
         </ol>
         <ol class="step-list continued" start="5">
-          <li><strong>Resolver la mecánica real.</strong><br>Medir motor y adaptador; después decidir rotor, soporte y protección.</li>
+          <li><strong>Resolver la mecánica real.</strong><br>Medir motor, adaptador y CD; después validar interfaz, retención, soporte y protección.</li>
           <li><strong>Construir generación y medida.</strong><br>Bobina, rectificador, carga, INA219, ESP32 y sensor RPM.</li>
           <li><strong>Probar por bloques.</strong><br>Primero multímetro; después software y registro.</li>
           <li><strong>Ensayar y documentar.</strong><br>Variar una condición cada vez, guardar resultados y preparar la defensa.</li>
@@ -168,7 +168,7 @@
         <div class="box warning">
           <span class="box-title">Si algo no coincide</span>
           <p>No se “corrige” el manual imaginando que servirá. Se anota el modelo, el valor impreso y la diferencia. En componentes eléctricos o mecánicos, esa diferencia puede cambiar un capítulo completo.</p>
-          <p><strong>TODO:</strong> actualizar el estado de envío de cada ficha cuando se confirme la recepción física.</p>
+          <p><strong>Completar con la pieza real:</strong> actualizar el estado de envío de cada ficha cuando se confirme la recepción física.</p>
         </div>
       </div>
       <div class="page-footer">Las fechas son una previsión del pedido, no una garantía de entrega.</div>
@@ -247,7 +247,7 @@
         </article>
 
         <article class="component-card">
-          <header class="component-card-header"><span class="component-number">15</span><div><h3>Kit de resistencias</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: foto propia</span></div></div></header>
+          <header class="component-card-header"><span class="component-number">15</span><div><h3>Kit de resistencias</h3><div class="component-status"><span class="tag pending">Previsto: 13 ago</span><span class="tag reference">Referencia generada</span><span class="tag todo">Completar: foto propia</span></div></div></header>
           <figure class="media-frame"><a href="assets/img/kit-resistencias-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/kit-resistencias-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de un kit genérico de resistencias axiales en organizador"></a><span class="zoom-hint">Abrir referencia</span></figure>
           <div class="component-body">
             <p><strong>Qué es:</strong> una colección de resistencias de distintos valores, normalmente agrupadas y etiquetadas.</p>
@@ -331,7 +331,7 @@
             <label class="component-check" for="recibido-motor"><input id="recibido-motor" type="checkbox" data-checklist data-key="recibido-motor"><span>Motor recibido; eje, terminales y carcasa sin daños.</span></label>
             <label class="observation" for="nota-motor">Observaciones<textarea id="nota-motor" data-note data-key="nota-motor" placeholder="Etiqueta, diámetro real del eje, longitud, accesorios…"></textarea></label>
           </div>
-          <p class="photo-note">La foto identifica el kit. La geometría final del rotor no se decide hasta medir estas piezas reales.</p>
+          <p class="photo-note">La foto identifica el kit. El rotor será un CD real, pero su interfaz y geometría útil no se cierran hasta medir estas piezas.</p>
         </article>
       </div>
       <div class="page-footer">Potencia y movimiento · La zona de red sigue desenchufada</div>
@@ -408,7 +408,7 @@
         </ul>
       </aside>
       <p class="decision pending"><strong>Plan registrado para el Capítulo 1:</strong> conservar la clavija macho tipo B con tierra de la extensión y retirar el extremo hembra para acceder a los tres conductores. <strong>No se hace ahora</strong> y queda sujeto a comprobar la extensión real, una toma colombiana de 120 V y 60 Hz con tierra funcional, y el procedimiento con una persona competente.</p>
-      <p class="decision todo"><strong>TODO de seguridad:</strong> fotografiar la fuente recibida por todos sus lados y sustituir estas referencias del anuncio si la disposición no coincide.</p>
+      <p class="decision todo"><strong>Control de seguridad:</strong> fotografiar la fuente recibida por todos sus lados y sustituir estas referencias del anuncio si la disposición no coincide.</p>
       <div class="page-footer">Comprobar en la pieza física antes de conectar.</div>
     </section>
 
@@ -458,12 +458,12 @@
           <p class="decision"><strong>Motor:</strong> será el actuador del banco de pruebas.</p>
           <p class="decision"><strong>Soporte:</strong> se evaluará para fijarlo al tablero.</p>
           <p class="decision"><strong>Disco dentado:</strong> no se usa como sierra y tampoco se adopta como rotor.</p>
-          <p class="decision"><strong>Protección:</strong> el rotor final tendrá pantalla y primeras pruebas a baja velocidad.</p>
+          <p class="decision"><strong>Protección:</strong> el rotor final tendrá un resguardo aprobado y solo se probará dentro de límites numéricos de RPM medidos.</p>
         </div>
         <div class="box warning">
           <span class="box-title">Pendiente de medir</span>
-          <p class="decision pending"><strong>Rotor definitivo:</strong> material, diámetro y centro.</p>
-          <p class="decision pending"><strong>Idea inicial:</strong> CD o disco ligero y no metálico; evaluar después de medir el adaptador. No es todavía la solución final.</p>
+          <p class="decision"><strong>Decisión actualizada:</strong> el rotor se construirá sobre un CD real.</p>
+          <p class="decision pending"><strong>CD pendiente de validar:</strong> pieza concreta, estado, diámetro medido, centro, interfaz con el adaptador, retención y RPM máxima.</p>
           <p class="decision pending"><strong>Adaptador:</strong> encaje real y sistema seguro de sujeción.</p>
           <p class="decision pending"><strong>Configuraciones:</strong> 4, 6 y 8 imanes son hipótesis de ensayo, no rotores cerrados.</p>
           <p class="decision pending"><strong>Bobina:</strong> forma y distancia ajustable frente al rotor.</p>
@@ -488,21 +488,21 @@
 
       <div class="inventory-grid">
         <article class="component-card">
-          <header class="component-card-header"><span class="component-number">17</span><div><h3>ESP32-S3 · 44 pines · USB-C</h3><div class="component-status"><span class="tag owned">Ya disponible</span><span class="tag reference">Foto oficial</span><span class="tag todo">TODO: comprobar placa</span></div></div></header>
+          <header class="component-card-header"><span class="component-number">17</span><div><h3>ESP32-S3 · 44 pines · USB-C</h3><div class="component-status"><span class="tag owned">Ya disponible</span><span class="tag reference">Foto oficial</span><span class="tag todo">Completar: comprobar placa</span></div></div></header>
           <figure class="media-frame"><a href="assets/img/esp32-s3-devkitc-1-oficial.webp" target="_blank" rel="noopener"><img src="assets/img/esp32-s3-devkitc-1-oficial.webp" width="800" height="695" loading="lazy" alt="Fotografía oficial de referencia de una placa ESP32-S3-DevKitC-1 con dos filas de pines y dos conectores USB-C"></a><span class="zoom-hint">Abrir referencia</span></figure>
           <div class="component-body"><p><strong>Qué es:</strong> el microcontrolador que leerá sensores y enviará datos al ordenador.</p><p class="recognition"><strong>Cómo reconocerlo:</strong> placa alargada con dos filas de pines, módulo metálico y conector USB-C. El pinout debe corresponder a esta placa concreta, no a otra ESP32.</p><label class="component-check" for="localizado-esp32"><input id="localizado-esp32" type="checkbox" data-checklist data-key="localizado-esp32"><span>ESP32-S3 y cable USB de datos localizados.</span></label><label class="observation" for="nota-esp32">Observaciones<textarea id="nota-esp32" data-note data-key="nota-esp32" placeholder="Texto exacto de la placa, número de pines, cable USB…"></textarea></label></div>
           <p class="photo-note">Fotografía real de referencia publicada por Espressif para la familia ESP32-S3-DevKitC-1. No confirma la revisión, memoria ni pinout de la unidad disponible.</p>
         </article>
 
         <article class="component-card">
-          <header class="component-card-header"><span class="component-number">18</span><div><h3>Cables Dupont</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: foto propia</span></div></div></header>
+          <header class="component-card-header"><span class="component-number">18</span><div><h3>Cables Dupont</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">Completar: foto propia</span></div></div></header>
           <figure class="media-frame"><a href="assets/img/cables-dupont-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cables-dupont-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de cables Dupont macho-macho, macho-hembra y hembra-hembra"></a><span class="zoom-hint">Abrir referencia</span></figure>
           <div class="component-body"><p><strong>Qué son:</strong> cables finos de conexión rápida para protoboard, sensores y ESP32.</p><p class="recognition"><strong>Cómo reconocerlos:</strong> terminales cuadrados; pueden ser macho–macho, macho–hembra o hembra–hembra.</p><label class="component-check" for="localizados-dupont"><input id="localizados-dupont" type="checkbox" data-checklist data-key="localizados-dupont"><span>Cables M–M, M–H y H–H revisados.</span></label><label class="observation" for="nota-dupont">Observaciones<textarea id="nota-dupont" data-note data-key="nota-dupont" placeholder="Tipos y cantidades disponibles…"></textarea></label></div>
           <p class="photo-note">Referencia fotográfica generada para distinguir terminales macho y hembra. Comprobar los tipos y cantidades realmente disponibles.</p>
         </article>
 
         <article class="component-card">
-          <header class="component-card-header"><span class="component-number">19</span><div><h3>LEDs</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: foto propia</span></div></div></header>
+          <header class="component-card-header"><span class="component-number">19</span><div><h3>LEDs</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">Completar: foto propia</span></div></div></header>
           <figure class="media-frame"><a href="assets/img/leds-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/leds-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de LEDs redondos de cinco milímetros en varios colores y con dos patillas"></a><span class="zoom-hint">Abrir referencia</span></figure>
           <div class="component-body"><p><strong>Qué son:</strong> diodos que emiten luz.</p><p><strong>Para qué sirven:</strong> podrán actuar como indicadores controlados por la ESP32; no son la carga principal del generador.</p><p class="recognition"><strong>Cómo reconocerlos:</strong> cápsula transparente o coloreada y dos patillas. La polaridad se comprobará antes de usarlos.</p><label class="component-check" for="localizados-leds"><input id="localizados-leds" type="checkbox" data-checklist data-key="localizados-leds"><span>LEDs localizados y separados por tipo/color.</span></label><label class="observation" for="nota-leds">Observaciones<textarea id="nota-leds" data-note data-key="nota-leds" placeholder="Colores, tamaños, cantidad…"></textarea></label></div>
           <p class="photo-note">Referencia fotográfica generada de LEDs genéricos de 5 mm. Los colores, tamaños y polaridad de las piezas reales deben comprobarse.</p>
@@ -516,7 +516,7 @@
         </article>
 
         <article class="component-card">
-          <header class="component-card-header"><span class="component-number">21</span><div><h3>30 imanes redondos de neodimio · 15×2 mm</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">TODO: medir y contar</span></div></div></header>
+          <header class="component-card-header"><span class="component-number">21</span><div><h3>30 imanes redondos de neodimio · 15×2 mm</h3><div class="component-status"><span class="tag owned">Ya disponibles</span><span class="tag reference">Referencia generada</span><span class="tag todo">Completar: medir y contar</span></div></div></header>
           <figure class="media-frame"><a href="assets/img/imanes-redondos-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/imanes-redondos-referencia-generada.webp" width="1254" height="1254" loading="lazy" alt="Referencia fotográfica generada de treinta imanes redondos macizos sin orificio dispuestos en cinco filas de seis"></a><span class="zoom-hint">Abrir referencia</span></figure>
           <div class="component-body"><p><strong>Qué son:</strong> discos magnéticos de neodimio, principales para el rotor experimental.</p><p class="recognition"><strong>Cómo reconocerlos:</strong> discos metálicos macizos, aproximadamente 15 mm de diámetro y 2 mm de grosor, sin orificio central. Deben mantenerse separados de electrónica y objetos sensibles.</p><label class="component-check" for="localizados-imanes-redondos"><input id="localizados-imanes-redondos" type="checkbox" data-checklist data-key="localizados-imanes-redondos"><span>30 imanes redondos localizados y contados.</span></label><label class="observation" for="nota-imanes-redondos">Observaciones<textarea id="nota-imanes-redondos" data-note data-key="nota-imanes-redondos" placeholder="Cantidad, medidas comprobadas, estado…"></textarea></label></div>
           <p class="photo-note">Referencia fotográfica generada de 30 discos macizos. La foto incorrecta del ZIP sigue descartada: muestra piezas con orificio y no prueba la cantidad ni las medidas reales.</p>
@@ -546,15 +546,15 @@
           <label class="check-row" for="falta-separadores"><input id="falta-separadores" type="checkbox" data-checklist data-key="falta-separadores"><span>Separadores, escuadras y soportes.</span></label>
           <label class="check-row" for="falta-bridas"><input id="falta-bridas" type="checkbox" data-checklist data-key="falta-bridas"><span>Bridas, cinta aislante y cinta de doble cara.</span></label>
           <label class="check-row" for="falta-etiquetas"><input id="falta-etiquetas" type="checkbox" data-checklist data-key="falta-etiquetas"><span>Etiquetas para cables y componentes.</span></label>
-          <label class="check-row" for="falta-pantalla"><input id="falta-pantalla" type="checkbox" data-checklist data-key="falta-pantalla"><span>Pantalla transparente para proteger el rotor.</span></label>
+          <label class="check-row" for="falta-pantalla"><input id="falta-pantalla" type="checkbox" data-checklist data-key="falta-pantalla"><span>Material y piezas del resguardo del rotor, pendientes de diseño y aprobación.</span></label>
         </div>
 
         <div class="check-group">
           <h3>Pegado y preparación</h3>
-          <label class="check-row" for="falta-epoxi"><input id="falta-epoxi" type="checkbox" data-checklist data-key="falta-epoxi"><span>Epoxi bicomponente fuerte.</span></label>
+          <label class="check-row" for="falta-epoxi"><input id="falta-epoxi" type="checkbox" data-checklist data-key="falta-epoxi"><span>Adhesivo candidato —incluido epoxi si procede— pendiente de validar para el CD y el revestimiento de los imanes.</span></label>
           <label class="check-row" for="falta-alcohol"><input id="falta-alcohol" type="checkbox" data-checklist data-key="falta-alcohol"><span>Alcohol isopropílico para limpiar superficies.</span></label>
           <label class="check-row" for="falta-carrocero"><input id="falta-carrocero" type="checkbox" data-checklist data-key="falta-carrocero"><span>Cinta de carrocero para marcar y sujetar temporalmente.</span></label>
-          <label class="check-row" for="falta-rotor"><input id="falta-rotor" type="checkbox" data-checklist data-key="falta-rotor"><span>Material de rotor seguro, pendiente de decidir tras medir el kit.</span></label>
+          <label class="check-row" for="falta-rotor"><input id="falta-rotor" type="checkbox" data-checklist data-key="falta-rotor"><span>CD real destinado al rotor, pendiente de localizar, medir e inspeccionar.</span></label>
           <p><strong>No usar silicona caliente</strong> como fijación principal de imanes que van a girar.</p>
         </div>
 
@@ -640,7 +640,7 @@
         </div>
         <div class="box warning">
           <span class="box-title">Pendiente</span>
-          <p class="decision pending"><strong>Rotor definitivo:</strong> medir motor y adaptador reales.</p>
+          <p class="decision pending"><strong>Rotor sobre CD:</strong> medir CD, motor y adaptador reales y validar su interfaz.</p>
           <p class="decision pending"><strong>Número de imanes:</strong> 4, 6 y 8 son configuraciones previstas para comparar.</p>
           <p class="decision pending"><strong>Molde de bobina:</strong> diseñarlo con la geometría real.</p>
           <p class="decision pending"><strong>Distancia bobina–imán:</strong> debe ser ajustable y sin contacto.</p>
@@ -656,10 +656,10 @@
             <p><strong>Selector 110/220 mal interpretado.</strong><br>En Colombia se necesita el rango que incluya 120 V, 60 Hz; leer la unidad y su manual antes de enchufar.</p>
             <p><strong>Bornes de red accesibles.</strong><br>Añadir protección física y revisión competente.</p>
             <p><strong>INA219 sin montar.</strong><br>Practicar soldadura y revisar puentes/fríos.</p>
-            <p><strong>Rotor desequilibrado.</strong><br>Colocación simétrica, baja velocidad y pantalla.</p>
+            <p><strong>Rotor desequilibrado.</strong><br>Colocación simétrica, equilibrado, resguardo y límite numérico de RPM medido.</p>
           </div>
           <div>
-            <p><strong>Imanes despegados.</strong><br>Preparar superficie, curar epoxi y contener el rotor.</p>
+            <p><strong>Imanes despegados.</strong><br>Validar superficies y adhesivo, respetar el curado documentado y contener el rotor.</p>
             <p><strong>Bobina demasiado lejos.</strong><br>Soporte ajustable sin posibilidad de rozar.</p>
             <p><strong>Lecturas extrañas.</strong><br>Comprobar primero con multímetro y por bloques.</p>
             <p><strong>Cables confusos.</strong><br>Etiquetar desde el principio y separar circuitos.</p>
@@ -667,7 +667,7 @@
         </div>
       </div>
 
-      <p class="decision todo"><strong>TODO de inventario:</strong> las referencias permiten reconocer las piezas, pero todavía deben fotografiarse y verificarse el kit de resistencias, la ESP32-S3 concreta, los Dupont, los LEDs y los imanes redondos disponibles. La imagen incorrecta de “imanes redondos” del ZIP no se usa.</p>
+      <p class="decision todo"><strong>Control de inventario:</strong> las referencias permiten reconocer las piezas, pero todavía deben fotografiarse y verificarse el kit de resistencias, la ESP32-S3 concreta, los Dupont, los LEDs y los imanes redondos disponibles. La imagen incorrecta de “imanes redondos” del ZIP no se usa.</p>
       <div class="page-footer">Decidido = se puede documentar · Pendiente = se debe medir o probar</div>
     </section>
 
@@ -691,7 +691,7 @@
           <label class="check-row" for="final-multimetro"><input id="final-multimetro" type="checkbox" data-checklist data-key="final-multimetro"><span>Multímetro disponible y con pilas.</span></label>
           <label class="check-row" for="final-soldador"><input id="final-soldador" type="checkbox" data-checklist data-key="final-soldador"><span>Soldador, soporte y estaño disponibles.</span></label>
           <label class="check-row" for="final-herramientas"><input id="final-herramientas" type="checkbox" data-checklist data-key="final-herramientas"><span>Pelacables, crimpadora y destornilladores adecuados.</span></label>
-          <label class="check-row" for="final-fijacion"><input id="final-fijacion" type="checkbox" data-checklist data-key="final-fijacion"><span>Epoxi, tornillería, bridas, cinta y protección previstos.</span></label>
+          <label class="check-row" for="final-fijacion"><input id="final-fijacion" type="checkbox" data-checklist data-key="final-fijacion"><span>Adhesivo candidato, tornillería, bridas, cinta auxiliar y protección previstos, sin aprobar aún la retención del CD.</span></label>
         </div>
       </div>
 

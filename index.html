@@ -16,13 +16,14 @@
 
     <div class="home-hero">
       <div>
-        <p class="lead"><strong>Esta web es el manual vivo del proyecto.</strong> Cada capítulo se incorpora cuando sus piezas, decisiones y comprobaciones están suficientemente claras para que Sara no tenga que adivinar el siguiente paso.</p>
+        <p class="lead"><strong>Esta web contiene ya el recorrido completo del proyecto.</strong> Los capítulos 4–11 están listos como borrador operativo para revisarlos después contra las piezas y el montaje reales, sin convertir los datos pendientes en decisiones.</p>
         <div class="status-box">
           <strong>Estado actual</strong><br>
           Capítulo 0: disponible y en revisión con fotografías reales y referencias generadas identificadas.<br>
           Capítulo 1: adaptado a Colombia (120 V, 60 Hz y clavija tipo B con tierra); el primer encendido sigue bloqueado hasta verificar la fuente física, su manual y las protecciones.<br>
           Capítulo 2: procedimiento de baja tensión disponible; la primera rotación queda bloqueada hasta identificar el PWM y el motor reales y dimensionar protección, corte y cable.<br>
-          Capítulo 3: diseño mecánico disponible; ningún rotor se energiza hasta cerrar RPM máxima, retención, equilibrado y contención.
+          Capítulo 3: montaje del rotor sobre el CD real con plantilla imprimible 1:1 y espacios para documentar vuestras fotos; ningún rotor se energiza hasta cerrar RPM máxima, retención, equilibrado y contención.<br>
+          Capítulos 4–11: recorrido operativo de bobina, rectificador, INA219, RPM, software, ensayos, diagnóstico y presentación. Los valores que dependen del equipo se miden y escriben en sus casillas antes de cada prueba.
         </div>
       </div>
       <figure class="hero-visual">
@@ -57,57 +58,61 @@
         <a class="chapter-card available" href="capitulo-3.html">
           <span class="chapter-number">Capítulo 3</span>
           <h2>Rotor, disco e imanes</h2>
-          <p>Medidas, patrones 4/6/8, polaridad, retención, equilibrado y protección mecánica, sin prueba motorizada.</p>
+          <p>Plantilla imprimible 1:1 para marcar el CD real, patrones 4/6/8, pegado documentado, equilibrado y fotos del montaje.</p>
           <span class="badge available">Disponible</span>
+          <span class="chapter-tool">Incluye <strong>plantilla-rotor.html</strong> para imprimir</span>
         </a>
-        <article class="chapter-card pending">
+        <a class="chapter-card available" href="capitulo-4.html">
           <span class="chapter-number">Capítulo 4</span>
           <h2>Construcción de la bobina</h2>
-          <p>Molde, cobre AWG28, conteo de espiras, derivaciones, continuidad y montaje ajustable.</p>
-          <span class="badge">Pendiente</span>
-        </article>
-        <article class="chapter-card pending">
+          <p>Práctica previa, bobinado manual realista, útil desmontable, 32 bloques, derivaciones en U y multímetro desde cero.</p>
+          <span class="badge available">Guía ampliada</span>
+          <span class="chapter-tool">Incluye plantillas 1:1 del útil y del soporte ajustable, más referencias visuales paso a paso</span>
+        </a>
+        <a class="chapter-card available" href="capitulo-5.html">
           <span class="chapter-number">Capítulo 5</span>
           <h2>Puente rectificador y carga</h2>
           <p>Cuatro diodos 1N5818, orientación, protoboard, salida DC y resistencias de prueba.</p>
-          <span class="badge">Pendiente</span>
-        </article>
-        <article class="chapter-card pending">
+          <span class="badge preparing">Borrador listo</span>
+        </a>
+        <a class="chapter-card available" href="capitulo-6.html">
           <span class="chapter-number">Capítulo 6</span>
           <h2>INA219 + ESP32</h2>
           <p>Soldadura, alimentación, bus I2C, medida de tensión/corriente y comprobación de conexiones.</p>
-          <span class="badge">Pendiente</span>
-        </article>
-        <article class="chapter-card pending">
+          <span class="badge preparing">Borrador listo</span>
+        </a>
+        <a class="chapter-card available" href="capitulo-7.html">
           <span class="chapter-number">Capítulo 7</span>
           <h2>Sensor RPM</h2>
           <p>TCRT5000 o KY-003, soporte, señal de referencia y cálculo de revoluciones por minuto.</p>
-          <span class="badge">Pendiente</span>
-        </article>
-        <article class="chapter-card pending">
+          <span class="badge preparing">Borrador listo</span>
+        </a>
+        <a class="chapter-card available" href="capitulo-8.html">
           <span class="chapter-number">Capítulo 8</span>
           <h2>Software y monitorización</h2>
           <p>Programa de la ESP32, monitor serie, calibración y registro ordenado de medidas.</p>
-          <span class="badge">Pendiente</span>
-        </article>
-        <article class="chapter-card pending">
+          <span class="badge preparing">Borrador listo</span>
+          <span class="chapter-tool">Incluye firmware descargable con configuración bloqueada</span>
+        </a>
+        <a class="chapter-card available" href="capitulo-9.html">
           <span class="chapter-number">Capítulo 9</span>
           <h2>Pruebas experimentales</h2>
           <p>Plan de ensayos, variables, tablas de resultados y comparación de configuraciones.</p>
-          <span class="badge">Pendiente</span>
-        </article>
-        <article class="chapter-card pending">
+          <span class="badge preparing">Borrador listo</span>
+          <span class="chapter-tool">Incluye plantilla CSV de ensayos</span>
+        </a>
+        <a class="chapter-card available" href="capitulo-10.html">
           <span class="chapter-number">Capítulo 10</span>
           <h2>Fallos frecuentes</h2>
           <p>Diagnóstico paso a paso cuando el motor no gira, no hay tensión o las medidas no cuadran.</p>
-          <span class="badge">Pendiente</span>
-        </article>
-        <article class="chapter-card pending">
+          <span class="badge preparing">Borrador listo</span>
+        </a>
+        <a class="chapter-card available" href="capitulo-11.html">
           <span class="chapter-number">Capítulo 11</span>
           <h2>Presentación y defensa</h2>
           <p>Cómo explicar el objetivo, el montaje, la seguridad, los resultados y las mejoras futuras.</p>
-          <span class="badge">Pendiente</span>
-        </article>
+          <span class="badge preparing">Borrador listo</span>
+        </a>
       </div>
     </section>
 

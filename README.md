@@ -101,7 +101,7 @@ También disponemos de imanes rectangulares para pruebas auxiliares y un sensor 
 - Alambre de cobre esmaltado **AWG28**.
 - 30 imanes redondos de neodimio **15 × 2 mm**.
 - Imanes rectangulares adicionales.
-- Cableado, terminales, tornillería, epoxi y elementos de fijación.
+- Cableado, terminales, tornillería y adhesivo candidato —incluido epoxi si resulta compatible—, todos pendientes de validar para su función real.
 
 ---
 
@@ -115,14 +115,14 @@ El manual no se va a comprimir artificialmente. Cada operación tendrá el espac
 | **1** | Cable de red → fuente → salida segura de 12 V | 🟢 Disponible |
 | **2** | Fuente → protección/corte DC → PWM → motor 775 → primera rotación sin rotor | 🟢 Disponible |
 | **3** | Rotor, patrones 4/6/8, retención, equilibrado y protección | 🟢 Disponible |
-| **4** | Construcción de la bobina y derivaciones | ⚪ Pendiente |
-| **5** | Puente rectificador en protoboard | ⚪ Pendiente |
-| **6** | Soldadura y conexión del INA219 | ⚪ Pendiente |
-| **7** | Sensor de RPM: TCRT5000 o KY-003 | ⚪ Pendiente |
-| **8** | Software, calibración y registro de datos | ⚪ Pendiente |
-| **9** | Plan de ensayos y análisis de resultados | ⚪ Pendiente |
-| **10** | Fallos frecuentes y diagnóstico | ⚪ Pendiente |
-| **11** | Presentación y defensa del proyecto | ⚪ Pendiente |
+| **4** | Construcción de la bobina y derivaciones | 🟢 Guía ampliada paso a paso |
+| **5** | Puente rectificador en protoboard | 🟡 Borrador para validar |
+| **6** | Soldadura y conexión del INA219 | 🟡 Borrador para validar |
+| **7** | Sensor de RPM: TCRT5000 o KY-003 | 🟡 Borrador para validar |
+| **8** | Software, calibración y registro de datos | 🟡 Borrador para validar |
+| **9** | Plan de ensayos y análisis de resultados | 🟡 Borrador para validar |
+| **10** | Fallos frecuentes y diagnóstico | 🟡 Borrador para validar |
+| **11** | Presentación y defensa del proyecto | 🟡 Borrador para validar |
 
 ---
 
@@ -136,7 +136,7 @@ El objetivo de la web es que pueda consultarse fácilmente desde móvil, tablet 
 
 Las listas de comprobación, fotografías, esquemas y capítulos irán actualizándose a medida que avance el proyecto.
 
-### Funciones disponibles en los capítulos 0, 1, 2 y 3
+### Funciones disponibles en los capítulos 0–11
 
 - Inventario visual en fichas grandes de dos columnas y una columna en móvil.
 - Fotografías ampliables y optimizadas como WebP, sin imágenes incrustadas en base64.
@@ -145,6 +145,11 @@ Las listas de comprobación, fotografías, esquemas y capítulos irán actualiz�
 - Botón de borrado con confirmación previa.
 - Índice rápido, navegación a la portada e impresión / guardado en PDF.
 - Estilos específicos para móvil, tablet, escritorio e impresión.
+- Calculadora de RPM basada en pulsos, intervalo y PPR medidos.
+- Firmware descargable para escaneo I2C, prueba manual de RPM y registro integrado.
+- Plantilla CSV para 36 configuraciones y sus repeticiones.
+- Calculadora y plantilla SVG 1:1 para cortar las dos tapas y las cuatro barras desmontables del útil de bobina.
+- Calculadora y plano SVG 1:1 para cortar la placa, la base y los dos cartabones del soporte ajustable de la bobina.
 
 ### Fotografías y trazabilidad
 
@@ -152,7 +157,7 @@ Las imágenes principales se seleccionaron del paquete de fotografías aportado 
 
 La ESP32-S3 utiliza una fotografía real de referencia procedente de la [documentación oficial de Espressif](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html). No se considera prueba de la revisión, memoria o pinout de la placa disponible.
 
-Los cuatro huecos restantes incluyen referencias fotográficas generadas y rotuladas como tales: kit de resistencias, cables Dupont, LEDs e imanes redondos. Sirven para reconocer el tipo de componente, pero no sustituyen la comprobación ni la fotografía de las piezas reales. Esos `TODO` se conservan.
+Los cuatro huecos restantes incluyen referencias fotográficas generadas y rotuladas como tales: kit de resistencias, cables Dupont, LEDs e imanes redondos. Sirven para reconocer el tipo de componente, pero no sustituyen la comprobación ni la fotografía de las piezas reales. Esos `dato por verificar` se conservan.
 
 El Capítulo 1 combina las fotografías aportadas del alargador, la fuente, sus bornes, el selector y las horquillas con cuatro referencias generadas: preparación de la mesa, aspecto de los tres conductores, terminaciones crimpadas y concepto de envolvente. Todas están rotuladas como referencias y no se presentan como prueba del montaje real.
 
@@ -160,11 +165,27 @@ El Capítulo 2 utiliza las fotografías aportadas del PWM, motor 775, soporte, m
 
 El proyecto se realizará en **Colombia**. El Capítulo 1 utiliza como referencia una toma doméstica de **120 V AC, 60 Hz**, clavija tipo B con tierra y el código de conductores del [RETIE vigente](https://www.minenergia.gov.co/documents/15921/Libro-3-Resolucion-40284-23-06-2026.pdf) para ese sistema: negro para fase, blanco para neutro y verde para protección. La [Superintendencia de Industria y Comercio](https://www.sic.gov.co/informacion-de-Interes-sobre-congreso-internacional-derecho-de-los-mercados) también identifica 120 V, 60 Hz y clavijas tipo A/B como referencias de uso en Colombia. Las imágenes generadas se corrigieron para mostrar tipo B con tierra y no una clavija europea.
 
-Las imágenes disponibles de la fuente proceden del material/anuncio y no identifican de forma suficiente fabricante o modelo. Por ello el manual conserva como `TODO` bloqueantes la placa real, el manual exacto, la terminación permitida, la longitud de pelado, el par de apriete, la ventilación y el tiempo de descarga. No se autoriza el primer encendido hasta resolverlos.
+Las imágenes disponibles de la fuente proceden del material/anuncio y no identifican de forma suficiente fabricante o modelo. Por ello el manual conserva como `dato por verificar` bloqueantes la placa real, el manual exacto, la terminación permitida, la longitud de pelado, el par de apriete, la ventilación y el tiempo de descarga. No se autoriza el primer encendido hasta resolverlos.
 
-Las imágenes del PWM tampoco permiten leer con fiabilidad qué bornes son entrada y salida. El Capítulo 2 conserva como `TODO` bloqueantes esa asignación, las corrientes reales del controlador y el motor, el comportamiento de arranque, la protección y el corte DC, la validez del AWG18 y los terminales. La primera prueba se limita al motor desnudo, fijado y con el eje completamente resguardado; el rotor sigue fuera.
+Las imágenes del PWM tampoco permiten leer con fiabilidad qué bornes son entrada y salida. El Capítulo 2 conserva como `dato por verificar` bloqueantes esa asignación, las corrientes reales del controlador y el motor, el comportamiento de arranque, la protección y el corte DC, la validez del AWG18 y los terminales. La primera prueba se limita al motor desnudo, fijado y con el eje completamente resguardado; el rotor sigue fuera.
 
-El Capítulo 3 conserva el rotor ligero y no metálico como dirección inicial y las configuraciones de 4, 6 y 8 imanes, pero no convierte un CD doméstico ni el adaptador del anuncio en piezas aprobadas. Añade tres referencias generadas y rotuladas —medición del adaptador, clasificación segura de imanes y maqueta inerte del resguardo—. La geometría angular se representa con diagramas HTML deterministas. La prueba motorizada queda bloqueada hasta fijar RPM máxima, medida independiente, retención, equilibrado y capacidad de contención.
+El Capítulo 3 documenta la decisión del proyecto de construir el rotor sobre un CD real con configuraciones de 4, 6 y 8 imanes. Incluye un generador de plantillas SVG a escala 1:1 que exige introducir las medidas físicas del CD, el centro y los imanes; no precarga cotas ni representa soportes que no existen. Los huecos del rotor, el montaje final y el resguardo se reservan para fotografías reales tomadas durante la construcción. El adhesivo queda pendiente de validar específicamente para el sustrato real del CD y el revestimiento de los imanes; la prueba motorizada sigue bloqueada hasta cerrar RPM máxima, retención, equilibrado y contención.
+
+Los Capítulos 4–7 reutilizan las fotografías aportadas del cobre AWG28, protoboard, diodos 1N5818, resistencia de potencia, INA219, TCRT5000 y KY-003. Los dibujos de bobina y conexiones son esquemas HTML/SVG deterministas. Molde, soportes, distancias, pinout, niveles y fijaciones permanecen como `dato por verificar` hasta verificarlos en las piezas físicas.
+
+El Capítulo 4 incorpora referencias fotográficas generadas y rotuladas como tales para explicar el útil, su despiece en cuatro barras, el montaje, la extracción, el gesto real del bobinado manual, la forma del bucle continuo en U, un acabado manual aceptablemente irregular y el manejo básico de un multímetro. No representan la bobina construida, no demuestran el conteo y las pantallas del medidor son valores ilustrativos. La primera referencia del molde se conserva por trazabilidad, pero ya no se usa en el capítulo porque parecía una placa con hueco y no mostraba un canal construible. La guía corregida usa dos tapas sólidas y cuatro barras interiores que se extraen hacia el hueco central.
+
+El bobinado ya no se presenta como una sucesión de vueltas perfectas. Antes de abrir el carrete exige ensayar 50 vueltas con hilo desechable, parar y reanudar sin perder el paquete. Durante la pieza real una persona gira el útil y otra guía el hilo; se trabaja en grupos de cinco dentro de bloques de 25, se recolocan solo los grupos nuevos y se admiten desniveles y cruces amplios. Bucles flojos, montones que desbordan, dobleces, raspaduras o una cuenta perdida obligan a parar.
+
+Las referencias iniciales de comienzo y acabado excesivamente ordenados se conservan como archivos para no borrar trazabilidad, pero dejan de utilizarse como objetivo en el capítulo. Las nuevas referencias muestran el útil cerrado durante el giro y un paquete deliberadamente irregular; aun así continúan rotuladas como imágenes generadas y nunca sustituyen la evidencia de la bobina real.
+
+La página `plantilla-util-bobina.html` calcula el despiece SVG 1:1 sin precargar ninguna medida. La página `plantilla-soporte-bobina.html` calcula la placa vertical, la base y dos cartabones a partir del contorno de la bobina terminada y del espacio real disponible. Los orificios de las bridas se transfieren presentando la bobina física para que ninguno atraviese el cobre. Marca, modelo y frontal del multímetro real deben copiarse de su carcasa y manual; por eso las imágenes del medidor enseñan símbolos y bornes genéricos.
+
+Las derivaciones T200, T400 y T600 se documentan como bucles continuos en U: el hilo no se corta durante el bobinado. El método para retirar esmalte y añadir los terminales se mantiene como `dato por verificar` hasta identificar el aislamiento del carrete y validarlo en un retal; no se prescribe llama, temperatura o crimp genérico.
+
+El Capítulo 8 incorpora firmware con configuración bloqueada por defecto: pines `-1`, dirección I2C `0x00` y PPR `0`. No comienza a medir hasta sustituirlos por datos trazables de los capítulos 6 y 7. El Capítulo 9 añade una plantilla CSV y señala una decisión abierta: comparar 4, 6 y 8 imanes con adhesión permanente exige decidir entre tres CDs equivalentes o un sistema desmontable aprobado; no se despegarán imanes entre ensayos.
+
+Los Capítulos 10 y 11 completan diagnóstico, trazabilidad, selección de evidencias reales y defensa. No contienen resultados simulados: tablas y gráficos finales permanecen como `dato por verificar` hasta disponer de datos experimentales.
 
 La imagen del paquete que estaba rotulada como «imanes redondos» sigue descartada porque muestra anillos/adaptadores con orificio, no los discos macizos de 15 × 2 mm descritos en el proyecto.
 
@@ -198,9 +219,9 @@ Por eso:
 - se utiliza una toma tipo B compatible y con tierra funcional, sin adaptadores que eliminen la protección;
 - una persona adulta o competente revisa la parte conectada a red antes del primer encendido;
 - la hoja de sierra incluida con el kit del motor **no se utilizará**;
-- la idea inicial es un rotor ligero y no metálico, pero su geometría se decidirá al medir el motor y el adaptador reales;
+- el rotor será un CD real; sus medidas, patrón, retención e interfaz se validarán con el CD, los imanes y el adaptador físicos;
 - el rotor definitivo contará con protección;
-- las primeras pruebas se harán a **baja velocidad**;
+- las primeras pruebas partirán del menor objetivo de RPM aprobado y siempre con velocidad numérica medida;
 - antes de conectar el ESP32 se comprobarán tensiones y polaridades.
 
 ---
@@ -226,12 +247,28 @@ generador/
 ├── capitulo-1.html            # Cable de red, fuente protegida y prueba de 12 V
 ├── capitulo-2.html            # Protección DC, PWM, motor y primera rotación sin rotor
 ├── capitulo-3.html            # Rotor, imanes, retención, equilibrado y resguardo
+├── capitulo-4.html            # Bobina AWG28 y derivaciones
+├── capitulo-5.html            # Puente 1N5818 y carga
+├── capitulo-6.html            # INA219 y ESP32-S3
+├── capitulo-7.html            # Sensor y cálculo de RPM
+├── capitulo-8.html            # Software, calibración y CSV
+├── capitulo-9.html            # Matriz y protocolo experimental
+├── capitulo-10.html           # Diagnóstico por subsistemas
+├── capitulo-11.html           # Presentación y defensa
+├── plantilla-rotor.html       # Generador SVG imprimible 1:1 para 4, 6 u 8 imanes
+├── plantilla-util-bobina.html # Generador SVG imprimible 1:1 del útil desmontable
+├── plantilla-soporte-bobina.html # Plano SVG 1:1 del soporte ajustable
+├── datos/
+│   └── plantilla-ensayos.csv  # Registro tabular de la campaña
+├── firmware/                  # Escáner I2C, RPM y registrador integrado
 ├── README.md                  # Este documento
 └── assets/
     ├── css/
     │   └── manual.css         # Identidad visual, responsive e impresión
     ├── js/
     │   ├── checklist.js       # Persistencia, progreso y borrado
+    │   ├── coil-jig-template.js # Cálculo y SVG 1:1 del útil de bobina
+    │   ├── coil-support-template.js # Plano SVG 1:1 del soporte ajustable
     │   └── navigation.js      # Impresión e índice rápido
     └── img/                   # Fotografías WebP con nombres descriptivos
 ```
@@ -242,7 +279,7 @@ El sitio no requiere compilación, dependencias de ejecución ni framework: GitH
 
 ## 🚧 Estado del proyecto
 
-**En construcción activa.**
+**Recorrido completo en borrador y en construcción física activa.**
 
 Los componentes están llegando y el manual se escribe al mismo tiempo que se valida el montaje real. Por eso puede haber cambios en conexiones, soportes o procedimientos cuando se inspeccionen físicamente las piezas.
 
