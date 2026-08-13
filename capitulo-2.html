@@ -145,7 +145,7 @@
     <section class="page" id="bloqueos" aria-labelledby="bloqueos-title">
       <span class="page-number">Página 3</span>
       <p class="eyebrow">Capítulo 2 · Antes de conectar</p>
-      <h2 id="bloqueos-title">Datos reales que deben cerrar los TODO</h2>
+      <h2 id="bloqueos-title">Datos reales que deben cerrar las comprobaciones</h2>
       <p class="page-subtitle">Las fotografías del paquete permiten reconocer las piezas, pero no autorizan su conexión.</p>
 
       <div class="grid-2">
@@ -161,7 +161,7 @@
           <p class="photo-note">Referencia generada para ordenar el banco. No muestra una conexión aprobada, no sustituye resguardos reales y mantiene la clavija tipo B fuera de la toma.</p>
         </article>
         <div class="box danger">
-          <span class="box-title">TODO bloqueantes</span>
+          <span class="box-title">Verificaciones obligatorias</span>
           <p class="decision todo"><strong>PWM real:</strong> fabricante/modelo, manual, orden exacto de entrada/salida, polaridad, corriente continua, pico permitido, ventilación y comportamiento al arrancar.</p>
           <p class="decision todo"><strong>Motor real:</strong> tensión nominal, corriente en vacío, corriente de arranque/bloqueo, sentido de giro observado y límites térmicos.</p>
           <p class="decision todo"><strong>Protección DC:</strong> tipo, poder de corte y valor del fusible o limitador, además de un corte accesible compatible con DC.</p>
@@ -182,7 +182,7 @@
       <label class="observation" for="c2-registro-modelos">Modelos, documentación y valores confirmados
         <textarea id="c2-registro-modelos" data-note placeholder="PWM: marca/modelo/manual/bornes/rating continuo · Motor: marca/tensión/corrientes · Protección DC · Cable y terminales."></textarea>
       </label>
-      <div class="page-footer">Un TODO bloqueante no se completa con un dato de otra placa parecida.</div>
+      <div class="page-footer">Un Verificación obligatoria no se completa con un dato de otra placa parecida.</div>
     </section>
 
     <section class="page" id="pwm" aria-labelledby="pwm-title">
@@ -212,9 +212,9 @@
       </ol>
 
       <div class="terminal-map" aria-label="Campos pendientes para documentar los bornes reales del PWM">
-        <div><strong>Bornes reales</strong><span>→</span><strong>Entrada DC</strong><span>TODO</span></div>
-        <div><strong>Bornes reales</strong><span>→</span><strong>Salida motor</strong><span>TODO</span></div>
-        <div><strong>Potenciómetro</strong><span>→</span><strong>Mínimo / apagado</strong><span>TODO</span></div>
+        <div><strong>Bornes reales</strong><span>→</span><strong>Entrada DC</strong><span>Registrar</span></div>
+        <div><strong>Bornes reales</strong><span>→</span><strong>Salida motor</strong><span>Registrar</span></div>
+        <div><strong>Potenciómetro</strong><span>→</span><strong>Mínimo / apagado</strong><span>Registrar</span></div>
       </div>
 
       <div class="check-group">
@@ -308,9 +308,9 @@
 
       <div class="box danger">
         <span class="box-title">Decisión técnica pendiente</span>
-        <p class="decision todo"><strong>TODO:</strong> anotar aquí el dispositivo de protección y su justificación. Hasta entonces no se conectará V+ al PWM.</p>
-        <p class="decision todo"><strong>TODO:</strong> seleccionar el corte DC y decidir, con documentación, si abre uno o ambos conductores.</p>
-        <p class="decision todo"><strong>TODO:</strong> aceptar o sustituir el AWG18 tras calcular el circuito real. No se propone una sección alternativa sin esos datos.</p>
+        <p class="decision todo"><strong>Completar con la pieza real:</strong> anotar aquí el dispositivo de protección y su justificación. Hasta entonces no se conectará V+ al PWM.</p>
+        <p class="decision todo"><strong>Completar con la pieza real:</strong> seleccionar el corte DC y decidir, con documentación, si abre uno o ambos conductores.</p>
+        <p class="decision todo"><strong>Completar con la pieza real:</strong> aceptar o sustituir el AWG18 tras calcular el circuito real. No se propone una sección alternativa sin esos datos.</p>
       </div>
 
       <div class="check-group">
@@ -492,7 +492,7 @@
       </div>
 
       <aside class="notice danger"><strong>No poner el INA219 del proyecto en este circuito del motor.</strong> Su rango, shunt, conexiones y transitorios no se han validado para la corriente de arranque. La corriente solo se caracterizará con un método específicamente aprobado.</aside>
-      <aside class="notice warning"><strong>Ruido eléctrico:</strong> mantener cortos y juntos los conductores del motor. Si la documentación exige condensadores de supresión u otras medidas, se incorporarán como TODO verificado; no se añaden valores genéricos a ciegas.</aside>
+      <aside class="notice warning"><strong>Ruido eléctrico:</strong> mantener cortos y juntos los conductores del motor. Si la documentación exige condensadores de supresión u otras medidas, se incorporarán después de verificar componente, valor y conexión; no se añaden valores genéricos a ciegas.</aside>
       <div class="page-footer">Preparado no significa energizado: el corte permanece abierto hasta la orden de prueba.</div>
     </section>
 
@@ -570,7 +570,7 @@
       <div class="box danger">
         <span class="box-title">Estado técnico conservado</span>
         <p>Las fotografías disponibles no permiten leer el orden de bornes del PWM ni demostrar sus corrientes. Tampoco aportan la corriente de bloqueo del motor ni un fusible, corte DC o resguardo reales.</p>
-        <p class="decision todo"><strong>TODO bloqueante:</strong> esos datos deben completarse con el hardware, documentación y selección competente antes de ejecutar la energización. Este capítulo no rellena los huecos con valores inventados.</p>
+        <p class="decision todo"><strong>Verificación obligatoria:</strong> esos datos deben completarse con el hardware, documentación y selección competente antes de ejecutar la energización. Este capítulo no rellena los huecos con valores inventados.</p>
       </div>
 
       <section class="source-panel" aria-labelledby="fuentes-title">

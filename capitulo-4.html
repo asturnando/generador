@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Guía visual y realista para construir a mano una bobina AWG28 de 800 espiras con derivaciones continuas a 200, 400 y 600 vueltas.">
+  <title>Capítulo 4 · Construcción paso a paso de la bobina</title>
+  <link rel="stylesheet" href="assets/css/manual.css">
+</head>
+<body data-storage-namespace="generador:capitulo-4:v1:" data-checklist-label="Capítulo 4">
+  <a class="skip-link" href="#capitulo">Saltar al capítulo</a>
+  <header class="toolbar" aria-label="Navegación del manual">
+    <strong class="toolbar-title">Manual del generador · Capítulo 4</strong>
+    <a href="index.html">← Portada</a><a href="capitulo-3.html">Anterior</a><a href="capitulo-5.html">Siguiente</a>
+    <details class="quick-menu"><summary>Índice rápido</summary><nav aria-label="Índice del Capítulo 4">
+      <a href="#alcance">1. Resultado</a><a href="#inventario">2. Material</a><a href="#diseno">3. Medir</a><a href="#util">4. Entender el útil</a><a href="#util-despiece">5. Cortar piezas</a><a href="#util-montaje">6. Montar el útil</a><a href="#practica">7. Practicar</a><a href="#inicio">8. Bobinar a mano</a><a href="#conteo">9. Contar</a><a href="#derivacion">10. Sacar la U</a><a href="#repeticion">11. Llegar a 800</a><a href="#acabado">12. Extraer</a><a href="#terminales">13. Terminales</a><a href="#multimetro-puntas">14. Puntas</a><a href="#multimetro-prueba">15. Probar medidor</a><a href="#verificacion">16. Medir Ω</a><a href="#multimetro-ac">17. Medir V~</a><a href="#instalacion">18. Cerrar</a>
+    </nav></details>
+    <button type="button" data-print>Imprimir / PDF</button>
+  </header>
+
+  <main class="manual-main" id="capitulo">
+    <section class="page" id="alcance" aria-labelledby="c4-alcance-title">
+      <span class="page-number">Página 1</span><p class="eyebrow">Capítulo 4 · Bobina</p>
+      <h1 id="c4-alcance-title">Construir la bobina sin tener que adivinar</h1>
+      <p class="page-subtitle">Al terminar habrá un solo hilo continuo, dos extremos y tres derivaciones intermedias identificadas.</p>
+      <span class="review-stamp">Guía de construcción · medir, fabricar, comprobar y registrar</span>
+      <div class="grid-2">
+        <div class="box blue"><span class="box-title">Resultado eléctrico</span><p class="lead"><strong>INICIO → T200 → T400 → T600 → FINAL 800</strong></p><p>Para elegir 200, 400, 600 u 800 espiras se usa INICIO como común y el terminal correspondiente.</p></div>
+        <div class="box danger"><span class="box-title">Condición de trabajo</span><p>Fuente desenchufada, motor desconectado y CD inmóvil. El AWG28 nunca se conecta directamente a 12 V.</p></div>
+      </div>
+      <div class="tap-chain" role="img" aria-label="Bobina continua con derivaciones a 200, 400 y 600 espiras y final a 800">
+        <span class="tap-terminal strong">INICIO<small>0</small></span><span class="tap-section">200 espiras</span><span class="tap-terminal">T200</span><span class="tap-section">+200</span><span class="tap-terminal">T400</span><span class="tap-section">+200</span><span class="tap-terminal">T600</span><span class="tap-section">+200</span><span class="tap-terminal strong">FINAL<small>800</small></span>
+      </div>
+      <div class="progress-panel"><div class="progress-copy"><strong data-progress-text>0 comprobaciones realizadas</strong><div class="progress-track" role="progressbar" aria-label="Progreso del Capítulo 4" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"><span data-progress-bar></span></div></div><button class="reset-button" type="button" data-reset-checklist>Borrar progreso</button></div>
+      <div class="check-group">
+        <label class="check-row" for="c4-rotor-inmovil"><input id="c4-rotor-inmovil" type="checkbox" data-checklist><span>Motor desconectado, rotor de CD inmóvil y fuente desenchufada.</span></label>
+        <label class="check-row" for="c4-gafas"><input id="c4-gafas" type="checkbox" data-checklist><span>Hay gafas, mesa despejada y el carrete no puede rodar.</span></label>
+        <label class="check-row" for="c4-metodo-entendido"><input id="c4-metodo-entendido" type="checkbox" data-checklist><span>T200, T400 y T600 se formarán con bucles en U sin cortar el hilo.</span></label>
+      </div>
+      <aside class="notice warning"><strong>Las fotografías generadas son referencias visuales.</strong> Enseñan la operación, pero no prueban materiales, medidas ni vueltas. Una bobina manual real tendrá pequeñas irregularidades: no tiene que parecer fabricada por una máquina.</aside>
+      <div class="page-footer">La bobina será continua: no se empalman cuatro bobinas.</div>
+    </section>
+
+    <section class="page" id="inventario" aria-labelledby="c4-inventario-title">
+      <span class="page-number">Página 2</span><p class="eyebrow">Capítulo 4 · Preparación</p>
+      <h2 id="c4-inventario-title">Reunir todo antes de abrir el carrete</h2>
+      <p class="page-subtitle">Interrumpir un bloque a medias facilita perder la cuenta.</p>
+      <div class="grid-2">
+        <article class="component-card"><div class="component-card-header"><span class="component-number">1</span><div><h3>Cobre esmaltado</h3><div class="component-status"><span class="tag reference">Foto aportada</span><span class="tag pending">AWG28 por confirmar</span></div></div></div><figure class="media-frame"><a href="assets/img/cobre-esmaltado-awg28.webp" target="_blank" rel="noopener"><img src="assets/img/cobre-esmaltado-awg28.webp" width="844" height="852" loading="lazy" alt="Carretes aportados como referencia del cobre esmaltado AWG28"></a><span class="zoom-hint">Abrir foto</span></figure><p class="photo-note">La imagen no identifica el carrete recibido ni su tipo de esmalte.</p></article>
+        <div>
+          <div class="box success"><span class="box-title">Material de taller</span><ul><li>Carrete real con su etiqueta.</li><li>Regla o calibre y rotulador.</li><li>Dos placas, separador central y pinzas.</li><li>Cinta suave no conductora.</li><li>Cinco etiquetas.</li><li>Hoja de conteo y dos contadores.</li><li>Multímetro.</li></ul></div>
+          <div class="box danger"><span class="box-title">Tres puertas de control</span><p class="decision todo"><strong>Útil:</strong> introducir las cotas medidas en la plantilla, fabricar el prototipo y demostrar dos desmontajes.</p><p class="decision todo"><strong>Hilo:</strong> fotografiar la etiqueta y superar 50 vueltas de práctica antes de abrir el carrete definitivo.</p><p class="decision todo"><strong>Contacto:</strong> aplicar únicamente la terminación indicada por la ficha del hilo o por un terminal específico, después de ensayarla en un retal.</p></div>
+        </div>
+      </div>
+      <ol class="step-list">
+        <li>Fotografiar toda la etiqueta del carrete.</li>
+        <li>Confirmar por escrito AWG28, conductor, aislamiento y longitud anunciada.</li>
+        <li>Reservar un retal corto para probar la terminación; no tocar todavía el hilo de la bobina.</li>
+        <li>Preparar etiquetas: <strong>INICIO, T200, T400, T600 y FINAL 800</strong>.</li>
+      </ol>
+      <div class="check-group"><label class="check-row" for="c4-etiqueta-cobre"><input id="c4-etiqueta-cobre" type="checkbox" data-checklist><span>La etiqueta confirma AWG28 y está fotografiada.</span></label><label class="check-row" for="c4-retal"><input id="c4-retal" type="checkbox" data-checklist><span>Hay un retal para ensayar la terminación.</span></label><label class="check-row" for="c4-etiquetas-preparadas"><input id="c4-etiquetas-preparadas" type="checkbox" data-checklist><span>Las cinco etiquetas existen antes de empezar.</span></label></div>
+      <label class="observation" for="c4-ficha-material">Ficha del hilo real<textarea id="c4-ficha-material" data-note placeholder="Marca/lote · AWG · diámetro · esmalte · longitud · foto · método de contacto por ensayar."></textarea></label>
+      <div class="page-footer">El color cobrizo no identifica calibre ni aislamiento.</div>
+    </section>
+
+    <section class="page" id="diseno" aria-labelledby="c4-diseno-title">
+      <span class="page-number">Página 3</span><p class="eyebrow">Capítulo 4 · Medidas</p>
+      <h2 id="c4-diseno-title">Definir la ventana con el CD real</h2>
+      <p class="page-subtitle">El dibujo explica la forma; sus cotas no se copian.</p>
+      <div class="coil-sketch" role="img" aria-label="Dibujo orientativo de la bobina y sus cinco salidas"><span class="coil-window">Ventana<br>ancho × alto medidos</span><span class="coil-lead start">INICIO</span><span class="coil-lead tap-200">T200</span><span class="coil-lead tap-400">T400</span><span class="coil-lead tap-600">T600</span><span class="coil-lead end">FINAL 800</span></div>
+      <p class="diagram-caption"><strong>Dibujo, no plantilla:</strong> la ventana debe cruzar la trayectoria real del imán y dejar holgura aprobada.</p>
+      <table class="spec-table"><thead><tr><th>Dato</th><th>Cómo obtenerlo</th><th>Valor real</th></tr></thead><tbody>
+        <tr><td>Imán</td><td>Medir una pieza física.</td><td><span class="write-field">______ mm</span></td></tr>
+        <tr><td>Trayectoria sobre CD</td><td>Plantilla y rotor del Capítulo 3.</td><td><span class="write-field">______ mm</span></td></tr>
+        <tr><td>Ventana interior</td><td>Superponer un recorte a la trayectoria.</td><td><span class="write-field">______ × ______ mm</span></td></tr>
+        <tr><td>Espesor máximo</td><td>Espacio sin invadir rotor ni resguardo.</td><td><span class="write-field">______ mm</span></td></tr>
+        <tr><td>Separación inicial</td><td>Usar la galga no magnética de 10 mm y comprobar una vuelta manual.</td><td><strong>10 mm</strong></td></tr>
+      </tbody></table>
+      <ol class="step-list"><li>Colocar sobre papel la plantilla real del rotor.</li><li>Marcar el recorrido de los centros de los imanes.</li><li>Dibujar y recortar una ventana candidata.</li><li>Presentarla junto al CD inmóvil y girar una vuelta a mano.</li><li>Corregir hasta que nada pueda tocarse.</li><li>Anotar las cotas aprobadas y fabricar entonces el útil.</li></ol>
+      <div class="check-group"><label class="check-row" for="c4-cotas"><input id="c4-cotas" type="checkbox" data-checklist><span>Las cotas proceden de las piezas reales.</span></label><label class="check-row" for="c4-presentacion"><input id="c4-presentacion" type="checkbox" data-checklist><span>El recorte completó una vuelta manual sin invadir el rotor.</span></label><label class="check-row" for="c4-cotas-anotadas"><input id="c4-cotas-anotadas" type="checkbox" data-checklist><span>Geometría, espesor y margen están anotados.</span></label></div>
+      <div class="page-footer">Las cotas se escriben después de medir: una casilla en blanco es parte del trabajo, no contenido ausente.</div>
+    </section>
+
+    <section class="page" id="util" aria-labelledby="c4-util-title">
+      <span class="page-number">Página 4</span><p class="eyebrow">Capítulo 4 · Útil desmontable</p>
+      <h2 id="c4-util-title">Entender qué estamos construyendo</h2>
+      <p class="page-subtitle">El cobre se enrolla en el canal entre dos tapas, alrededor de un núcleo interior que luego se desmonta en cuatro piezas.</p>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-util-piezas-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-util-piezas-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada del despiece con dos tapas, cuatro barras de núcleo y cuatro pinzas"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia generada corregida.</strong> Deben existir exactamente dos tapas, cuatro piezas interiores independientes y cuatro pinzas.</figcaption></figure>
+        <div class="jig-stack" aria-label="Capas del útil"><span>Tapa superior sólida</span><span>Núcleo de 4 piezas<br><small>2 laterales + 2 cortas</small></span><span>Tapa inferior sólida</span><span>4 pinzas fuera del canal</span></div>
+      </div>
+      <div class="jig-principle" role="img" aria-label="Corte lateral del útil con tapa superior, canal de bobinado, núcleo y tapa inferior"><span>TAPA SUPERIOR</span><span class="jig-channel">CANAL: aquí entra el cobre</span><span>NÚCLEO DESMONTABLE</span><span class="jig-channel">CANAL: aquí entra el cobre</span><span>TAPA INFERIOR</span></div>
+      <div class="box blue"><span class="box-title">Diferencia importante</span><p>El <strong>útil de bobinado</strong> solo da forma al cobre sobre la mesa y después se retira. El <strong>soporte ajustable</strong> de la página 18 mantiene la bobina frente al CD durante la prueba manual. La referencia anterior parecía una placa con hueco; se conserva en el repositorio, pero deja de usarse porque no mostraba un canal construible.</p></div>
+      <div class="check-group"><label class="check-row" for="c4-concepto-util"><input id="c4-concepto-util" type="checkbox" data-checklist><span>Se distingue el útil temporal del soporte final.</span></label><label class="check-row" for="c4-seis-piezas"><input id="c4-seis-piezas" type="checkbox" data-checklist><span>Se entiende el despiece: dos tapas y cuatro barras.</span></label><label class="check-row" for="c4-canal"><input id="c4-canal" type="checkbox" data-checklist><span>Se ha localizado el canal lateral por donde rodeará el cobre.</span></label></div>
+      <div class="page-footer">El núcleo nunca se fabrica como un bloque único atrapado dentro de la bobina.</div>
+    </section>
+
+    <section class="page" id="util-despiece" aria-labelledby="c4-util-despiece-title">
+      <span class="page-number">Página 5</span><p class="eyebrow">Capítulo 4 · Construir el útil</p>
+      <h2 id="c4-util-despiece-title">Marcar y cortar las seis piezas</h2>
+      <p class="page-subtitle">Primero se hace un prototipo en material barato; las medidas proceden de la página 3, nunca de la fotografía.</p>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-util-nucleo-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-util-nucleo-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada de cuatro barras formando el núcleo sobre una tapa y la segunda tapa al lado"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia generada.</strong> Las cuatro barras se apoyan juntas, pero no se pegan entre sí ni a la tapa.</figcaption></figure>
+        <div>
+          <div class="box success"><span class="box-title">Lista de corte</span><ol><li>2 tapas rectangulares iguales.</li><li>2 barras laterales iguales.</li><li>2 barras cortas iguales.</li><li>4 tiradores de papel o cinta, uno por barra.</li></ol></div>
+          <a class="template-link" href="plantilla-util-bobina.html"><strong>Abrir calculadora y plantilla 1:1</strong><span>Introduce las medidas reales y descarga el despiece SVG.</span></a>
+        </div>
+      </div>
+      <ol class="step-list">
+        <li>Trasladar al material las medidas calculadas con regla y escuadra; escribir A/B en las tapas y L1/L2/C1/C2 en las barras.</li>
+        <li>Pedir a una persona adulta o competente que haga los cortes sobre una base de corte, con la herramienta adecuada al material y alejándose siempre de manos y cuerpo.</li>
+        <li>No intentar atravesar una placa gruesa de una sola pasada: hacer pasadas ligeras guiadas. Si el material exige sierra o herramienta eléctrica, detenerse y usar supervisión competente.</li>
+        <li>Comparar las dos tapas enfrentadas. Sus bordes deben coincidir; si no, corregir antes de seguir.</li>
+        <li>Comparar L1 con L2 y C1 con C2. Cada pareja debe ser igual.</li>
+        <li>Redondear suavemente solo las caras exteriores por las que pasará el cobre. No alterar las cotas interiores sin registrarlo.</li>
+        <li>Cubrir o pulir cantos ásperos y probarlos pasando un retal del mismo hilo sin tensión: no debe enganchar ni levantar esmalte.</li>
+        <li>Añadir un tirador plegado hacia el hueco central a cada barra. El adhesivo del tirador no debe unir unas barras con otras.</li>
+      </ol>
+      <aside class="notice warning"><strong>Selección del material.</strong> Para el prototipo se usa cartón gris compacto o tablero de fibras sin grapas, limpio, plano, seco, aislante y con cantos suavizados. Si se flexiona al cerrar las cuatro pinzas, se duplica su espesor o se repite con una placa aislante más rígida antes de introducir cobre.</aside>
+      <div class="check-group"><label class="check-row" for="c4-corte-adulto"><input id="c4-corte-adulto" type="checkbox" data-checklist><span>Los cortes se realizaron con herramienta y supervisión adecuadas.</span></label><label class="check-row" for="c4-parejas-iguales"><input id="c4-parejas-iguales" type="checkbox" data-checklist><span>Tapas y parejas de barras coinciden.</span></label><label class="check-row" for="c4-tiradores"><input id="c4-tiradores" type="checkbox" data-checklist><span>Las cuatro barras tienen tirador y siguen independientes.</span></label></div>
+      <div class="page-footer">Una plantilla correcta no sustituye comprobar cada pieza con regla.</div>
+    </section>
+
+    <section class="page" id="util-montaje" aria-labelledby="c4-util-montaje-title">
+      <span class="page-number">Página 6</span><p class="eyebrow">Capítulo 4 · Construir el útil</p>
+      <h2 id="c4-util-montaje-title">Montarlo y demostrar que se desmonta</h2>
+      <p class="page-subtitle">La prueba se hace dos veces sin cobre: si una barra queda atrapada ahora, quedará peor bajo 800 vueltas.</p>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-util-cerrado-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-util-cerrado-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada del útil cerrado con dos tapas, canal lateral y cuatro pinzas"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia generada.</strong> La tapa superior es sólida. El espacio lateral entre tapas es el canal de bobinado.</figcaption></figure>
+        <div class="jig-stack"><span>1 · Tapa A sobre la mesa</span><span>2 · L1 + L2 + C1 + C2</span><span>3 · Tapa B encima</span><span>4 · Cuatro pinzas exteriores</span></div>
+      </div>
+      <ol class="step-list">
+        <li>Apoyar la tapa A sobre la mesa y dibujar, sin cortar, el contorno exterior aprobado del núcleo.</li>
+        <li>Colocar L1 y L2 paralelas. Encajar C1 y C2 entre ellas dejando el pequeño juego aprobado para extracción.</li>
+        <li>Orientar los cuatro tiradores hacia el hueco central y comprobar que se pueden agarrar.</li>
+        <li>Colocar la tapa B encima, alineada con A. Las barras quedan atrapadas por presión, no por pegamento.</li>
+        <li>Situar cuatro pinzas en el margen exterior, lejos del canal de cobre y de las cinco salidas.</li>
+        <li>Mirar el útil de canto: las tapas deben estar paralelas y el canal debe mantener la misma altura.</li>
+        <li>Marcar en el borde las cinco salidas y hacer rebajes anchos y redondeados solo si el prototipo demuestra que son necesarios.</li>
+        <li>Desmontar de prueba: quitar tapa B; tirar C1 y C2 hacia el hueco; después desplazar L1 y L2 hacia el hueco y sacarlas.</li>
+        <li>Volver a montar y repetir. Ninguna pieza puede necesitar palanca contra la futura bobina.</li>
+      </ol>
+      <div class="jig-removal-flow"><span>Quitar pinzas</span><b>→</b><span>Levantar tapa B</span><b>→</b><span>Sacar C1 y C2 al centro</span><b>→</b><span>Sacar L1 y L2 al centro</span><b>→</b><span>Levantar bobina atada</span></div>
+      <aside class="notice danger"><strong>No pegar el núcleo y no encerar/engrasar a ciegas.</strong> Cualquier película de desmoldeo puede atacar el esmalte o contaminar una unión posterior; si hiciera falta, debe aprobarse y probarse con el hilo real.</aside>
+      <div class="check-group"><label class="check-row" for="c4-molde-real"><input id="c4-molde-real" type="checkbox" data-checklist><span>El útil está medido y fotografiado.</span></label><label class="check-row" for="c4-cantos"><input id="c4-cantos" type="checkbox" data-checklist><span>El retal no se engancha en canal ni rebajes.</span></label><label class="check-row" for="c4-doble-desmontaje"><input id="c4-doble-desmontaje" type="checkbox" data-checklist><span>Se desmontó dos veces sin palanca.</span></label><label class="check-row" for="c4-zonas-salida"><input id="c4-zonas-salida" type="checkbox" data-checklist><span>Pinzas y salidas no invaden el canal.</span></label></div>
+      <div class="page-footer">Fotografiar este montaje real antes de introducir el cobre.</div>
+    </section>
+
+    <section class="page" id="practica" aria-labelledby="c4-practica-title">
+      <span class="page-number">Página 7</span><p class="eyebrow">Capítulo 4 · Antes de usar el carrete</p>
+      <h2 id="c4-practica-title">Practicar el gesto con hilo barato</h2>
+      <p class="page-subtitle">No se empieza directamente con 800 vueltas de AWG28: primero se aprende a girar, guiar, parar y reanudar sin perder el paquete.</p>
+      <div class="grid-2">
+        <div class="box blue"><span class="box-title">Reparto de manos</span><p><strong>Una persona:</strong> sujeta el útil por las placas y lo gira despacio siempre en el sentido de la flecha.</p><p><strong>Otra persona:</strong> guía el hilo hacia el centro del canal con los dedos, sin agarrarlo fuerte ni tirar del carrete.</p><p>Si se trabaja solo, se gira un cuarto de vuelta, se apoya el útil y se recoloca la mano. No se intenta girar y ordenar a la vez con prisas.</p></div>
+        <div class="box success"><span class="box-title">Ensayo desechable</span><ol><li>Usar cordel fino o hilo aislado barato, nunca el cobre definitivo.</li><li>Hacer 25 vueltas y marcarlas en una hoja.</li><li>Parar, sujetar el hilo con una pinza sobre un cartón protector y soltar las manos.</li><li>Reanudar otras 25 vueltas sin cambiar el sentido.</li><li>Desmontar el útil y comprobar que las cuatro piezas salen al centro.</li></ol></div>
+      </div>
+      <div class="manual-cycle" aria-label="Ciclo manual de bobinado"><span><b>1</b>Girar despacio</span><span><b>2</b>Guiar al canal</span><span><b>3</b>Recolocar cada 5 vueltas</span><span><b>4</b>Parar en 25</span><span><b>5</b>Sujetar y anotar</span></div>
+      <h3>La prueba termina solo cuando puedas hacer esto</h3>
+      <div class="check-group"><label class="check-row" for="c4-practica-25"><input id="c4-practica-25" type="checkbox" data-checklist><span>Se completaron 25 vueltas de práctica sin perder la cuenta.</span></label><label class="check-row" for="c4-practica-parada"><input id="c4-practica-parada" type="checkbox" data-checklist><span>El útil quedó sujeto al parar y se pudo soltar sin que el hilo se aflojara.</span></label><label class="check-row" for="c4-practica-reinicio"><input id="c4-practica-reinicio" type="checkbox" data-checklist><span>Se reanudó en el mismo sentido y desde el número anotado.</span></label><label class="check-row" for="c4-practica-salida"><input id="c4-practica-salida" type="checkbox" data-checklist><span>El hilo de práctica y las cuatro barras salieron sin palanca.</span></label></div>
+      <aside class="notice warning"><strong>Si esto resulta difícil, todavía no se abre el carrete AWG28.</strong> Se repite el ensayo, se aumenta el margen de las tapas o se trabaja con ayudante. Forzarse a seguir no ahorra tiempo: arriesga 800 vueltas.</aside>
+      <div class="page-footer">La práctica no cuenta como bobina y puede repetirse tantas veces como sea necesario.</div>
+    </section>
+
+    <section class="page" id="inicio" aria-labelledby="c4-inicio-title">
+      <span class="page-number">Página 8</span><p class="eyebrow">Capítulo 4 · Bobinado manual real</p>
+      <h2 id="c4-inicio-title">Dejar INICIO y bobinar sin perseguir la perfección</h2>
+      <p class="page-subtitle">La cola queda fuera, aislada y larga. Se gira el útil completo; la segunda mano solo guía el hilo dentro del canal.</p>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-bobinado-manual-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-bobinado-manual-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada de dos personas bobinando a mano un útil cerrado mientras el carrete gira sobre un eje"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia generada del gesto manual.</strong> Una persona gira el útil; otra acompaña el hilo. El cobre queda en el canal lateral y por eso casi no se ve desde arriba. Las pinzas nunca deben atrapar directamente el AWG28: se interpone cartón suave y solo durante una parada.</figcaption></figure>
+        <div><div class="box blue"><span class="box-title">Una vuelta</span><p>Cuenta cuando el hilo da la vuelta completa al núcleo oculto entre las placas y cruza otra vez la línea de referencia.</p></div><div class="box success"><span class="box-title">Tensión correcta</span><p>El hilo queda apoyado, no tirante. El carrete gira libremente y el cobre nunca se usa para arrastrarlo.</p></div><div class="box warning"><span class="box-title">Aspecto real</span><p>No hay que poner cada hilo con precisión. Se guía un pequeño grupo hacia una zona baja cada cinco vueltas y se acepta que unas crucen suavemente sobre otras.</p></div></div>
+      </div>
+      <ol class="step-list"><li>Colocar el carrete atravesado por un eje horizontal para que gire sin rodar. El carrete queda a un lado y a la misma altura de la mesa.</li><li>Dejar una cola capaz de alcanzar holgadamente la futura regleta. Fijarla fuera del canal con cinta suave y etiquetar INICIO; no anudar ni retirar esmalte.</li><li>Dibujar en la tapa una flecha grande con el único sentido de giro y una línea de referencia para contar vueltas completas.</li><li>Sentarse con antebrazos apoyados. Sujetar el útil por dos bordes opuestos, nunca por el hilo ni por las pinzas.</li><li>Pedir al ayudante que mantenga el hilo entre pulgar e índice, a unos centímetros del útil, solo para conducirlo; no lo aprieta ni frena el carrete.</li><li>Girar el útil despacio una vuelta completa. Decir “uno” únicamente cuando la línea de referencia vuelve a pasar por delante.</li><li>Repetir hasta cinco. Apoyar el útil sin soltar tensión y empujar suavemente el pequeño grupo hacia una zona baja del canal usando un dedo, sin uña ni herramienta.</li><li>Continuar en grupos de cinco: 5, recolocar; 10, recolocar; 15; 20; 25 y parada. No se intenta ordenar durante cada centímetro.</li><li>En 25, colocar un trozo de cartón suave sobre el hilo y cerrar una pinza de parada sobre el cartón, fuera de la bobina. Solo entonces soltar las manos.</li><li>Comprobar que no existen bucles flojos, pellizcos, esquinas agudas o raspaduras. Pequeños desniveles y cruces amplios son aceptables.</li></ol>
+      <div class="manual-verdict"><div class="ok"><strong>ACEPTABLE</strong><span>Bordes algo irregulares, capas mezcladas y cruces amplios que permanecen apoyados.</span></div><div class="fix"><strong>PARAR Y CORREGIR</strong><span>Bucle que puede levantarse, montón que supera el canal o vuelta que cruza una salida.</span></div><div class="stop"><strong>DESCARTAR / CONSULTAR</strong><span>Esmalte raspado, cobre desnudo, doblez cerrado, hilo aplastado o cuenta irrecuperable.</span></div></div>
+      <aside class="notice blue"><strong>Cómo corregir sin estropear:</strong> detenerse, sujetar con el cartón, retroceder únicamente hasta el último bloque confirmado si hace falta y volver a apoyar la vuelta con la yema. No empujar con destornillador, regla, uña o pinza metálica.</aside>
+      <div class="check-group"><label class="check-row" for="c4-inicio-largo"><input id="c4-inicio-largo" type="checkbox" data-checklist><span>INICIO llega a la conexión sin tensión.</span></label><label class="check-row" for="c4-sentido"><input id="c4-sentido" type="checkbox" data-checklist><span>Flecha y línea permanecen visibles.</span></label><label class="check-row" for="c4-primeras-diez"><input id="c4-primeras-diez" type="checkbox" data-checklist><span>Las diez primeras vueltas están anotadas y sin daño.</span></label></div>
+      <div class="page-footer">La meta manual es continuidad, conteo y ausencia de daño; no una fotografía de catálogo.</div>
+    </section>
+
+    <section class="page" id="conteo" aria-labelledby="c4-conteo-title">
+      <span class="page-number">Página 9</span><p class="eyebrow">Capítulo 4 · Conteo</p>
+      <h2 id="c4-conteo-title">Completar 32 bloques de 25 vueltas</h2>
+      <p class="page-subtitle">Un bloque se marca solo cuando sus 25 vueltas cruzaron la línea.</p>
+      <div class="formula-grid"><div class="formula-card"><code>1 bloque</code><span>25 vueltas.</span></div><div class="formula-card"><code>8 bloques</code><span>200 vueltas.</span></div><div class="formula-card"><code>32 bloques</code><span>800 vueltas.</span></div></div>
+      <div class="winding-ledger" aria-label="Hoja de 32 bloques">
+        <span>01<small>25</small></span><span>02<small>50</small></span><span>03<small>75</small></span><span>04<small>100</small></span><span>05<small>125</small></span><span>06<small>150</small></span><span>07<small>175</small></span><span class="milestone">08<small>200 · T200</small></span>
+        <span>09<small>225</small></span><span>10<small>250</small></span><span>11<small>275</small></span><span>12<small>300</small></span><span>13<small>325</small></span><span>14<small>350</small></span><span>15<small>375</small></span><span class="milestone">16<small>400 · T400</small></span>
+        <span>17<small>425</small></span><span>18<small>450</small></span><span>19<small>475</small></span><span>20<small>500</small></span><span>21<small>525</small></span><span>22<small>550</small></span><span>23<small>575</small></span><span class="milestone">24<small>600 · T600</small></span>
+        <span>25<small>625</small></span><span>26<small>650</small></span><span>27<small>675</small></span><span>28<small>700</small></span><span>29<small>725</small></span><span>30<small>750</small></span><span>31<small>775</small></span><span class="milestone">32<small>800 · FINAL</small></span>
+      </div>
+      <ol class="step-list"><li>Contar en voz alta de 1 a 5 mientras la otra persona hace una marca; repetir cinco grupos.</li><li>Cada cinco vueltas, acercar suavemente el grupo a la zona más baja del canal. No desenrollar para eliminar una irregularidad solo estética.</li><li>En 25, detener con la línea delante y colocar la protección de cartón y la pinza de parada.</li><li>Comparar voz, marcas y contador; confirmar el bloque solo si coinciden.</li><li>Escribir el acumulado y hacer una foto antes de retirar la pinza para seguir.</li><li>Cuando el canal se llene a lo ancho, permitir que el hilo suba sobre la capa anterior de forma gradual. No existe una “última vuelta de capa” exacta en un bobinado manual.</li><li>Repartir los montones guiando los cinco siguientes hacia una zona más baja; no apretar los ya hechos.</li><li>Si se interrumpe, dejarlo sujeto y escribir: bloque, vuelta dentro del bloque, sentido y cuál es el siguiente número.</li></ol>
+      <div class="box warning"><span class="box-title">Pausas reales</span><p>No se recomienda terminar 800 vueltas de una sentada. Parar como mínimo en cada bloque de 25 y hacer una pausa larga en cada derivación. Si duelen manos, hombros o vista, sujetar y parar: el cansancio aumenta los errores de cuenta y los tirones.</p></div>
+      <aside class="notice danger"><strong>Cuenta perdida = detenerse.</strong> Volver al último bloque confirmado; nunca completar por grosor o memoria.</aside>
+      <div class="check-group"><label class="check-row" for="c4-doble-conteo"><input id="c4-doble-conteo" type="checkbox" data-checklist><span>Hay dos registros por bloque.</span></label><label class="check-row" for="c4-cambio-capa"><input id="c4-cambio-capa" type="checkbox" data-checklist><span>Los cambios de capa no cambian el sentido.</span></label><label class="check-row" for="c4-sin-dano"><input id="c4-sin-dano" type="checkbox" data-checklist><span>No hay raspados, dobleces cerrados ni vueltas flojas.</span></label></div>
+      <div class="page-footer">La hoja de conteo es parte de los datos de la bobina.</div>
+    </section>
+
+    <section class="page" id="derivacion" aria-labelledby="c4-derivacion-title">
+      <span class="page-number">Página 10</span><p class="eyebrow">Capítulo 4 · Operación clave</p>
+      <h2 id="c4-derivacion-title">Cómo sacar T200 sin cortar el hilo</h2>
+      <p class="page-subtitle">La derivación es una U: sale, gira suavemente y regresa para continuar bobinando.</p>
+      <figure class="tap-path-figure">
+        <svg viewBox="0 0 900 300" role="img" aria-labelledby="tap-title tap-desc">
+          <title id="tap-title">Recorrido continuo de una derivación</title><desc id="tap-desc">Un único hilo forma una U larga y vuelve a la bobina sin ser cortado.</desc>
+          <defs><marker id="c4arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#0c5ea8"/></marker></defs>
+          <rect x="32" y="46" width="235" height="208" rx="52" fill="#fff8ec" stroke="#8f4b20" stroke-width="18"/>
+          <path d="M260 110 H650 Q790 110 790 150 Q790 190 650 190 H260" fill="none" stroke="#b85a24" stroke-width="9" stroke-linecap="round"/>
+          <path d="M260 190 C225 190 215 222 258 240" fill="none" stroke="#b85a24" stroke-width="9" stroke-linecap="round"/>
+          <path d="M315 80 H550" fill="none" stroke="#0c5ea8" stroke-width="3" marker-end="url(#c4arrow)"/>
+          <circle cx="790" cy="150" r="15" fill="#fff" stroke="#0c5ea8" stroke-width="5"/>
+          <text x="120" y="148" text-anchor="middle">última vuelta</text><text x="120" y="174" text-anchor="middle">del bloque 8</text>
+          <text x="545" y="56" text-anchor="middle">dos tramos paralelos y holgados</text><text x="790" y="245" text-anchor="middle">contacto T200</text><text x="380" y="275" text-anchor="middle">regresar y continuar igual</text>
+        </svg>
+        <figcaption>El círculo marca la futura zona de contacto. No es una rama añadida: el conductor sigue entero. El dibujo separa las patas para que se entiendan; en la pieza real se conducen próximas y paralelas, sin pellizcarlas.</figcaption>
+      </figure>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-derivacion-u-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-derivacion-u-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada de un hilo continuo formando un bucle largo en U"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia generada.</strong> La separación está exagerada para mostrar el recorrido. En la bobina real ambas patas se sujetan juntas y el dibujo superior manda sobre la continuidad eléctrica.</figcaption></figure>
+        <ol class="step-list compact"><li>Confirmar bloque 8 = <strong>200</strong> en ambos registros.</li><li>Inmovilizar la última vuelta sin aplastarla.</li><li>Sin cortar, sacar del carrete longitud para ir a la futura regleta y volver.</li><li>Llevar el hilo fuera por T200.</li><li>Formar un giro amplio de 180°, no un pliegue.</li><li>Regresar con la segunda pata paralela.</li><li>Sujetar ambas patas y etiquetar T200.</li><li>Continuar la vuelta 201 desde la pata de retorno, en el mismo sentido.</li></ol>
+      </div>
+      <aside class="notice warning"><strong>No cortar la U ni retirar esmalte ahora.</strong> El contacto se prepara después de validarlo en el retal. Las dos patas se mantienen próximas para no crear un lazo exterior grande, pero sin apretarlas ni dañar el esmalte.</aside>
+      <div class="check-group"><label class="check-row" for="c4-t200-conteo"><input id="c4-t200-conteo" type="checkbox" data-checklist><span>T200 se formó tras confirmar 200.</span></label><label class="check-row" for="c4-t200-u"><input id="c4-t200-u" type="checkbox" data-checklist><span>La U tiene dos patas, giro amplio y continuidad visible.</span></label><label class="check-row" for="c4-t200-vuelta201"><input id="c4-t200-vuelta201" type="checkbox" data-checklist><span>La vuelta 201 sale del retorno sin cambiar el sentido.</span></label></div>
+      <div class="page-footer">Repetir exactamente en T400 y T600.</div>
+    </section>
+
+    <section class="page" id="repeticion" aria-labelledby="c4-repeticion-title">
+      <span class="page-number">Página 11</span><p class="eyebrow">Capítulo 4 · Secuencia</p>
+      <h2 id="c4-repeticion-title">De T200 hasta FINAL 800</h2>
+      <p class="page-subtitle">Cada tramo añade 200 vueltas; las U quedan separadas y no se cruzan.</p>
+      <table class="spec-table"><thead><tr><th>Al completar</th><th>Acción</th><th>Etiqueta</th><th>Sigue</th></tr></thead><tbody>
+        <tr><td>Bloque 8 = 200</td><td>U continua y foto.</td><td>T200</td><td>201</td></tr>
+        <tr><td>Bloque 16 = 400</td><td>Otra U sin cruzar T200.</td><td>T400</td><td>401</td></tr>
+        <tr><td>Bloque 24 = 600</td><td>Tercera U y revisar etiquetas.</td><td>T600</td><td>601</td></tr>
+        <tr><td>Bloque 32 = 800</td><td>Cola final; cortar del carrete una vez.</td><td>FINAL 800</td><td>Fin</td></tr>
+      </tbody></table>
+      <div class="terminal-roster" aria-label="Cinco salidas de la bobina"><div><strong>1</strong><span>INICIO</span><small>cola</small></div><div><strong>2</strong><span>T200</span><small>U</small></div><div><strong>3</strong><span>T400</span><small>U</small></div><div><strong>4</strong><span>T600</span><small>U</small></div><div><strong>5</strong><span>FINAL</span><small>cola</small></div></div>
+      <ol class="step-list"><li>Fotografiar contador, etiqueta y continuidad después de cada U.</li><li>Ordenar T200, T400 y T600 sin pasar una debajo de otra.</li><li>Al reiniciar, escribir “empiezo 201”, “401” o “601”.</li><li>Confirmar 32 bloques antes de formar FINAL.</li><li>Dejar FINAL con la misma holgura funcional que INICIO.</li><li>Sujetar y cortar del carrete: es el único corte desde que comenzó el bobinado.</li></ol>
+      <div class="box blue"><span class="box-title">Elegir espiras</span><p><strong>200:</strong> INICIO–T200 · <strong>400:</strong> INICIO–T400 · <strong>600:</strong> INICIO–T600 · <strong>800:</strong> INICIO–FINAL.</p><p>Las salidas no usadas permanecen aisladas individualmente.</p></div>
+      <div class="check-group"><label class="check-row" for="c4-tres-u"><input id="c4-tres-u" type="checkbox" data-checklist><span>Hay exactamente tres U.</span></label><label class="check-row" for="c4-dos-colas"><input id="c4-dos-colas" type="checkbox" data-checklist><span>Hay exactamente dos colas.</span></label><label class="check-row" for="c4-registros-32"><input id="c4-registros-32" type="checkbox" data-checklist><span>Dos registros confirman 800 vueltas.</span></label></div>
+      <div class="page-footer">Cinco accesos no son cinco hilos: el cobre interior es uno.</div>
+    </section>
+
+    <section class="page" id="acabado" aria-labelledby="c4-acabado-title">
+      <span class="page-number">Página 12</span><p class="eyebrow">Capítulo 4 · Acabado</p>
+      <h2 id="c4-acabado-title">Atar el paquete y retirar el útil</h2>
+      <p class="page-subtitle">La bobina queda compacta, pero todavía no se pega a ningún soporte.</p>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-bobina-manual-aceptable-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-bobina-manual-aceptable-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada de una bobina manual compacta pero irregular sobre el núcleo desmontable de cuatro piezas"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia generada de un acabado manual aceptable.</strong> Hay pequeñas ondulaciones, alturas distintas y cruces amplios. La imagen explica tolerancia visual; no demuestra 800 vueltas, medidas, terminales ni material del útil.</figcaption></figure>
+        <div class="box success"><span class="box-title">Aspecto manual esperado</span><ul><li>Ventana central libre.</li><li>Paquete compacto, aunque no perfectamente plano.</li><li>Pequeñas irregularidades distribuidas.</li><li>Ataduras no conductoras.</li><li>Dos colas y tres U identificables.</li><li>Sin bucles sueltos ni cobre desnudo.</li><li>Sin adhesivo definitivo.</li></ul></div>
+      </div>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-util-extraccion-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-util-extraccion-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada de la extracción de las piezas cortas del núcleo hacia el hueco de una bobina ya atada"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia generada de la extracción.</strong> La tapa superior ya está fuera y las dos piezas cortas se desplazan hacia el hueco antes que las laterales. El aspecto del cobre es ilustrativo.</figcaption></figure>
+        <ol class="step-list compact"><li>Con el útil todavía cerrado, pasar varias ataduras no conductoras por puntos repartidos.</li><li>Apretar solo hasta que las vueltas no se desplacen; proteger cualquier cruce.</li><li>Verificar que INICIO, las tres U y FINAL quedan libres y etiquetados.</li><li>Apoyar el conjunto en la mesa, retirar las cuatro pinzas y levantar la tapa B recta.</li><li>Tirar de los tiradores de C1 y C2 hacia la ventana central; sacar ambas piezas sin rozar las salidas.</li><li>Desplazar L1 y L2 hacia la ventana y retirarlas una a una.</li><li>Levantar la bobina sujetando el paquete, nunca las cinco salidas.</li><li>Retirar la tapa A, apoyar la bobina y medir exterior, ventana y espesor.</li><li>Si una pieza no se mueve o el paquete se abre, parar y volver a montar; no usar palanca metálica ni cortar junto al cobre.</li></ol>
+      </div>
+      <aside class="notice danger"><strong>No pegarla al banco.</strong> La bobina se ata al portabobina ajustable de la página 18. La separación comienza con una galga no magnética de 10 mm y solo puede reducirse con el CD inmóvil, manteniendo margen para alabeo y una vuelta manual completa sin roce.</aside>
+      <div class="check-group"><label class="check-row" for="c4-ataduras"><input id="c4-ataduras" type="checkbox" data-checklist><span>Las ataduras no dañan el hilo.</span></label><label class="check-row" for="c4-extraida"><input id="c4-extraida" type="checkbox" data-checklist><span>La bobina salió sin tirar de salidas.</span></label><label class="check-row" for="c4-medidas-finales"><input id="c4-medidas-finales" type="checkbox" data-checklist><span>La geometría final está medida y fotografiada.</span></label></div>
+      <div class="page-footer">La referencia se acompañará con la foto de la bobina real.</div>
+    </section>
+
+    <section class="page" id="terminales" aria-labelledby="c4-terminales-title">
+      <span class="page-number">Página 13</span><p class="eyebrow">Capítulo 4 · Contactos</p>
+      <h2 id="c4-terminales-title">Crear conexiones sin cargar el hilo fino</h2>
+      <p class="page-subtitle">Primero se valida el esmalte en el retal; después se toca una salida cada vez.</p>
+      <div class="box danger"><span class="box-title">Método cerrado por ficha, no por intuición</span><p>El hilo esmaltado no se pela como un cable normal. Se identifica el producto y se aplica exclusivamente el método de terminación indicado por su fabricante o por un terminal certificado para ese diámetro. Si la etiqueta no permite identificarlo, se compra hilo con ficha técnica antes de terminar la bobina.</p></div>
+      <ol class="step-list"><li>Leer marca, referencia y clase de aislamiento en la etiqueta o ficha del carrete.</li><li>Copiar en el acta el método de contacto autorizado y preparar exactamente la herramienta o terminal que especifique.</li><li>Ensayar primero en el retal: realizar el contacto, medir continuidad y someterlo a una tracción manual suave desde el latiguillo, nunca desde el cobre fino.</li><li>Rechazar el proceso si el conductor queda marcado, adelgazado, quebradizo o con esmalte levantado fuera de la zona de contacto.</li><li>Atornillar una pequeña regleta aislante al reverso del portabobina, fuera de la trayectoria del CD.</li><li>Fijar cada latiguillo a la regleta con una brida suave antes de unirlo al AWG28; así cualquier tirón lo recibe el latiguillo y no la bobina.</li><li>Terminar INICIO y medir hasta FINAL antes de continuar.</li><li>En cada U preparar una zona recta de una pata, nunca el giro, manteniendo el conductor continuo.</li><li>Aislar cada unión por separado y colocar su etiqueta a ambos lados de la regleta.</li><li>Repetir T200, T400, T600 y FINAL midiendo tras cada operación.</li></ol>
+      <table class="spec-table"><thead><tr><th>Salida</th><th>Forma</th><th>Etiqueta</th><th>Alivio</th></tr></thead><tbody><tr><td>INICIO</td><td>Cola</td><td>INICIO / 0</td><td>Brida al portabobina</td></tr><tr><td>T200</td><td>U continua</td><td>T200</td><td>Brida al portabobina</td></tr><tr><td>T400</td><td>U continua</td><td>T400</td><td>Brida al portabobina</td></tr><tr><td>T600</td><td>U continua</td><td>T600</td><td>Brida al portabobina</td></tr><tr><td>FINAL</td><td>Cola</td><td>FINAL / 800</td><td>Brida al portabobina</td></tr></tbody></table>
+      <aside class="notice blue"><strong>Motivo:</strong> algunos esmaltes admiten contacto térmico y otros requieren otra preparación. Los IDC para hilo magnético solo sirven con terminal, alojamiento y proceso especificados.</aside>
+      <div class="check-group"><label class="check-row" for="c4-metodo-aprobado"><input id="c4-metodo-aprobado" type="checkbox" data-checklist><span>El método pasó la prueba en el retal.</span></label><label class="check-row" for="c4-alivio"><input id="c4-alivio" type="checkbox" data-checklist><span>Cada salida tiene aislamiento y alivio.</span></label><label class="check-row" for="c4-etiquetas"><input id="c4-etiquetas" type="checkbox" data-checklist><span>Las cinco etiquetas se leen sin forzar el hilo.</span></label></div>
+      <div class="page-footer">El contacto fiable no deja el peso del cable colgando del AWG28.</div>
+    </section>
+
+    <section class="page" id="multimetro-puntas" aria-labelledby="c4-multimetro-puntas-title">
+      <span class="page-number">Página 14</span><p class="eyebrow">Capítulo 4 · Multímetro desde cero</p>
+      <h2 id="c4-multimetro-puntas-title">Colocar las puntas en los bornes correctos</h2>
+      <p class="page-subtitle">Antes de girar el selector —la “rosca”— hay que conectar cada cable al orificio correcto del multímetro.</p>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-multimetro-puntas-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-multimetro-puntas-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada de un multímetro genérico con punta negra en COM, roja en V y ohmios y entradas de corriente vacías"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia genérica, no es vuestro modelo.</strong> Negro a <strong>COM</strong>; rojo al borne que contiene <strong>V</strong> y <strong>Ω</strong>. Los bornes A, 10A, mA o µA quedan vacíos.</figcaption></figure>
+        <div>
+          <div class="meter-jacks"><span><b>NEGRA</b><strong>COM</strong><small>común</small></span><span class="correct"><b>ROJA</b><strong>V / Ω</strong><small>voltaje, resistencia y continuidad</small></span><span class="forbidden"><b>VACÍO</b><strong>A / mA / µA</strong><small>no se usan aquí</small></span></div>
+          <aside class="notice danger"><strong>En este capítulo no se mide la red de 120 V de Colombia ni la salida de la fuente.</strong> Solo se mide la bobina aislada y, al final, una pequeña señal producida al girar el CD a mano.</aside>
+        </div>
+      </div>
+      <ol class="step-list"><li>Desenchufar la fuente, desconectar el motor y dejar el CD inmóvil.</li><li>Separar la bobina de rectificador, protoboard, fuente y cualquier otro circuito.</li><li>Poner el multímetro en <strong>OFF</strong> antes de insertar o cambiar cables.</li><li>Introducir hasta el fondo el conector de la punta <strong>negra</strong> en el borne marcado literalmente <strong>COM</strong>.</li><li>Introducir hasta el fondo el conector de la punta <strong>roja</strong> en el borne que tenga <strong>V</strong> y <strong>Ω</strong>; puede aparecer como VΩ o con más símbolos.</li><li>Comprobar que los bornes marcados A, 10A, mA o µA están vacíos. Si la punta roja está en uno de ellos, no continuar.</li><li>Fotografiar de frente el multímetro real, con todos los símbolos legibles, y fotografiar su marca/modelo. Su manual decidirá la posición exacta.</li></ol>
+      <div class="meter-mode-grid"><div><strong>Ω</strong><span>Resistencia de la bobina, siempre sin energía.</span></div><div><strong>)))</strong><span>Continuidad o zumbador; a veces comparte posición.</span></div><div><strong>V~</strong><span>Tensión alterna al girar el CD a mano.</span></div><div><strong>V⎓</strong><span>Tensión continua; no es la posición para la señal directa de la bobina.</span></div></div>
+      <aside class="notice warning"><strong>Regla para cualquier modelo.</strong> Buscar el símbolo impreso, no copiar la posición de la fotografía. Si continuidad comparte posición con Ω o diodo, pulsar SELECT/FUNC hasta que aparezca el zumbador; confirmar después juntando las puntas como se explica en la página 15.</aside>
+      <div class="check-group"><label class="check-row" for="c4-negra-com"><input id="c4-negra-com" type="checkbox" data-checklist><span>Punta negra conectada a COM.</span></label><label class="check-row" for="c4-roja-vohm"><input id="c4-roja-vohm" type="checkbox" data-checklist><span>Punta roja conectada al borne V/Ω.</span></label><label class="check-row" for="c4-corriente-vacia"><input id="c4-corriente-vacia" type="checkbox" data-checklist><span>Todos los bornes A/mA/µA están vacíos.</span></label><label class="check-row" for="c4-modelo-multimetro"><input id="c4-modelo-multimetro" type="checkbox" data-checklist><span>Marca, modelo, frontal y manual están documentados.</span></label></div>
+      <div class="page-footer">Cambiar la punta roja de borne siempre con el multímetro en OFF.</div>
+    </section>
+
+    <section class="page" id="multimetro-prueba" aria-labelledby="c4-multimetro-prueba-title">
+      <span class="page-number">Página 15</span><p class="eyebrow">Capítulo 4 · Multímetro desde cero</p>
+      <h2 id="c4-multimetro-prueba-title">Probar continuidad antes de tocar la bobina</h2>
+      <p class="page-subtitle">Esta prueba comprueba batería, puntas, bornes y función del medidor con el circuito todavía apartado.</p>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-multimetro-continuidad-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-multimetro-continuidad-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada de un multímetro genérico en continuidad con las dos puntas tocándose"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia genérica.</strong> Las puntas se tocan metal con metal. El valor 0,3 Ω es solo ilustrativo: cada juego de puntas puede mostrar otro valor.</figcaption></figure>
+        <table class="spec-table"><thead><tr><th>Estado</th><th>Lectura habitual</th></tr></thead><tbody><tr><td>Puntas separadas</td><td>OL, 1 u otra indicación de circuito abierto; depende del modelo.</td></tr><tr><td>Puntas juntas</td><td>Valor próximo a cero y, si la función está activa, un pitido.</td></tr><tr><td>No cambia</td><td>Parar: revisar bornes, función, botón SELECT, puntas, batería y manual.</td></tr></tbody></table>
+      </div>
+      <ol class="step-list"><li>Confirmar otra vez: negra en COM, roja en V/Ω y sistema completo sin energía.</li><li>Girar el selector desde OFF hasta el símbolo de continuidad. Suele parecer un altavoz o unas ondas <strong>)))</strong>.</li><li>Si esa posición comparte símbolos, pulsar SELECT/FUNC hasta activar el zumbador según el manual real.</li><li>Dejar las puntas separadas y observar la indicación de circuito abierto.</li><li>Sujetar cada punta por detrás de la protección de los dedos y tocar sus extremos metálicos entre sí.</li><li>Confirmar que la pantalla cambia a un valor próximo a cero. Anotar ese valor como resistencia de las puntas.</li><li>Separarlas: la pantalla debe volver a circuito abierto.</li><li>Volver a OFF si se van a mover los conectores o se abandona la prueba.</li></ol>
+      <aside class="notice blue"><strong>El pitido no da un valor universal.</strong> Su umbral cambia entre modelos. Para registrar la bobina se usará también el modo Ω y se escribirán números, no solo “pita”.</aside>
+      <div class="check-group"><label class="check-row" for="c4-abierto-puntas"><input id="c4-abierto-puntas" type="checkbox" data-checklist><span>Con puntas separadas aparece circuito abierto.</span></label><label class="check-row" for="c4-juntas-puntas"><input id="c4-juntas-puntas" type="checkbox" data-checklist><span>Al juntarlas la lectura se acerca a cero.</span></label><label class="check-row" for="c4-ohm-puntas"><input id="c4-ohm-puntas" type="checkbox" data-checklist><span>La resistencia propia de las puntas está anotada.</span></label></div>
+      <div class="page-footer">Una bobina nunca se mide en Ω o continuidad mientras está conectada o generando.</div>
+    </section>
+
+    <section class="page" id="verificacion" aria-labelledby="c4-verificacion-title">
+      <span class="page-number">Página 16</span><p class="eyebrow">Capítulo 4 · Comprobación</p>
+      <h2 id="c4-verificacion-title">Demostrar que las derivaciones están en orden</h2>
+      <p class="page-subtitle">Bobina sola, desconectada del rectificador y lejos del rotor.</p>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-multimetro-resistencia-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-multimetro-resistencia-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada de una medición de resistencia entre INICIO y una derivación de una bobina"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia genérica.</strong> Negro en INICIO y rojo en la salida elegida. La lectura 12,6 Ω es ilustrativa, no un valor esperado. Las demás salidas reales deben estar aisladas individualmente.</figcaption></figure>
+        <ol class="step-list compact"><li>Comprobar que la bobina está aislada de todo circuito y completamente quieta.</li><li>Dejar negra en COM y roja en V/Ω. Girar el selector a <strong>Ω</strong>.</li><li>Si el medidor es de rango manual, empezar en el rango Ω más alto y reducirlo hasta obtener una lectura estable; usar el manual real para reconocer sobrecarga.</li><li>Juntar las puntas y anotar de nuevo su resistencia.</li><li>Apoyar la punta negra sobre el contacto preparado de INICIO; el esmalte sin retirar es aislante y no sirve como contacto.</li><li>Apoyar la roja en T200 sin tocar metal con los dedos. Esperar a que la lectura se estabilice y anotarla.</li><li>Repetir con T400, T600 y FINAL. Mantener las salidas no usadas separadas y aisladas.</li><li>Repetir invirtiendo las puntas: en resistencia no hay polaridad, pero ambas lecturas deben ser coherentes.</li><li>Medir T200–T400, T400–T600 y T600–FINAL.</li><li>Mover suavemente cada latiguillo desde su alivio; la lectura no debe saltar.</li><li>Comprobar circuito abierto entre cada salida y cualquier soporte conductor.</li></ol>
+      </div>
+      <table class="spec-table"><thead><tr><th>Par</th><th>Esperado</th><th>Real</th></tr></thead><tbody>
+        <tr><td>INICIO–T200</td><td>Primera resistencia acumulada.</td><td><span class="write-field">______ Ω</span></td></tr><tr><td>INICIO–T400</td><td>Mayor que la anterior.</td><td><span class="write-field">______ Ω</span></td></tr><tr><td>INICIO–T600</td><td>Mayor que la anterior.</td><td><span class="write-field">______ Ω</span></td></tr><tr><td>INICIO–FINAL</td><td>Mayor que la anterior.</td><td><span class="write-field">______ Ω</span></td></tr><tr><td>T200–T400</td><td>Tramo de 200.</td><td><span class="write-field">______ Ω</span></td></tr><tr><td>T400–T600</td><td>Tramo de 200.</td><td><span class="write-field">______ Ω</span></td></tr><tr><td>T600–FINAL</td><td>Tramo de 200.</td><td><span class="write-field">______ Ω</span></td></tr>
+      </tbody></table>
+      <div class="fault-grid"><div><strong>∞ / OL</strong><span>Revisar contacto y continuidad.</span></div><div><strong>Salta al mover</strong><span>Unión o conductor dañado.</span></div><div><strong>No aumenta</strong><span>Etiqueta, contacto entre U o corto entre vueltas.</span></div><div><strong>Casi 0 Ω</strong><span>Compensar puntas y revisar rango.</span></div></div>
+      <aside class="notice warning"><strong>Criterio reproducible.</strong> Restar la resistencia de las puntas a cada lectura. Las cuatro secciones de 200 deben dar continuidad, las acumuladas deben aumentar en el orden correcto y ninguna lectura puede saltar al mover su alivio. Se registran los cuatro tramos como referencia del primer ejemplar; no se inventa una cifra universal para una geometría que todavía se está midiendo.</aside>
+      <div class="check-group"><label class="check-row" for="c4-resistencias"><input id="c4-resistencias" type="checkbox" data-checklist><span>Las resistencias acumuladas crecen coherentemente.</span></label><label class="check-row" for="c4-tramos"><input id="c4-tramos" type="checkbox" data-checklist><span>Los cuatro tramos de 200 tienen continuidad.</span></label><label class="check-row" for="c4-intermitencia"><input id="c4-intermitencia" type="checkbox" data-checklist><span>No hay intermitencia al mover los alivios.</span></label></div>
+      <div class="page-footer">La resistencia detecta errores, pero no certifica todo el aislamiento.</div>
+    </section>
+
+    <section class="page" id="multimetro-ac" aria-labelledby="c4-multimetro-ac-title">
+      <span class="page-number">Página 17</span><p class="eyebrow">Capítulo 4 · Multímetro desde cero</p>
+      <h2 id="c4-multimetro-ac-title">Ver la señal de la bobina girando el CD a mano</h2>
+      <p class="page-subtitle">Esta es la única medición con la bobina generando: se usa V~ y el motor continúa desenchufado.</p>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-multimetro-tension-ac-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-multimetro-tension-ac-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada de un multímetro en tensión alterna conectado entre INICIO y FINAL de una bobina"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia genérica.</strong> Selector en <strong>V~</strong>, negra en INICIO y roja en FINAL. 0,84 V~ es ilustrativo: no predice el resultado real.</figcaption></figure>
+        <div class="box blue"><span class="box-title">Qué punta es cada polo</span><p>En tensión alterna de esta bobina no hay un positivo y un negativo fijos. Se conserva negra en INICIO y roja en T200/T400/T600/FINAL solo para que todos los registros sean comparables.</p><p><strong>Nunca</strong> mover la roja a A, mA o µA.</p></div>
+      </div>
+      <ol class="step-list"><li>Hacer esta prueba solo después de aprobar la presentación mecánica, la distancia, el resguardo y una vuelta manual sin roce.</li><li>Desenchufar la fuente y dejar el motor desconectado. Seleccionar primero el par que se va a medir; por ejemplo INICIO–FINAL.</li><li>Aislar por separado las tres salidas no utilizadas. Sujetar las puntas al par elegido con clips protegidos para mantener las manos fuera del rotor.</li><li>Confirmar negra en COM y roja en V/Ω. Girar el selector a <strong>V~</strong>, no a V⎓ ni a Ω.</li><li>Si el medidor tiene rangos manuales, comenzar en el rango V~ más alto. Con el CD parado, reducir el rango si hace falta para leer mejor.</li><li>Cerrar el resguardo. Girar el CD lentamente a mano usando únicamente el punto de accionamiento externo previsto; no tocar imanes, bobina ni eje mientras se mueve.</li><li>Observar y anotar la lectura, el par de terminales y cómo se hizo girar. Una lectura variable es normal al cambiar la velocidad manual.</li><li>Detener completamente el CD antes de cambiar de par o de rango. Volver a aislar las salidas no usadas.</li><li>Al terminar, detener el CD, poner el medidor en OFF y retirar las puntas por detrás de sus protecciones.</li></ol>
+      <aside class="notice danger"><strong>No energizar el motor para “ver más voltaje”.</strong> Esta página no autoriza velocidad motorizada ni sustituye los capítulos de retención, equilibrado, contención y límite de RPM.</aside>
+      <div class="check-group"><label class="check-row" for="c4-ac-v"><input id="c4-ac-v" type="checkbox" data-checklist><span>Selector en V~ y punta roja en V/Ω.</span></label><label class="check-row" for="c4-ac-aisladas"><input id="c4-ac-aisladas" type="checkbox" data-checklist><span>Salidas no usadas aisladas individualmente.</span></label><label class="check-row" for="c4-ac-motor-off"><input id="c4-ac-motor-off" type="checkbox" data-checklist><span>Motor desenchufado y giro únicamente manual.</span></label><label class="check-row" for="c4-ac-registro"><input id="c4-ac-registro" type="checkbox" data-checklist><span>Lectura, rango y par usado están registrados.</span></label></div>
+      <div class="page-footer">Ω/continuidad se miden sin generación; V~ se mide únicamente durante el giro manual protegido.</div>
+    </section>
+
+    <section class="page" id="instalacion" aria-labelledby="c4-instalacion-title">
+      <span class="page-number">Página 18</span><p class="eyebrow">Capítulo 4 · Cierre</p>
+      <h2 id="c4-instalacion-title">Construir el portabobina ajustable</h2>
+      <p class="page-subtitle">La bobina se ata a una placa vertical reforzada; esa placa se desplaza sobre una base independiente y se inmoviliza antes de girar el CD a mano.</p>
+      <div class="grid-2">
+        <figure class="instruction-figure"><div class="media-frame"><a href="assets/img/cap4-soporte-bobina-ajustable-referencia-generada.webp" target="_blank" rel="noopener"><img src="assets/img/cap4-soporte-bobina-ajustable-referencia-generada.webp" width="1536" height="1024" loading="lazy" alt="Referencia generada de un portabobina de madera sobre base deslizante, frente a un CD vertical protegido y con una galga no magnética de diez milímetros"></a><span class="zoom-hint">Abrir referencia</span></div><figcaption><strong>Referencia generada del soporte.</strong> La galga amarilla de 10 mm es no magnética y se retira antes de girar. La imagen explica la arquitectura; las perforaciones se trazan sobre la bobina real y el resguardo debe adaptarse al montaje real.</figcaption></figure>
+        <div><div class="box success"><span class="box-title">Piezas del portabobina</span><ol><li>Una base deslizante de tablero contrachapado.</li><li>Una placa vertical mayor que la bobina.</li><li>Dos cartabones triangulares iguales.</li><li>Cuatro cordones aislantes y ocho orificios.</li><li>Dos sargentos para inmovilizar la base.</li><li>Una galga no magnética de 10 mm.</li></ol></div><div class="box blue"><span class="box-title">Regla de diseño</span><p>Las medidas salen de la bobina terminada: placa vertical = bobina más 30 mm de margen en cada lado; base = profundidad suficiente para alojar ambos cartabones y los dos sargentos.</p></div></div>
+      </div>
+      <ol class="step-list"><li>Apoyar la bobina terminada sobre papel y dibujar su contorno exterior y su ventana. Añadir 30 mm alrededor para obtener la placa vertical.</li><li>Marcar cuatro parejas de orificios fuera del cobre: dos arriba y dos abajo, de modo que los cordones abracen el paquete sin cruzar su ventana ni las cinco salidas.</li><li>Cortar la placa, la base y dos triángulos idénticos con supervisión y herramienta adecuada; suavizar todos los cantos.</li><li>Colocar la placa a 90° sobre la base y fijar un cartabón por detrás a cada lado con tornillos adecuados al tablero. Ningún tornillo debe asomar por la cara de la bobina.</li><li>Atar la bobina por cuatro zonas con cordón aislante. El nudo queda detrás y las salidas recorren la parte posterior hacia la regleta de alivio.</li><li>Con motor desenchufado y CD inmóvil, colocar la base deslizante frente al rotor. Orientar la bobina paralela al CD y centrada sobre la trayectoria de los imanes.</li><li>Introducir entre imán y bobina una galga rígida no magnética de 10 mm. Desplazar el soporte hasta tocar suavemente la galga, sin empujar el CD.</li><li>Fijar la base con dos sargentos, uno a cada lado. Retirar completamente la galga y comprobar visualmente que nada queda dentro del resguardo.</li><li>Girar el CD una vuelta completa a mano desde el mando exterior. Si la separación cambia, algo roza o la base se mueve, detenerse y volver a alinear.</li><li>Seguir la página 17 para conectar V~, cerrar el resguardo y realizar únicamente el giro manual.</li></ol>
+      <a class="template-link" href="plantilla-soporte-bobina.html"><strong>Abrir calculadora y plano 1:1 del soporte</strong><span>Introduce las medidas de la bobina terminada y descarga el despiece de placa, base y dos cartabones.</span></a>
+      <div class="evidence-guide"><article><strong>1 · Antes de extraer</strong><p>Fotografiar útil abierto, hoja de 32 bloques y las cinco salidas.</p></article><article><strong>2 · Bobina terminada</strong><p>Fotografiar ventana, espesor, ataduras e irregularidades reales.</p></article><article><strong>3 · Contactos</strong><p>Fotografiar regleta, etiquetas y alivios desde atrás.</p></article><article><strong>4 · Montaje manual</strong><p>Fotografiar CD inmóvil, galga de 10 mm, soporte y sargentos.</p></article></div>
+      <div class="check-group"><label class="check-row" for="c4-holgura"><input id="c4-holgura" type="checkbox" data-checklist><span>La bobina no toca nada durante una vuelta manual.</span></label><label class="check-row" for="c4-foto-final"><input id="c4-foto-final" type="checkbox" data-checklist><span>Existen las cuatro evidencias reales.</span></label><label class="check-row" for="c4-senal-manual"><input id="c4-senal-manual" type="checkbox" data-checklist><span>La señal AC manual y sus terminales están registrados.</span></label></div>
+      <label class="observation" for="c4-acta">Acta de la bobina<textarea id="c4-acta" data-note placeholder="ID · fecha · geometría · 32 bloques · salidas · contacto · resistencias · holgura · señal AC · incidencias."></textarea></label>
+      <aside class="notice danger"><strong>No energizar el motor.</strong> Antes deben cerrarse capítulos 5–8, fijación, resguardo y límite de RPM.</aside>
+      <section class="source-panel"><h3>Base técnica</h3><ul><li>La bobina conserva un conductor continuo con tomas acumuladas.</li><li><a href="https://www.fluke.com/en/learn/blog/digital-multimeters/how-to-test-for-continuity" target="_blank" rel="noopener">Fluke · continuidad</a>: circuito sin energía, negra en COM, roja en V/Ω y función de continuidad.</li><li><a href="https://www.fluke.com/en-gb/learn/blog/digital-multimeters/how-to-measure-resistance" target="_blank" rel="noopener">Fluke · resistencia</a>: componente aislado y resistencia de las puntas relevante en valores bajos.</li><li><a href="https://data.kleintools.com/sites/all/product_assets/documents/instructions/klein/MM320-1390422ART%20-%20WEB.pdf" target="_blank" rel="noopener">Klein Tools · manual de ejemplo</a>: muestra por qué la posición y el botón de función dependen del modelo.</li><li><a href="https://www.elektrisola.com/en-us/Magnet-Wire/Info" target="_blank" rel="noopener">Elektrisola</a> muestra que el contacto depende del esmalte; no se inventa temperatura ni llama.</li><li><a href="https://www.te.com/en/products/terminals-splices/magnet-wire-terminals/mag-mate-terminals.html?tab=pgp-story" target="_blank" rel="noopener">TE Connectivity</a> documenta IDC para hilo magnético, siempre con componentes y proceso compatibles.</li></ul></section>
+      <nav class="bottom-nav" aria-label="Navegación al final"><a href="index.html">← Portada</a><a href="capitulo-3.html">← Capítulo 3</a><a href="capitulo-5.html">Capítulo 5 →</a><button type="button" data-print>Imprimir / Guardar PDF</button></nav>
+      <div class="page-footer">Generador electromagnético experimental · Fin del Capítulo 4</div>
+    </section>
+  </main>
+  <script src="assets/js/checklist.js" defer></script><script src="assets/js/navigation.js" defer></script>
+</body>
+</html>

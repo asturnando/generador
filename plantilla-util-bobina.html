@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calculadora de despiece para el útil desmontable de una bobina plana, sin medidas precargadas.">
+  <title>Despiece del útil de bobina · Manual del generador</title>
+  <link rel="stylesheet" href="assets/css/manual.css">
+</head>
+<body class="template-tool-page">
+  <a class="skip-link" href="#plantilla">Saltar a la herramienta</a>
+  <header class="toolbar" aria-label="Navegación del manual">
+    <strong class="toolbar-title">Manual del generador · Útil de bobina</strong>
+    <a href="index.html">← Portada</a><a href="capitulo-4.html#util">← Capítulo 4</a>
+    <button type="button" data-print>Imprimir / PDF</button>
+  </header>
+  <main class="manual-main" id="plantilla">
+    <section class="page">
+      <span class="page-number">Herramienta</span>
+      <p class="eyebrow">Capítulo 4 · Despiece</p>
+      <h1>Calculadora del útil desmontable</h1>
+      <p class="page-subtitle">Convierte las cotas aprobadas de la ventana en una lista de seis piezas. No incorpora medidas por defecto.</p>
+      <div class="box danger"><span class="box-title">No es el soporte final</span><p>Sirve únicamente para enrollar y extraer la bobina. No define la pieza que sostendrá la bobina frente al CD, su distancia ni su fijación.</p></div>
+      <section class="template-builder" data-coil-jig aria-labelledby="coil-jig-title">
+        <h2 id="coil-jig-title">Introduce solo medidas verificadas</h2>
+        <div class="template-controls">
+          <label for="jig-window-width">Ancho exterior del núcleo (mm)<input id="jig-window-width" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Escribir medida del recorte aprobado"></label>
+          <label for="jig-window-height">Alto exterior del núcleo (mm)<input id="jig-window-height" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Escribir medida del recorte aprobado"></label>
+          <label for="jig-core-width">Ancho de cada barra (mm)<input id="jig-core-width" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Escribir ancho elegido y ensayado"></label>
+          <label for="jig-margin">Margen de cada tapa (mm)<input id="jig-margin" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Reservar canal, cobre y pinzas"></label>
+          <label for="jig-clearance">Juego por extremo corto (mm)<input id="jig-clearance" type="number" inputmode="decimal" min="0" step="0.1" placeholder="Escribir juego probado en vacío"></label>
+          <label for="jig-depth">Separación entre tapas (mm)<input id="jig-depth" type="number" inputmode="decimal" min="1" step="0.1" placeholder="Escribir espesor disponible"></label>
+        </div>
+        <div class="template-actions"><button type="button" data-jig-render>Calcular despiece</button><button type="button" data-jig-download disabled>Descargar SVG 1:1</button></div>
+        <div class="template-preview"><svg class="rotor-template-svg coil-jig-svg" data-jig-svg viewBox="0 0 210 297" role="img" aria-label="Despiece pendiente"><text x="50%" y="50%" text-anchor="middle" class="template-placeholder">Introduce las seis medidas verificadas</text></svg></div>
+        <p class="template-message" data-jig-message>La herramienta permanece vacía para no inventar el tamaño, el canal ni las holguras.</p>
+      </section>
+      <div class="grid-2">
+        <div class="box blue"><span class="box-title">Seis piezas</span><ul><li><strong>Dos tapas iguales:</strong> contienen el cobre.</li><li><strong>Dos barras laterales:</strong> recorren el alto.</li><li><strong>Dos barras cortas:</strong> encajan entre las laterales y salen primero.</li><li><strong>Espesor útil:</strong> se consigue apilando material dentro de cada barra, sin pegar las cuatro entre sí.</li></ul></div>
+        <div class="box warning"><span class="box-title">Prueba obligatoria</span><p>Imprime al 100 %, mide la regla y fabrica primero un prototipo vacío. Las barras deben desplazarse al hueco central sin soltarse durante el bobinado.</p></div>
+      </div>
+      <nav class="bottom-nav" aria-label="Navegación al final"><a href="capitulo-4.html#util">← Volver al Capítulo 4</a><button type="button" data-print>Imprimir / Guardar PDF</button></nav>
+      <div class="page-footer">Generador electromagnético experimental · Despiece del útil</div>
+    </section>
+  </main>
+  <script src="assets/js/navigation.js" defer></script>
+  <script src="assets/js/coil-jig-template.js" defer></script>
+</body>
+</html>
