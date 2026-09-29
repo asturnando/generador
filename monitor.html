@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102338">
+  <title>Generador Sara · Monitor Bluetooth</title>
+  <link rel="stylesheet" href="assets/css/monitor.css">
+</head>
+<body>
+  <main>
+    <header><a class="back" href="index.html">← Manual del proyecto</a><span class="eyebrow">LABORATORIO · 655 VUELTAS</span>
+      <h1>Generador de Sara<span>El experimento, en directo.</span></h1>
+      <p>Conecta la ESP32 por Bluetooth. Mira las lecturas y guarda cada ensayo.</p>
+    </header>
+    <section class="connection" aria-label="Conexión">
+      <div><span class="dot" id="dot"></span><strong id="connection">Sin conectar</strong><p id="device">ESP32-S3 · Bluetooth LE</p></div>
+      <div class="actions"><button id="connect">Conectar ESP32</button><button id="disconnect" class="secondary" disabled>Desconectar</button></div>
+    </section>
+    <p id="message" role="status" aria-live="polite">La placa debe estar alimentada por USB. No conectes el motor para esta primera prueba.</p>
+    <section id="origin" class="origin disconnected"><strong id="mode-label">SIN DATOS</strong><span id="mode-description">Los valores aparecerán cuando se reciban desde la ESP32.</span></section>
+    <section class="metrics" aria-label="Lecturas actuales">
+      <article class="metric rpm"><span>Velocidad</span><div><strong id="rpm">—</strong><b>RPM</b></div><small id="rpm-source">Sin lectura</small></article>
+      <article class="metric"><span>Tensión en la carga</span><div><strong id="volts">—</strong><b>V</b></div><small id="electric-source">Sin lectura</small></article>
+      <article class="metric"><span>Corriente</span><div><strong id="current">—</strong><b>mA</b></div><small id="current-source">Sin lectura</small></article>
+      <article class="metric"><span>Potencia · V × I</span><div><strong id="power">—</strong><b>mW</b></div><small id="power-source">Sin lectura</small></article>
+    </section>
+    <section class="panel controls">
+      <div><h2>Preparar el ensayo</h2><p>Modo y vueltas se confirman en la ESP32, no solo en esta pantalla.</p></div>
+      <div class="control-grid">
+        <label>Origen de los datos<select id="mode" disabled><option value="DEMO">Demostración · todo simulado</option><option value="REAL" disabled>Real · sensores</option><option value="MIXED" disabled>Mixto · RPM medidas, electricidad simulada</option></select></label>
+        <label>Salida de la bobina<select id="turns" disabled><option value="200">INICIO → T200 · 200 vueltas</option><option value="400">INICIO → T400 · 400 vueltas</option><option value="600">INICIO → T600 · 600 vueltas</option><option value="655" selected>INICIO → FINAL · 655 vueltas</option></select></label>
+      </div>
+      <p class="note">Seleccionar vueltas solo etiqueta el ensayo: no cambia cables. En modo real, para cambiar de toma hay que parar y desconectar el motor, cambiar los cables y actualizar esta selección.</p>
+      <div id="demo-controls"><label for="speed">Velocidad de demostración <output id="speed-value">0 RPM</output></label>
+        <input id="speed" type="range" min="0" max="1200" step="25" value="0" disabled>
+        <div class="actions"><button id="apply-speed" disabled>Aplicar velocidad simulada</button><button id="stop" class="secondary" disabled>Poner simulación a cero</button></div>
+        <p class="note">Este control NO mueve ni detiene el motor. Es una demostración arbitraria, no una predicción de lo que producirá la bobina.</p>
+      </div>
+    </section>
+    <section class="panel"><div class="section-head"><div><h2>Últimos 60 segundos</h2><p>Gráficas separadas: RPM y voltios. Los huecos indican lecturas ausentes.</p></div><span id="sample-count">0 muestras</span></div>
+      <canvas id="chart" role="img" aria-label="Historial de velocidad en RPM y tensión en voltios durante los últimos 60 segundos"></canvas>
+      <p id="sensor-status">Sensores sin comprobar.</p>
+    </section>
+    <section class="panel"><div class="section-head"><div><h2>Registro del ensayo</h2><p>El CSV conserva modo, origen, vueltas, estado y hora de recepción.</p></div><button id="export" class="secondary" disabled>Descargar CSV</button></div>
+      <p id="log-info">Se guardan hasta 7.200 muestras en esta pestaña (aprox. una hora). Descarga antes de cerrarla.</p>
+      <button id="clear" class="text-button" disabled>Borrar registro de esta pestaña</button>
+    </section>
+    <details class="panel"><summary>Primera conexión y ayuda</summary>
+      <ol><li>Carga el proyecto <code>firmware/generador_ble</code> desde PlatformIO.</li><li>Enciende el Bluetooth del móvil. Abre esta página en Chrome para Android mediante HTTPS, no desde WhatsApp ni como archivo descargado.</li><li>Pulsa «Conectar ESP32» y elige «Generador Sara». No hace falta emparejar previamente desde Ajustes.</li><li>Con el firmware de prueba, el modo es DEMOSTRACIÓN. Pon 300 RPM y pulsa «Aplicar velocidad simulada».</li><li>Deberías ver 300 RPM, 2 V, 20 mA y 40 mW para 655 vueltas. Son datos sintéticos de comprobación.</li></ol>
+      <p>Al desconectarse, las lecturas actuales se borran; el historial se conserva. Si pasan 3 segundos sin paquetes, se muestra «Sin datos recientes». Vuelve a conectar manualmente si Android suspende la pestaña.</p>
+      <p>Real y mixto permanecen bloqueados hasta configurar el hardware verificado en <code>include/config.h</code>. Cero RPM significa «sin pulsos»: no demuestra por sí solo que el sensor funcione.</p>
+      <p>La ESP32 arranca siempre en demostración a cero. El modo real nunca se sustituye automáticamente por datos simulados. La conexión BLE de laboratorio no tiene autenticación: no transmite datos personales ni permite controlar el motor.</p>
+    </details>
+    <footer>Proyecto de Sara · 200 / 400 / 600 / 655 vueltas · Monitor v1<br>La simulación comprueba el software; no sustituye los resultados experimentales.</footer>
+  </main>
+  <script type="module" src="assets/js/monitor.js"></script>
+</body>
+</html>
