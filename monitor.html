@@ -1,29 +1,55 @@
 <!doctype html>
+<!--
+  monitor.html · Página del monitor Bluetooth del Generador Sara
+
+  Aquí solo está la estructura de la página: textos, botones, casillas de
+  lectura y el lienzo de la gráfica. Toda la lógica (conectar, recibir,
+  enviar órdenes, dibujar) está en assets/js/monitor.js, y el aspecto
+  (colores, tamaños) en assets/css/monitor.css.
+
+  monitor.js encuentra cada elemento por su atributo id. Si se cambia o se
+  borra un id, hay que cambiarlo también en monitor.js; las pruebas
+  automáticas de tests/monitor-ui.test.mjs comprueban que todos existan.
+-->
 <html lang="es">
 <head>
+  <!-- utf-8: permite tildes y ñ. viewport: adapta la página al ancho del móvil. -->
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Color de la barra del navegador en Android, a juego con el fondo. -->
   <meta name="theme-color" content="#102338">
   <title>Generador Sara · Monitor Bluetooth</title>
   <link rel="stylesheet" href="assets/css/monitor.css">
 </head>
 <body>
   <main>
+    <!-- Cabecera: enlace al manual, título y descripción. -->
     <header><a class="back" href="index.html">← Manual del proyecto</a><span class="eyebrow">LABORATORIO · 655 VUELTAS</span>
       <h1>Generador de Sara<span>El experimento, en directo.</span></h1>
       <p>Conecta la ESP32 por Bluetooth. Mira las lecturas y guarda cada ensayo.</p>
     </header>
+    <!-- Conexión: punto de estado (gris o verde), texto de estado, nombre y
+         versión de la placa, y botones Conectar / Desconectar. -->
     <section class="connection" aria-label="Conexión">
       <div><span class="dot" id="dot"></span><strong id="connection">Sin conectar</strong><p id="device">ESP32-S3 · Bluetooth LE</p></div>
       <div class="actions"><button id="connect">Conectar ESP32</button><button id="disconnect" class="secondary" disabled>Desconectar</button></div>
     </section>
+    <!-- Línea de mensajes: avisos y errores. aria-live hace que los lectores
+         de pantalla la lean en voz alta cuando cambia. -->
     <p id="message" role="status" aria-live="polite">La placa debe estar alimentada por USB. No conectes el motor para esta primera prueba.</p>
+    <!-- Origen de los datos: indica el modo (demostración, real, mixto) o
+         que no hay datos actuales. Cambia de color según el modo. -->
     <section id="origin" class="origin disconnected"><strong id="mode-label">SIN DATOS</strong><span id="mode-description">Los valores aparecerán cuando se reciban desde la ESP32.</span></section>
+    <!-- Las cuatro lecturas actuales. Cada tarjeta tiene el nombre, la cifra
+         (— si no hay dato), la unidad y debajo de dónde sale el dato. -->
     <section class="metrics" aria-label="Lecturas actuales">
       <article class="metric rpm"><span>Velocidad</span><div><strong id="rpm">—</strong><b>RPM</b></div><small id="rpm-source">Sin lectura</small></article>
       <article class="metric"><span>Tensión en la carga</span><div><strong id="volts">—</strong><b>V</b></div><small id="electric-source">Sin lectura</small></article>
       <article class="metric"><span>Corriente</span><div><strong id="current">—</strong><b>mA</b></div><small id="current-source">Sin lectura</small></article>
       <article class="metric"><span>Potencia · V × I</span><div><strong id="power">—</strong><b>mW</b></div><small id="power-source">Sin lectura</small></article>
     </section>
+    <!-- Preparar el ensayo: desplegables de modo y de toma de la bobina.
+         Real y mixto empiezan desactivados; monitor.js los activa solo si la
+         placa dice que tiene los sensores necesarios. -->
     <section class="panel controls">
       <div><h2>Preparar el ensayo</h2><p>Modo y vueltas se confirman en la ESP32, no solo en esta pantalla.</p></div>
       <div class="control-grid">
@@ -31,28 +57,38 @@
         <label>Salida de la bobina<select id="turns" disabled><option value="200">INICIO → T200 · 200 vueltas</option><option value="400">INICIO → T400 · 400 vueltas</option><option value="600">INICIO → T600 · 600 vueltas</option><option value="655" selected>INICIO → FINAL · 655 vueltas</option></select></label>
       </div>
       <p class="note">Seleccionar vueltas solo etiqueta el ensayo: no cambia cables. En modo real, para cambiar de toma hay que parar y desconectar el motor, cambiar los cables y actualizar esta selección.</p>
+      <!-- Velocidad simulada (solo en demostración): deslizador de 0 a 1200 RPM
+           en pasos de 25, y botones para aplicarla o ponerla a cero. -->
       <div id="demo-controls"><label for="speed">Velocidad de demostración <output id="speed-value">0 RPM</output></label>
         <input id="speed" type="range" min="0" max="1200" step="25" value="0" disabled>
         <div class="actions"><button id="apply-speed" disabled>Aplicar velocidad simulada</button><button id="stop" class="secondary" disabled>Poner simulación a cero</button></div>
         <p class="note">Este control NO mueve ni detiene el motor. Es una demostración arbitraria, no una predicción de lo que producirá la bobina.</p>
       </div>
     </section>
+    <!-- Gráfica de los últimos 60 s (la dibuja la función draw de monitor.js)
+         y estado de los sensores. -->
     <section class="panel"><div class="section-head"><div><h2>Últimos 60 segundos</h2><p>Gráficas separadas: RPM y voltios. Los huecos indican lecturas ausentes.</p></div><span id="sample-count">0 muestras</span></div>
       <canvas id="chart" role="img" aria-label="Historial de velocidad en RPM y tensión en voltios durante los últimos 60 segundos"></canvas>
       <p id="sensor-status">Sensores sin comprobar.</p>
     </section>
+    <!-- Registro: descargar las lecturas como CSV o borrarlas. Se guardan en
+         la memoria de la pestaña; al cerrarla se pierden. -->
     <section class="panel"><div class="section-head"><div><h2>Registro del ensayo</h2><p>El CSV conserva modo, origen, vueltas, estado y hora de recepción.</p></div><button id="export" class="secondary" disabled>Descargar CSV</button></div>
       <p id="log-info">Se guardan hasta 7.200 muestras en esta pestaña (aprox. una hora). Descarga antes de cerrarla.</p>
       <button id="clear" class="text-button" disabled>Borrar registro de esta pestaña</button>
     </section>
+    <!-- Ayuda plegable: se abre al pulsar el título. -->
     <details class="panel"><summary>Primera conexión y ayuda</summary>
-      <ol><li>Carga el proyecto <code>firmware/generador_ble</code> desde PlatformIO.</li><li>Enciende el Bluetooth del móvil. Abre esta página en Chrome para Android mediante HTTPS, no desde WhatsApp ni como archivo descargado.</li><li>Pulsa «Conectar ESP32» y elige «Generador Sara». No hace falta emparejar previamente desde Ajustes.</li><li>Con el firmware de prueba, el modo es DEMOSTRACIÓN. Pon 300 RPM y pulsa «Aplicar velocidad simulada».</li><li>Deberías ver 300 RPM, 2 V, 20 mA y 40 mW para 655 vueltas. Son datos sintéticos de comprobación.</li></ol>
+      <ol><li>Carga el proyecto <code>firmware/generador_ble</code> desde PlatformIO, o desde el navegador con el <a href="instalar.html">instalador web</a>.</li><li>Enciende el Bluetooth del móvil. Abre esta página en Chrome para Android mediante HTTPS, no desde WhatsApp ni como archivo descargado.</li><li>Pulsa «Conectar ESP32» y elige «Generador Sara». No hace falta emparejar previamente desde Ajustes.</li><li>Con el firmware de prueba, el modo es DEMOSTRACIÓN. Pon 300 RPM y pulsa «Aplicar velocidad simulada».</li><li>Deberías ver 300 RPM, 2 V, 20 mA y 40 mW para 655 vueltas. Son datos sintéticos de comprobación.</li></ol>
       <p>Al desconectarse, las lecturas actuales se borran; el historial se conserva. Si pasan 3 segundos sin paquetes, se muestra «Sin datos recientes». Vuelve a conectar manualmente si Android suspende la pestaña.</p>
       <p>Real y mixto permanecen bloqueados hasta configurar el hardware verificado en <code>include/config.h</code>. Cero RPM significa «sin pulsos»: no demuestra por sí solo que el sensor funcione.</p>
       <p>La ESP32 arranca siempre en demostración a cero. El modo real nunca se sustituye automáticamente por datos simulados. La conexión BLE de laboratorio no tiene autenticación: no transmite datos personales ni permite controlar el motor.</p>
     </details>
     <footer>Proyecto de Sara · 200 / 400 / 600 / 655 vueltas · Monitor v1<br>La simulación comprueba el software; no sustituye los resultados experimentales.</footer>
   </main>
-  <script type="module" src="assets/js/monitor.js?v=2"></script>
+  <!-- La lógica de la página. "?v=3" es un número de versión: al cambiarlo,
+       el navegador descarga el archivo nuevo en lugar de usar el guardado.
+       Hay que subirlo cada vez que se modifique monitor.js. -->
+  <script type="module" src="assets/js/monitor.js?v=3"></script>
 </body>
 </html>

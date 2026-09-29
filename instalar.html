@@ -1,0 +1,71 @@
+<!doctype html>
+<!--
+  instalar.html · Instalador del firmware desde el navegador
+
+  Permite cargar el firmware en una ESP32-S3 sin instalar VS Code ni
+  PlatformIO: basta un ordenador con Chrome o Edge y un cable USB. Usa
+  "ESP Web Tools", una herramienta de código abierto que habla con la placa
+  por el puerto serie del navegador (Web Serial).
+
+  Qué se instala: lo indica firmware/instalador/manifest.json, que apunta a
+  firmware/instalador/generador-sara-esp32s3.bin. Ese .bin contiene todo lo
+  necesario (arranque, tabla de particiones y programa) y se genera desde
+  firmware/generador_ble; los pasos están en firmware/instalador/LEEME.md.
+-->
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102338">
+  <title>Generador Sara · Instalar firmware</title>
+  <!-- Mismo aspecto que el monitor. -->
+  <link rel="stylesheet" href="assets/css/monitor.css">
+  <!-- Carga ESP Web Tools (versión 10). Añade a la página el elemento
+       <esp-web-install-button>, que hace todo el trabajo de instalación. -->
+  <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+</head>
+<body>
+  <main>
+    <header><a class="back" href="monitor.html">← Monitor Bluetooth</a><span class="eyebrow">LABORATORIO · 655 VUELTAS</span>
+      <h1>Instalar el firmware<span>ESP32-S3 · versión 1.0.1 · solo demostración</span></h1>
+      <p>Carga el programa en la ESP32 desde el navegador, sin instalar nada más.</p>
+    </header>
+    <!-- Botón de instalación. "manifest" indica qué firmware instalar.
+         Dentro van tres alternativas; el componente muestra la que toca:
+           activate    → el botón, si el navegador puede instalar.
+           unsupported → aviso si el navegador no tiene Web Serial (móvil,
+                         Firefox, Safari).
+           not-allowed → aviso si la página no se abrió por HTTPS. -->
+    <section class="connection" aria-label="Instalación">
+      <div><strong>Necesitas</strong><p>Un ordenador con Chrome o Edge (no sirve el móvil), un cable USB de datos y la ESP32-S3.</p></div>
+      <div class="actions">
+        <esp-web-install-button manifest="firmware/instalador/manifest.json">
+          <button slot="activate">Instalar firmware</button>
+          <span slot="unsupported">Este navegador no puede instalar. Abre esta página en Chrome o Edge desde un ordenador.</span>
+          <span slot="not-allowed">La instalación necesita una conexión HTTPS.</span>
+        </esp-web-install-button>
+      </div>
+    </section>
+    <p class="note" role="note">Sustituye el programa que tenga la placa. Arranca siempre en DEMOSTRACIÓN a 0 RPM y no controla el motor: no conectes el motor para esta prueba.</p>
+    <!-- Instrucciones paso a paso. -->
+    <section class="panel"><h2>Pasos</h2>
+      <ol>
+        <li>Conecta la ESP32 al ordenador con el USB marcado <strong>UART</strong> (en algunas placas pone <strong>COM</strong>).</li>
+        <li>Pulsa «Instalar firmware» y elige el puerto de la placa en la lista del navegador. Suele llamarse «USB Serial», «CP210x», «CH343» o «USB JTAG/serial debug unit».</li>
+        <li>Pulsa «Install» y espera a que termine (alrededor de un minuto). No desconectes el cable mientras tanto.</li>
+        <li>Al acabar, pulsa el botón <strong>RST</strong> de la placa o desconéctala y vuelve a conectarla.</li>
+        <li>Abre el <a href="monitor.html">monitor</a> en Chrome para Android y pulsa «Conectar ESP32». Debe aparecer «firmware 1.0.1» y el modo DEMOSTRACIÓN.</li>
+      </ol>
+    </section>
+    <!-- Problemas frecuentes, plegado para no distraer. -->
+    <details class="panel"><summary>Si algo falla</summary>
+      <ul>
+        <li><strong>No aparece ningún puerto:</strong> prueba otro cable (muchos solo cargan y no pasan datos) y el otro USB de la placa. En Windows puede faltar el controlador: mira el nombre del chip junto al conector (CP2102 o CH343) e instala el de su fabricante.</li>
+        <li><strong>Se queda en «Connecting»:</strong> mantén pulsado <strong>BOOT</strong>, pulsa y suelta <strong>RST</strong>, suelta <strong>BOOT</strong> y vuelve a intentarlo.</li>
+        <li><strong>Dice que el chip no es compatible:</strong> la placa no es una ESP32-S3. Anota el modelo que aparece impreso en el módulo metálico y avisa: hace falta otra versión del firmware.</li>
+        <li><strong>El puerto está ocupado:</strong> cierra el monitor serie de PlatformIO, Arduino u otras pestañas que usen la placa.</li>
+      </ul>
+    </details>
+    <footer>Proyecto de Sara · Firmware Generador Sara BLE 1.0.1 · Instalador basado en ESP Web Tools</footer>
+  </main>
+</body>
+</html>

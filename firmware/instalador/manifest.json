@@ -1,0 +1,11 @@
+{
+  "name": "Generador Sara BLE",
+  "version": "1.0.1",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [{ "path": "generador-sara-esp32s3.bin", "offset": 0 }]
+    }
+  ]
+}
