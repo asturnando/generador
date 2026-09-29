@@ -62,7 +62,7 @@ function receive(value) {
 }
 
 function ackEvent(event) {
-  const response = new TextDecoder().decode(event.target.value);
+  const response = new TextDecoder().decode(event.target.value).replace(/\0+$/, '');
   if (!pending) return;
   if (response === `OK ${pending.command}` || response.startsWith('ERR ')) {
     const task = pending; pending = null; clearTimeout(task.timer);
@@ -99,7 +99,8 @@ async function connect() {
     const server = await device.gatt.connect();
     if (token !== generation) { server.disconnect(); return; }
     const service = await server.getPrimaryService(UUID.service);
-    const info = JSON.parse(new TextDecoder().decode(await (await service.getCharacteristic(UUID.info)).readValue()));
+    // Firmware antiguo enviaba el búfer entero con '\0' de relleno: se descartan.
+    const info = JSON.parse(new TextDecoder().decode(await (await service.getCharacteristic(UUID.info)).readValue()).replace(/\0+$/, ''));
     if (info.protocol !== 1 || info.finalTurns !== 655) throw new Error('Firmware incompatible con este monitor.');
     const nextTelemetry = await service.getCharacteristic(UUID.telemetry);
     const nextControl = await service.getCharacteristic(UUID.control);

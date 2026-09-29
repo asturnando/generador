@@ -149,13 +149,14 @@ void setup() {
   telemetry = service->createCharacteristic(TELEMETRY, NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY, 20);
   control = service->createCharacteristic(CONTROL, NIMBLE_PROPERTY::WRITE | NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY, 24);
   control->setCallbacks(&controlCallbacks);
-  control->setValue("READY");
+  control->setValue(std::string("READY"));
   auto info = service->createCharacteristic(INFO, NIMBLE_PROPERTY::READ);
   char metadata[200];
   snprintf(metadata, sizeof(metadata),
     "{\"protocol\":1,\"firmware\":\"1.0.0\",\"finalTurns\":655,\"rpmReady\":%s,\"inaReady\":%s,\"ppr\":%u}",
     rpmReady ? "true" : "false", inaReady ? "true" : "false", Config::PULSES_PER_REV);
-  info->setValue(metadata);
+  // Longitud explícita: con un char[] NimBLE enviaría los 200 bytes, incluidos los '\0'.
+  info->setValue(reinterpret_cast<const uint8_t*>(metadata), strlen(metadata));
   service->start();
   sample();
   auto advertising = NimBLEDevice::getAdvertising();
