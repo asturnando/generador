@@ -17,7 +17,7 @@ class Emitter {
   removeEventListener(name, handler) { this.handlers.get(name)?.delete(handler); }
   emit(name) { for (const handler of this.handlers.get(name) || []) handler({ target: this }); }
 }
-function fixture({ bluetooth = true, secure = true, rpmReady = false, inaReady = false } = {}) {
+function fixture({ bluetooth = true, secure = true, rpmReady = false, inaReady = false, infoPadding = false } = {}) {
   const ctx2d = new Proxy({}, { get: (o, key) => o[key] ?? (() => {}) });
   const nodes = new Map([...html.matchAll(/id="([^"]+)"/g)].map(([, id]) => {
     const el = new Emitter(); Object.assign(el, { textContent: '', value: id === 'mode' ? 'DEMO' : id === 'turns' ? '655' : '0', disabled: false,
@@ -39,6 +39,8 @@ function fixture({ bluetooth = true, secure = true, rpmReady = false, inaReady =
   const telemetry = new Characteristic(); telemetry.value = packet();
   const control = new Characteristic(), info = new Characteristic();
   info.value = new TextEncoder().encode(JSON.stringify({ protocol: 1, finalTurns: 655, firmware: '1.0.0', rpmReady, inaReady }));
+  // Firmware 1.0.0: char[200] completo, con '\0' y basura de pila tras el JSON.
+  if (infoPadding) { const raw = new Uint8Array(200).fill(0x41); raw.set(info.value); raw[info.value.length] = 0; info.value = raw; }
   const chars = { [UUID.telemetry]: telemetry, [UUID.control]: control, [UUID.info]: info };
   const device = new Emitter(); device.name = 'Generador Sara';
   device.gatt = { connected: false, async connect() { this.connected = true; return this; }, async getPrimaryService() { return { getCharacteristic: async id => chars[id] }; }, disconnect() { if (this.connected) { this.connected = false; device.emit('gattserverdisconnected'); } } };
@@ -68,6 +70,10 @@ test('conectar, recibir demo, confirmar orden y exportar origen', async () => {
   f.push({ sequence: 2, rpm: 300, volts: 2, ma: 20 });
   assert.match(f.nodes.get('rpm').textContent, /300/); assert.match(f.nodes.get('power').textContent, /40/);
   assert.match(f.run('csvRows(rows)'), /SIMULADO,SIMULADO/);
+});
+test('acepta la info del firmware 1.0.0 con relleno tras el JSON', async () => {
+  const f = fixture({ infoPadding: true }); await f.run('connect()');
+  assert.equal(f.run('connected'), true); assert.match(f.nodes.get('device').textContent, /firmware 1\.0\.0/);
 });
 test('desconectar limpia lecturas pero no el CSV; reconecta sin handlers duplicados', async () => {
   const f = fixture(); await f.run('connect()'); f.push({ sequence: 2, rpm: 300, volts: 2, ma: 20 });
