@@ -1,4 +1,4 @@
-import { UUID, decodePacket, commandText, csvRows } from './monitor-protocol.js';
+import { UUID, decodePacket, decodeDiag, hex, commandText, csvRows } from './monitor-protocol.js?v=4';
 // =============================================================================
 // monitor.js · Lógica de la página del monitor (monitor.html)
 // =============================================================================
@@ -7,8 +7,10 @@ import { UUID, decodePacket, commandText, csvRows } from './monitor-protocol.js'
 //   - Conecta el navegador con la ESP32 por Bluetooth (Web Bluetooth).
 //   - Muestra cada lectura que llega (RPM, tensión, corriente, potencia) y de
 //     dónde sale: medida o simulada.
-//   - Envía las órdenes del usuario (modo, vueltas, velocidad simulada) y
-//     espera a que la placa las confirme.
+//   - Envía las órdenes del usuario (modo, vueltas, velocidad simulada,
+//     sensor de RPM, pulsos por vuelta...) y espera a que la placa las confirme.
+//   - Con firmware 1.1.0 o posterior, muestra en directo el estado de los
+//     sensores (panel "Sensores y ajustes") para comprobar el montaje.
 //   - Dibuja la gráfica de los últimos 60 segundos y guarda un registro que
 //     se puede descargar como CSV.
 //
@@ -27,7 +29,9 @@ import { UUID, decodePacket, commandText, csvRows } from './monitor-protocol.js'
 //
 // La línea "import" de arriba trae las funciones de monitor-protocol.js.
 // (Debe seguir siendo la primera línea: las pruebas automáticas la quitan
-// para poder ejecutar este archivo en Node.)
+// para poder ejecutar este archivo en Node.) Su "?v=4" debe coincidir con el
+// de monitor.html: así el navegador nunca mezcla un monitor.js nuevo con un
+// monitor-protocol.js antiguo guardado en caché.
 // =============================================================================
 
 // =============================================================================
@@ -60,6 +64,9 @@ let connected = false, connecting = false, generation = 0, session = 0, metadata
 //   history → solo las lecturas de los últimos 60 s, para la gráfica.
 //   dropped → lecturas antiguas descartadas por llenarse el registro.
 let rows = [], history = [], dropped = 0;
+//   diagChar → característica de diagnóstico (null si el firmware no la tiene).
+//   diag     → último diagnóstico recibido, ya traducido (o null).
+let diagChar = null, diag = null;
 
 // Escribe un texto en un elemento de la página.
 const text = (id, value) => { $(id).textContent = value; };
@@ -97,9 +104,16 @@ function setControls() {
   // Descargar y borrar el registro: solo si hay algo guardado.
   $('export').disabled = !rows.length; $('clear').disabled = !rows.length;
   // Las opciones REAL y MIXTO del desplegable solo se habilitan si la placa
-  // dijo al conectar que tiene los sensores necesarios.
-  $('mode').querySelector('[value="REAL"]').disabled = !(metadata.rpmReady && metadata.inaReady);
-  $('mode').querySelector('[value="MIXED"]').disabled = !metadata.rpmReady;
+  // tiene los sensores necesarios: REAL necesita el INA219; MIXTO, RPM
+  // configuradas. Se usa la última lectura (que lo dice en directo) o, antes
+  // de la primera, lo que dijo la placa al conectar.
+  const caps = lastPacket ?? metadata;
+  $('mode').querySelector('[value="REAL"]').disabled = !caps.inaReady;
+  $('mode').querySelector('[value="MIXED"]').disabled = !caps.rpmReady;
+  // Ajustes de sensores: solo con datos recientes, diagnóstico disponible y
+  // sin órdenes pendientes.
+  const tuning = ready && !!diag;
+  for (const id of ['rpm-sensor', 'ppr', 'apply-ppr', 'reset-pulses', 'scan-i2c']) $(id).disabled = !tuning || busy;
 }
 
 // Borra las lecturas de la pantalla (las sustituye por "—") y muestra el
@@ -122,7 +136,10 @@ function disconnected() {
   // Deja de escuchar los avisos de las características antiguas.
   telemetry?.removeEventListener('characteristicvaluechanged', packetEvent);
   control?.removeEventListener('characteristicvaluechanged', ackEvent);
+  diagChar?.removeEventListener('characteristicvaluechanged', diagEvent);
   telemetry = null; control = null; lastAt = 0; lastSequence = null;
+  // El diagnóstico tampoco es actual: se borra (el panel muestra "Sin datos").
+  diag = null; renderDiag();
   blank('DESCONECTADO'); text('connection', 'Sin conectar'); setControls(); draw();
 }
 
@@ -140,7 +157,9 @@ function receive(value) {
     text('rpm', format(p.rpm, 0)); text('volts', format(p.volts, 3));
     text('current', format(p.current, 2)); text('power', format(p.power, 2));
     // Debajo de cada cifra, de dónde sale.
-    text('rpm-source', p.rpmSource === 'MEDIDO' ? 'Medido por pulsos' : p.rpmSource === 'SIMULADO' ? 'Simulado · no mide giro' : 'Sin dato');
+    // Con diagnóstico se sabe además qué sensor mide las RPM.
+    const sensorName = diag ? (diag.source === 'IR' ? 'Medido · infrarrojo' : 'Medido · sensor Hall') : 'Medido por pulsos';
+    text('rpm-source', p.rpmSource === 'MEDIDO' ? sensorName : p.rpmSource === 'SIMULADO' ? 'Simulado · no mide giro' : 'Sin dato');
     for (const id of ['electric-source', 'current-source', 'power-source']) text(id, p.electricSource === 'MEDIDO' ? 'Medición INA219' : p.electricSource === 'SIMULADO' ? 'Simulado · no experimental' : 'Sin dato');
     // Rótulo del modo: título y explicación para cada uno.
     const labels = { DEMO: ['DEMOSTRACIÓN · DATOS SIMULADOS', 'Prueba del software. No son resultados experimentales.'], REAL: ['MODO REAL · SENSORES', 'Las lecturas ausentes se muestran como —, nunca se rellenan con simulación.'], MIXED: ['MODO MIXTO', 'RPM medidas por el sensor; tensión, corriente y potencia SIMULADAS.'] };
@@ -152,10 +171,14 @@ function receive(value) {
     if (!pending) { $('mode').value = p.mode; $('turns').value = String(p.turns); }
     // Texto del estado de los sensores.
     const states = { OK: 'Lectura recibida.', CONFIG_ERROR: 'Configuración incompleta.', INA_ERROR: 'Error de lectura INA219: revisar conexión.', NO_PULSES: 'Sin pulsos: puede estar parado o existir un fallo del sensor.', RANGE_ERROR: 'INA219 fuera del rango configurado; detener la prueba y revisar.' };
-    text('sensor-status', `${states[p.status]} RPM: ${p.rpmReady ? 'configurado, no equivale a validación física' : 'no configurado'}. INA219: ${p.inaReady ? 'inicializado al arrancar' : 'no inicializado'}.`);
+    text('sensor-status', `${states[p.status]} RPM: ${p.rpmReady ? 'configurado, no equivale a validación física' : 'sin pulsos por vuelta configurados'}. INA219: ${p.inaReady ? 'responde' : 'no encontrado'}.`);
     // Guarda la lectura con la hora (UTC, formato ISO) y el número de sesión.
     // "received" es la hora en ms, para calcular edades en la gráfica.
-    const row = { ...p, time: new Date().toISOString(), session, received: Date.now() };
+    // Si las RPM son medidas, se apunta también con qué sensor y PPR se
+    // calcularon (columnas sensor_rpm y ppr del CSV).
+    const measured = p.rpmSource === 'MEDIDO' && diag;
+    const row = { ...p, time: new Date().toISOString(), session, received: Date.now(),
+      rpmSensor: measured ? diag.source : null, ppr: measured ? diag.ppr : null };
     // Registro para el CSV: si pasa de 7200, se descarta la más antigua.
     rows.push(row); if (rows.length > 7200) { rows.shift(); dropped++; }
     // Historial de la gráfica: solo las lecturas de los últimos 60 s.
@@ -164,6 +187,63 @@ function receive(value) {
     text('log-info', dropped ? `Registro lleno: se descartaron ${dropped} muestras antiguas. Descarga el CSV para conservar las actuales.` : 'Se guardan hasta 7.200 muestras en esta pestaña. Descarga antes de cerrarla.');
     setControls(); draw();
   } catch (error) { message(error.message); }  // Paquete no válido: se avisa y se ignora.
+}
+
+// El navegador llama a esta función cada vez que llega un diagnóstico nuevo.
+function diagEvent(event) { receiveDiag(event.target.value); }
+
+// Procesa un diagnóstico: lo traduce y actualiza el panel "Sensores y ajustes".
+function receiveDiag(value) {
+  try { diag = decodeDiag(value); renderDiag(); setControls(); }
+  catch (error) { message(error.message); }
+}
+
+// Muestra el diagnóstico en el panel. Cada sensor tiene un punto de color:
+// verde = bien / detectando, amarillo = dudoso, rojo = problema, gris = sin datos.
+function renderDiag() {
+  // El panel solo aparece si la placa tiene diagnóstico (firmware 1.1.0+).
+  $('diag-panel').hidden = !diagChar;
+  const d = diag;
+  if (!d) {
+    text('ina-status', 'Sin datos.'); text('i2c-detail', 'SDA = GPIO 8 · SCL = GPIO 9');
+    for (const id of ['hall-pulses', 'ir-pulses']) text(id, '—');
+    for (const id of ['hall-level', 'ir-level']) text(id, 'Sin datos.');
+    for (const id of ['ina-dot', 'hall-dot', 'ir-dot']) $(id).className = 'dot';
+    return;
+  }
+  // ---- INA219 ----
+  // Se explica la causa más probable según lo que la placa comprobó en las líneas.
+  let inaText, inaDot;
+  if (d.inaFound) {
+    inaText = `Encontrado en ${hex(d.inaAddress)} y calibrado (16 V / 400 mA).`; inaDot = 'live';
+  } else if (d.i2cStuck) {
+    inaText = 'No encontrado: SDA o SCL están a 0 V. Revisa que ninguno vaya a GND.'; inaDot = 'bad';
+  } else if (!d.sdaPullup || !d.sclPullup) {
+    const missing = !d.sdaPullup && !d.sclPullup ? 'Ni SDA (GPIO 8) ni SCL (GPIO 9) llegan' : !d.sdaPullup ? 'SDA (GPIO 8) no llega' : 'SCL (GPIO 9) no llega';
+    inaText = `No encontrado: ${missing} al módulo. Revisa ese cable y que VCC vaya a 3V3 y GND a GND.`; inaDot = 'bad';
+  } else {
+    inaText = 'No encontrado, aunque SDA y SCL llegan al módulo. Comprueba que no estén intercambiados.'; inaDot = 'warn';
+  }
+  text('ina-status', inaText); $('ina-dot').className = `dot ${inaDot}`;
+  // Lista de direcciones que respondieron (si hay más de 7, se indica con "…").
+  text('i2c-detail', d.i2cCount
+    ? `Responden en I2C: ${d.i2cAddresses.map(hex).join(', ')}${d.i2cCount > d.i2cAddresses.length ? '…' : ''}`
+    : 'Ningún dispositivo responde en SDA = GPIO 8 · SCL = GPIO 9.');
+  // ---- Sensores de RPM ----
+  // Contador de pulsos y nivel actual. En la mayoría de módulos, 0 V = detectando.
+  const level = (low, what) => low ? `Salida a 0 V: detectando ${what} (su LED suele encenderse).` : 'Salida a 3,3 V: en reposo.';
+  text('hall-pulses', d.hallPulses.toLocaleString('es-CO')); text('hall-level', level(d.hallLow, 'imán'));
+  text('ir-pulses', d.irPulses.toLocaleString('es-CO')); text('ir-level', level(d.irLow, 'marca'));
+  $('hall-dot').className = 'dot' + (d.hallLow ? ' live' : '');
+  $('ir-dot').className = 'dot' + (d.irLow ? ' live' : '');
+  // ---- Ajustes ----
+  // Se muestran los valores que tiene la placa, salvo mientras se espera la
+  // confirmación de un cambio o mientras se está escribiendo el número.
+  if (!pending) {
+    $('rpm-sensor').value = d.source;
+    if (document.activeElement !== $('ppr')) $('ppr').value = String(d.ppr);
+  }
+  text('ppr-help', `${d.ppr ? `Ahora: ${d.ppr} pulso(s) por vuelta.` : 'Sin configurar: las RPM medidas aparecen como —.'} Para calibrar: pon los contadores a cero, gira el rotor a mano exactamente 10 vueltas y divide entre 10 los pulsos del sensor elegido. Repítelo tres veces.`);
 }
 
 // =============================================================================
@@ -246,8 +326,12 @@ async function connect() {
     if (info.protocol !== 1 || info.finalTurns !== 655) throw new Error('Firmware incompatible con este monitor.');
     const nextTelemetry = await service.getCharacteristic(UUID.telemetry);
     const nextControl = await service.getCharacteristic(UUID.control);
+    // Diagnóstico: solo si la placa dice tenerlo (firmware 1.1.0+). Si falla,
+    // se sigue sin él: el resto del monitor funciona igual.
+    let nextDiag = null;
+    if (info.diag) { try { nextDiag = (await service.getCharacteristic(UUID.diag)) || null; } catch { nextDiag = null; } }
     if (token !== generation) return;
-    metadata = info; telemetry = nextTelemetry; control = nextControl;
+    metadata = info; telemetry = nextTelemetry; control = nextControl; diagChar = nextDiag; diag = null;
     // Indica qué función se ejecuta cuando cambia cada característica.
     control.addEventListener('characteristicvaluechanged', ackEvent);
     telemetry.addEventListener('characteristicvaluechanged', packetEvent);
@@ -259,12 +343,22 @@ async function connect() {
     // Pide a la placa que avise de cada lectura nueva.
     await telemetry.startNotifications();
     if (token !== generation) throw new Error('Conexión cancelada.');
+    // Diagnóstico: suscribirse a sus avisos y leer el estado actual.
+    if (diagChar) {
+      diagChar.addEventListener('characteristicvaluechanged', diagEvent);
+      await diagChar.startNotifications();
+      if (token !== generation) return;
+      receiveDiag(await diagChar.readValue());
+      if (token !== generation) return;
+    }
+    renderDiag();
     // Lee la lectura actual para no esperar al siguiente aviso.
     const initialValue = await telemetry.readValue();
     if (token !== generation) return;
     receive(initialValue);
     text('device', `${device.name || 'Generador Sara'} · firmware ${metadata.firmware}`);
-    message('Conectado. En demostración, elige una velocidad y pulsa Aplicar. El motor no se controla desde aquí.');
+    message('Conectado. En demostración, elige una velocidad y pulsa Aplicar. El motor no se controla desde aquí.'
+      + (diagChar ? '' : ' Este firmware no informa de los sensores: instala la versión 1.1.0 para ver el panel «Sensores y ajustes».'));
     setControls();
   } catch (error) {
     // Cualquier fallo: si el intento sigue vigente, se desconecta y se explica.
@@ -290,13 +384,26 @@ $('speed').addEventListener('input', () => text('speed-value', `${$('speed').val
 async function runCommand(kind, value) {
   try { await send(kind, value); message('Orden confirmada por la ESP32. Esperando la próxima lectura.'); }
   catch (error) { message(error.message); }
-  finally { if (lastPacket) { $('mode').value = lastPacket.mode; $('turns').value = String(lastPacket.turns); } }
+  finally {
+    if (lastPacket) { $('mode').value = lastPacket.mode; $('turns').value = String(lastPacket.turns); }
+    if (diag) $('rpm-sensor').value = diag.source;
+  }
 }
 $('apply-speed').addEventListener('click', () => runCommand('SPEED', $('speed').value));
 // "Poner simulación a cero": deslizador a 0 y orden SPEED:0.
 $('stop').addEventListener('click', () => { $('speed').value = '0'; text('speed-value', '0 RPM'); runCommand('SPEED', 0); });
 $('mode').addEventListener('change', () => runCommand('MODE', $('mode').value));
 $('turns').addEventListener('change', () => runCommand('TURNS', $('turns').value));
+
+// Botones del panel "Sensores y ajustes".
+$('rpm-sensor').addEventListener('change', () => runCommand('SRC', $('rpm-sensor').value));
+$('apply-ppr').addEventListener('click', () => {
+  // Se comprueba antes el número para dar un mensaje claro.
+  try { commandText('PPR', $('ppr').value); } catch { message('Pulsos por vuelta: escribe un número entero de 0 a 64.'); return; }
+  runCommand('PPR', $('ppr').value);
+});
+$('reset-pulses').addEventListener('click', () => runCommand('RESET', 'PULSES'));
+$('scan-i2c').addEventListener('click', () => runCommand('SCAN'));
 
 // Descargar CSV: crea un archivo temporal en memoria y simula un clic en un
 // enlace de descarga. El nombre lleva la fecha y la hora, p. ej.

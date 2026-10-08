@@ -65,6 +65,25 @@
         <p class="note">Este control NO mueve ni detiene el motor. Es una demostración arbitraria, no una predicción de lo que producirá la bobina.</p>
       </div>
     </section>
+    <!-- Sensores y ajustes (firmware 1.1.0 o posterior): estado en directo del
+         INA219 y de los dos sensores de RPM, y los ajustes que se guardan en la
+         placa. Sirve para comprobar el montaje sin cargar programas de prueba.
+         Con un firmware anterior, monitor.js deja este bloque oculto. -->
+    <section class="panel" id="diag-panel" hidden>
+      <div class="section-head"><div><h2>Sensores y ajustes</h2><p>Estado en directo de cada sensor. Se actualiza aunque estés en demostración.</p></div><button id="scan-i2c" class="secondary" disabled>Buscar INA219</button></div>
+      <div class="sensor-grid">
+        <article class="sensor"><strong><span class="dot" id="ina-dot"></span>INA219 · tensión y corriente</strong><p id="ina-status">Sin datos.</p><small id="i2c-detail">SDA = GPIO 8 · SCL = GPIO 9</small></article>
+        <article class="sensor"><strong><span class="dot" id="hall-dot"></span>Hall KY-003 · GPIO 6</strong><p><b id="hall-pulses">—</b> pulsos</p><small id="hall-level">Sin datos.</small></article>
+        <article class="sensor"><strong><span class="dot" id="ir-dot"></span>Infrarrojo TCRT5000 · GPIO 7</strong><p><b id="ir-pulses">—</b> pulsos</p><small id="ir-level">Sin datos.</small></article>
+      </div>
+      <!-- Ajustes de las RPM. Se guardan en la ESP32 y no se pierden al apagarla. -->
+      <div class="control-grid">
+        <label>Sensor que da las RPM<select id="rpm-sensor" disabled><option value="HALL">Hall KY-003 · imanes</option><option value="IR">Infrarrojo TCRT5000 · marca</option></select></label>
+        <label for="ppr">Pulsos por vuelta (PPR)<span class="inline"><input id="ppr" type="number" min="0" max="64" step="1" inputmode="numeric" disabled><button id="apply-ppr" disabled>Guardar</button></span></label>
+      </div>
+      <p class="note" id="ppr-help">Para calibrar: pon los contadores a cero, gira el rotor a mano exactamente 10 vueltas y divide entre 10 los pulsos del sensor elegido. Repítelo tres veces. 0 = sin configurar.</p>
+      <button id="reset-pulses" class="secondary" disabled>Poner contadores a cero</button>
+    </section>
     <!-- Gráfica de los últimos 60 s (la dibuja la función draw de monitor.js)
          y estado de los sensores. -->
     <section class="panel"><div class="section-head"><div><h2>Últimos 60 segundos</h2><p>Gráficas separadas: RPM y voltios. Los huecos indican lecturas ausentes.</p></div><span id="sample-count">0 muestras</span></div>
@@ -81,14 +100,15 @@
     <details class="panel"><summary>Primera conexión y ayuda</summary>
       <ol><li>Carga el proyecto <code>firmware/generador_ble</code> desde PlatformIO, o desde el navegador con el <a href="instalar.html">instalador web</a>.</li><li>Enciende el Bluetooth del móvil. Abre esta página en Chrome para Android mediante HTTPS, no desde WhatsApp ni como archivo descargado.</li><li>Pulsa «Conectar ESP32» y elige «Generador Sara». No hace falta emparejar previamente desde Ajustes.</li><li>Con el firmware de prueba, el modo es DEMOSTRACIÓN. Pon 300 RPM y pulsa «Aplicar velocidad simulada».</li><li>Deberías ver 300 RPM, 2 V, 20 mA y 40 mW para 655 vueltas. Son datos sintéticos de comprobación.</li></ol>
       <p>Al desconectarse, las lecturas actuales se borran; el historial se conserva. Si pasan 3 segundos sin paquetes, se muestra «Sin datos recientes». Vuelve a conectar manualmente si Android suspende la pestaña.</p>
-      <p>Real y mixto permanecen bloqueados hasta configurar el hardware verificado en <code>include/config.h</code>. Cero RPM significa «sin pulsos»: no demuestra por sí solo que el sensor funcione.</p>
+      <p>«Real» se habilita cuando la ESP32 encuentra el INA219; «mixto», cuando hay pulsos por vuelta configurados en «Sensores y ajustes». El <a href="montaje.html">montaje</a> explica cada conexión. Cero RPM significa «sin pulsos»: no demuestra por sí solo que el sensor funcione.</p>
       <p>La ESP32 arranca siempre en demostración a cero. El modo real nunca se sustituye automáticamente por datos simulados. La conexión BLE de laboratorio no tiene autenticación: no transmite datos personales ni permite controlar el motor.</p>
     </details>
     <footer>Proyecto de Sara · 200 / 400 / 600 / 655 vueltas · Monitor v1<br>La simulación comprueba el software; no sustituye los resultados experimentales.</footer>
   </main>
-  <!-- La lógica de la página. "?v=3" es un número de versión: al cambiarlo,
+  <!-- La lógica de la página. "?v=4" es un número de versión: al cambiarlo,
        el navegador descarga el archivo nuevo en lugar de usar el guardado.
-       Hay que subirlo cada vez que se modifique monitor.js. -->
-  <script type="module" src="assets/js/monitor.js?v=3"></script>
+       Hay que subirlo cada vez que se modifique monitor.js o
+       monitor-protocol.js (y también en la línea import de monitor.js). -->
+  <script type="module" src="assets/js/monitor.js?v=4"></script>
 </body>
 </html>

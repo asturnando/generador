@@ -2,74 +2,72 @@
 // config.h · Ajustes del hardware conectado a la ESP32
 // =============================================================================
 //
-// Aquí se indica qué sensores hay, en qué pines están conectados y cada cuánto
-// se mide. Es el ÚNICO archivo que habrá que tocar cuando se conecten los
-// sensores de verdad.
+// Aquí se indica en qué pines está conectado cada sensor y cada cuánto se
+// mide. Pensado para la placa de Sara: ESP32-S3-WROOM-1 montada en una base
+// con regletas de tornillos verdes (numeración ESP32-S3-DevKitC-1).
 //
-// Estado actual: primera prueba con la ESP32 sola por USB. Ningún sensor está
-// activado, así que la placa solo puede funcionar en modo DEMO (datos
-// simulados). Los modos REAL y MIXED quedan bloqueados hasta que se rellenen
-// y verifiquen estos valores.
+// Desde la versión 1.1.0 los sensores ya no se activan a mano aquí: el
+// firmware los vigila siempre y cuenta lo que llega.
+//   - El INA219 se busca solo por el bus I2C (y se vuelve a buscar si se
+//     desconecta). No hace falta saber su dirección.
+//   - Los dos sensores de RPM se leen a la vez. Desde el móvil se elige cuál
+//     da las RPM y cuántos pulsos hay por vuelta (PPR); se guarda en la placa.
 //
-// "constexpr" significa que el valor es fijo y se conoce al compilar: no puede
-// cambiar mientras el programa funciona. Para cambiarlo hay que editar este
-// archivo y volver a cargar el firmware.
+// "constexpr" significa que el valor es fijo y se conoce al compilar: para
+// cambiarlo hay que editar este archivo y volver a cargar el firmware.
 // =============================================================================
 
 #pragma once
-#include <Arduino.h>  // Para FALLING (tipo de flanco) y otros nombres de Arduino.
+#include <Arduino.h>  // Para FALLING, INPUT_PULLUP y otros nombres de Arduino.
 
-// Primera prueba: ESP32 sola por USB. No se configura ningún GPIO por defecto.
-// Activar únicamente tras identificar y verificar el hardware de Sara.
 namespace Config {
 
 // -----------------------------------------------------------------------------
-// Sensor de velocidad (RPM)
+// Pines (número de GPIO). Posición en la regleta IZQUIERDA, contando desde
+// arriba con la antena arriba y los USB abajo: 1 = 3V3, 2 = 3V3, 3 = RST...
 // -----------------------------------------------------------------------------
-// El sensor envía un pulso eléctrico cada vez que pasa una marca o un imán del
-// rotor. La ESP32 cuenta los pulsos durante un tiempo y calcula las RPM.
 
-// Interruptor de seguridad: mientras sea false, el sensor de RPM no se usa
-// aunque el resto de valores estén rellenos. Ponerlo a true solo después de
-// comprobar el montaje.
-constexpr bool RPM_VERIFIED = false;
-// Número de pin (GPIO) donde está conectada la señal del sensor.
-// -1 = ninguno. El firmware además rechaza los pines reservados de la placa
-// (ver allowedPin en main.cpp).
-constexpr int RPM_PIN = -1;
-// Pulsos que da el sensor en una vuelta completa del rotor (por ejemplo,
-// 1 si hay una sola marca, 2 si hay dos imanes...). 0 = sin configurar.
-constexpr uint16_t PULSES_PER_REV = 0;
-// En qué momento del pulso se cuenta:
-//   FALLING = cuando la señal baja de 3,3 V a 0 V (flanco de bajada).
-//   RISING  = cuando sube de 0 V a 3,3 V (flanco de subida).
-// Depende del sensor; hay que comprobarlo girando el rotor a mano.
-constexpr int RPM_EDGE = FALLING;
-// true = activa la resistencia interna de la ESP32 que mantiene la entrada en
-// 3,3 V cuando el sensor no la está tirando a 0 V. Algunos sensores la
-// necesitan y otros ya llevan la suya.
-constexpr bool RPM_PULLUP = false;
+// INA219 (tensión y corriente) por I2C: SDA = datos, SCL = reloj.
+// Son los pines I2C por defecto de la ESP32-S3 en Arduino.
+constexpr int SDA_PIN = 8;   // Borne "8", posición 12.
+constexpr int SCL_PIN = 9;   // Borne "9", posición 15.
+
+// Sensor Hall KY-003 (detecta imanes): su pin S.
+constexpr int HALL_PIN = 6;  // Borne "6", posición 6.
+// Sensor infrarrojo TCRT5000 (detecta una marca reflectante): su pin OUT.
+constexpr int IR_PIN = 7;    // Borne "7", posición 7.
+
+// Todos los módulos se alimentan desde 3V3, nunca desde 5V: así sus salidas
+// nunca superan los 3,3 V que admiten los pines de la ESP32.
 
 // -----------------------------------------------------------------------------
-// Sensor de tensión y corriente INA219
+// Sensores de RPM
 // -----------------------------------------------------------------------------
-// El INA219 mide la tensión en la carga y la corriente que pasa por ella. Se
-// comunica con la ESP32 por I2C: un bus de dos cables, SDA (datos) y SCL (reloj).
 
-// Interruptor de seguridad equivalente al del sensor de RPM.
-constexpr bool INA_VERIFIED = false;
-// Pines del bus I2C. -1 = sin configurar.
-constexpr int SDA_PIN = -1;
-constexpr int SCL_PIN = -1;
-// Dirección I2C del INA219 (entre 0x40 y 0x4F según cómo estén soldados sus
-// puentes A0/A1; la más habitual es 0x40). Se averigua con el programa
-// firmware/escanner_i2c. 0 = sin configurar.
-constexpr uint8_t INA_ADDRESS = 0;
-// Este perfil solo implementa el rango 16 V / 400 mA (shunt de 0,1 ohmios).
-// Debe confirmarse que es adecuado; no describe los límites del montaje.
-// Si el generador pudiera superar 16 V o 400 mA, este rango no sirve y las
-// lecturas se marcarán como fuera de rango.
-constexpr bool INA_16V_400MA_APPROVED = false;
+// Activa la resistencia interna de la ESP32 que mantiene cada entrada en
+// 3,3 V. Si un sensor se desconecta, su entrada se queda quieta en alto en
+// lugar de captar ruido y contar pulsos falsos.
+constexpr bool SENSOR_PULLUP = true;
+// Antirrebote: un pulso solo cuenta si antes la señal estuvo en alto al menos
+// este tiempo (microsegundos). Filtra el "temblor" de la señal cuando el
+// imán o la marca pasan despacio. 300 µs permite hasta unos 1600 pulsos por
+// segundo, de sobra para este rotor.
+constexpr uint32_t MIN_HIGH_US = 300;
+// Si pasan estos milisegundos sin ningún pulso, las RPM pasan a 0.
+// Con 1 pulso por vuelta, por debajo de 20 RPM se mostrará 0.
+constexpr uint32_t RPM_TIMEOUT_MS = 3000;
+// Máximo de pulsos por vuelta que se puede configurar desde el móvil.
+constexpr uint8_t MAX_PPR = 64;
+
+// -----------------------------------------------------------------------------
+// INA219
+// -----------------------------------------------------------------------------
+// Se usa la calibración de la biblioteca "16 V / 400 mA" (shunt R100 de
+// 0,1 ohmios): la de más resolución. Por encima de 16 V o de 400 mA las
+// lecturas se marcan como fuera de rango en lugar de mostrarse.
+// Cada cuántos milisegundos se comprueba que el INA219 sigue respondiendo
+// (o se vuelve a buscar si no estaba).
+constexpr uint32_t I2C_CHECK_MS = 3000;
 
 // -----------------------------------------------------------------------------
 // Ajustes generales
@@ -80,9 +78,8 @@ constexpr bool INA_16V_400MA_APPROVED = false;
 constexpr uint16_t FINAL_TURNS = 655;
 // Cada cuántos milisegundos se envía una lectura al móvil: 500 ms = 2 por segundo.
 constexpr uint32_t SAMPLE_MS = 500;
-// Durante cuántos milisegundos se cuentan pulsos para calcular las RPM.
-// Una ventana más larga da más precisión pero reacciona más despacio.
-// La resolución es 60000 / (RPM_WINDOW_MS × PULSES_PER_REV) RPM: con 1000 ms
-// y 1 pulso por vuelta, las RPM van de 60 en 60.
-constexpr uint32_t RPM_WINDOW_MS = 1000;
+// Cada cuántos milisegundos se revisa si el diagnóstico ha cambiado (para que
+// los contadores de pulsos se vean casi al instante). Si no cambia nada, se
+// reenvía igualmente una vez por segundo.
+constexpr uint32_t DIAG_MS = 200;
 }
