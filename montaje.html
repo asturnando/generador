@@ -1,0 +1,159 @@
+<!doctype html>
+<!--
+  montaje.html · Guía para conectar todo el circuito de una vez
+
+  Explica dónde va cada cable con el firmware 1.1.0 (pines definidos en
+  firmware/generador_ble/include/config.h) y en qué orden comprobarlo con el
+  panel "Sensores y ajustes" del monitor. Si se cambia algún pin en
+  config.h, hay que cambiarlo también aquí y en monitor.html.
+-->
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102338">
+  <title>Generador Sara · Montaje completo</title>
+  <link rel="stylesheet" href="assets/css/monitor.css">
+</head>
+<body>
+  <main>
+    <header><a class="back" href="monitor.html">← Monitor Bluetooth</a><span class="eyebrow">LABORATORIO · 655 VUELTAS</span>
+      <h1>Montaje completo<span>INA219, sensor Hall, sensor infrarrojo y bobina</span></h1>
+      <p>Dónde va cada cable y cómo comprobarlo desde el móvil con un único firmware (versión 1.1.0). No hace falta cargar programas de prueba.</p>
+    </header>
+
+    <!-- Reglas que no se pueden saltar. -->
+    <section class="alert" role="note">
+      <strong>Antes de tocar un cable:</strong> USB desenchufado, motor desconectado y rotor quieto.
+      Los sensores y el INA219 se alimentan <strong>siempre a 3V3, nunca a 5V</strong>: los pines de la ESP32 solo admiten 3,3 V.
+      El <strong>DC+</strong> del puente nunca va a 3V3, 5V ni a un GPIO.
+    </section>
+
+    <!-- 1. Mapa de la regleta izquierda. -->
+    <section class="panel"><h2>1 · Regleta izquierda de la ESP32</h2>
+      <p>Coloca la placa con la antena arriba y los USB abajo. Cuenta los huecos negros (o los tornillos verdes) desde arriba: el primero es <strong>3V3</strong>. Cada borne lleva su número impreso al lado.</p>
+      <div class="table-wrap"><table class="wire-table">
+        <thead><tr><th>Posición</th><th>Borne</th><th>Qué se conecta</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>3V3</td><td>VCC del INA219</td></tr>
+          <tr><td>2</td><td>3V3</td><td>Carril <strong>3V3</strong> de la protoboard (alimenta los dos sensores)</td></tr>
+          <tr><td>3</td><td>RST</td><td>Nada</td></tr>
+          <tr><td>4 y 5</td><td>4, 5</td><td>Nada</td></tr>
+          <tr><td>6</td><td>6</td><td>Pin <strong>S</strong> del sensor Hall KY-003</td></tr>
+          <tr><td>7</td><td>7</td><td>Pin <strong>OUT</strong> del sensor infrarrojo TCRT5000</td></tr>
+          <tr><td>8 a 11</td><td>15, 16, 17, 18</td><td>Nada</td></tr>
+          <tr><td>12</td><td>8</td><td><strong>SDA</strong> del INA219</td></tr>
+          <tr><td>13 y 14</td><td>3, 46</td><td>Nada: son pines de arranque. Cuidado, están entre el 8 y el 9</td></tr>
+          <tr><td>15</td><td>9</td><td><strong>SCL</strong> del INA219</td></tr>
+          <tr><td>16 a 20</td><td>10 a 14</td><td>Nada</td></tr>
+          <tr><td>21</td><td>5V</td><td><strong>Nada, nunca</strong></td></tr>
+          <tr><td>22</td><td>G</td><td>Carril <strong>GND</strong> de la protoboard</td></tr>
+        </tbody>
+      </table></div>
+      <p>El <strong>GND del INA219</strong> puede ir a cualquier borne G/GND de la placa (la regleta derecha tiene tres).</p>
+    </section>
+
+    <!-- 2. Carriles de alimentación de la protoboard. -->
+    <section class="panel"><h2>2 · Carriles de la protoboard</h2>
+      <p>Usa los dos carriles largos de <strong>un solo lado</strong> de la protoboard: el rojo (+) será <strong>3V3</strong> y el azul (−) será <strong>GND</strong>. Rotúlalos con cinta. En muchas protoboards el carril está cortado a la mitad: usa solo una mitad o comprueba la continuidad con el multímetro.</p>
+      <p>Monta el puente rectificador en el <strong>otro lado</strong> de la protoboard, lejos del carril 3V3, para que el DC+ no pueda tocarlo por error.</p>
+    </section>
+
+    <!-- 3. INA219: parte lógica. -->
+    <section class="panel"><h2>3 · INA219: comunicación con la ESP32</h2>
+      <div class="table-wrap"><table class="wire-table">
+        <thead><tr><th>Pin del INA219</th><th>Va a</th></tr></thead>
+        <tbody>
+          <tr><td>VCC</td><td>3V3 · posición 1</td></tr>
+          <tr><td>GND</td><td>Un borne G/GND</td></tr>
+          <tr><td>SDA</td><td>Borne «8» · posición 12</td></tr>
+          <tr><td>SCL</td><td>Borne «9» · posición 15</td></tr>
+        </tbody>
+      </table></div>
+      <p>No hace falta saber su dirección I2C ni tocar los puentes A0/A1: el firmware lo busca solo.</p>
+    </section>
+
+    <!-- 4. Sensor Hall. -->
+    <section class="panel"><h2>4 · Sensor Hall KY-003 (imanes)</h2>
+      <div class="table-wrap"><table class="wire-table">
+        <thead><tr><th>Pin del KY-003</th><th>Va a</th></tr></thead>
+        <tbody>
+          <tr><td>S</td><td>Borne «6» · posición 6</td></tr>
+          <tr><td>+ (el del centro)</td><td>Carril 3V3</td></tr>
+          <tr><td>−</td><td>Carril GND</td></tr>
+        </tbody>
+      </table></div>
+      <p>Comprueba la serigrafía de tu módulo: en algunos el orden de los pines cambia.</p>
+      <p class="note">Muchos KY-003 llevan un chip pensado para 5V. Si a 3,3 V no reacciona con ninguna cara del imán (ni se enciende su LED ni sube el contador), <strong>no lo pases a 5V</strong>: con 5V su salida dañaría la ESP32. Usa el sensor infrarrojo y avisa.</p>
+      <p>Se fija a la base, frente al paso de los imanes, a pocos milímetros y sin poder tocar el rotor (<a href="capitulo-7.html">capítulo 7</a>). Detecta un solo polo del imán: los pulsos por vuelta dependen de cuántos imanes tengan ese polo hacia el sensor.</p>
+    </section>
+
+    <!-- 5. Sensor infrarrojo. -->
+    <section class="panel"><h2>5 · Sensor infrarrojo TCRT5000 (marca)</h2>
+      <div class="table-wrap"><table class="wire-table">
+        <thead><tr><th>Pin del TCRT5000</th><th>Va a</th></tr></thead>
+        <tbody>
+          <tr><td>OUT</td><td>Borne «7» · posición 7</td></tr>
+          <tr><td>VCC</td><td>Carril 3V3</td></tr>
+          <tr><td>GND</td><td>Carril GND</td></tr>
+        </tbody>
+      </table></div>
+      <p>Mira a una marca que contraste con el CD (una zona blanca sobre fondo oscuro o al revés), a pocos milímetros. Con el rotor parado, ajusta la distancia (y su potenciómetro azul, si lo tiene) hasta que el LED del módulo cambie justo al pasar la marca. Si añades una marca al CD, revisa el equilibrio (<a href="capitulo-3.html">capítulo 3</a>).</p>
+      <p>Se pueden dejar conectados los dos sensores: el firmware los lee a la vez y en el móvil se elige cuál da las RPM.</p>
+    </section>
+
+    <!-- 6. Ruta de potencia: bobina, puente, INA219 y carga. -->
+    <section class="panel"><h2>6 · Bobina, puente rectificador, INA219 y carga</h2>
+      <p>Cada punto de unión ocupa su propia fila de 5 agujeros de la protoboard (<a href="capitulo-5.html">capítulo 5</a>). Los diodos tienen una banda pintada: ese lado es el cátodo.</p>
+      <div class="table-wrap"><table class="wire-table">
+        <thead><tr><th>Punto</th><th>Qué se une ahí</th></tr></thead>
+        <tbody>
+          <tr><td>AC1</td><td>Cable <strong>INICIO</strong> de la bobina · lado <strong>sin banda</strong> de D1 · lado <strong>con banda</strong> de D3</td></tr>
+          <tr><td>AC2</td><td>Cable <strong>FINAL</strong> de la bobina · lado <strong>sin banda</strong> de D2 · lado <strong>con banda</strong> de D4</td></tr>
+          <tr><td>DC+</td><td>Lados <strong>con banda</strong> de D1 y D2 · cable a <strong>VIN+</strong> del INA219</td></tr>
+          <tr><td>DC−</td><td>Lados <strong>sin banda</strong> de D3 y D4 · un extremo de la resistencia de 100 Ω · cable al carril <strong>GND</strong></td></tr>
+          <tr><td>VIN−</td><td>Borne VIN− del INA219 · el otro extremo de la resistencia de 100 Ω</td></tr>
+        </tbody>
+      </table></div>
+      <p>Recorrido de la corriente: <strong>DC+ → VIN+ → (shunt del INA219) → VIN− → resistencia → DC−</strong>. Unir DC− con GND es necesario: sin esa referencia común el INA219 no puede medir la tensión (<a href="capitulo-6.html">capítulo 6</a>).</p>
+      <ul>
+        <li>Para las 655 vueltas se usan INICIO y FINAL. Para 200, 400 o 600, INICIO y la toma T200, T400 o T600, y se elige la misma en el monitor.</li>
+        <li>El hilo de la bobina lleva esmalte aislante: lija la punta hasta ver el cobre brillante donde muerde la pinza o se une el cable.</li>
+        <li>Las patillas van dentro de los agujeros, no retorcidas por encima.</li>
+        <li>La resistencia puede calentarse: que no toque plástico, cables ni manos.</li>
+      </ul>
+    </section>
+
+    <!-- 7. Comprobación con el monitor, en orden. -->
+    <section class="panel"><h2>7 · Comprobar con el móvil, paso a paso</h2>
+      <p>Abre el <a href="monitor.html">monitor</a>, pulsa «Conectar ESP32» y baja hasta <strong>«Sensores y ajustes»</strong>.</p>
+      <ol>
+        <li><strong>Sin la bobina conectada al puente.</strong> Enchufa el USB y conecta desde el móvil.</li>
+        <li><strong>INA219:</strong> debe poner «Encontrado en 0x40» (u otra dirección entre 0x40 y 0x4F) con el punto verde. Si no, el propio mensaje dice qué cable revisar.</li>
+        <li><strong>Sensor Hall:</strong> acerca y aleja un imán, probando las dos caras. El punto se pone verde mientras detecta y el contador sube 1 en cada pasada. 20 pasadas tienen que dar 20 pulsos.</li>
+        <li><strong>Sensor infrarrojo:</strong> pasa la marca (o una tarjeta blanca) a pocos milímetros. Ajusta el potenciómetro hasta que cada pasada sume exactamente 1.</li>
+        <li><strong>Elige el sensor</strong> que mejor funcione en «Sensor que da las RPM».</li>
+        <li><strong>Pulsos por vuelta:</strong> pulsa «Poner contadores a cero», gira el rotor a mano exactamente 10 vueltas y divide entre 10 los pulsos de ese sensor. Escribe el resultado y pulsa «Guardar». Repítelo tres veces: debe salir lo mismo. Queda guardado en la ESP32 aunque se apague.</li>
+        <li><strong>Desenchufa el USB</strong>, conecta la bobina al puente y vuelve a enchufar.</li>
+        <li>En «Preparar el ensayo», elige <strong>Real · sensores</strong>. Con el rotor quieto, la tensión debe estar cerca de 0. Al girarlo a mano debe aparecer algo de tensión y de RPM.</li>
+        <li>El giro con motor se hace solo siguiendo el manual: resguardo, velocidad máxima aprobada y montaje del motor (<a href="capitulo-2.html">capítulo 2</a>, <a href="capitulo-3.html">capítulo 3</a> y <a href="capitulo-9.html">capítulo 9</a>).</li>
+        <li>Descarga el CSV al terminar cada ensayo: incluye el sensor y los pulsos por vuelta usados.</li>
+      </ol>
+    </section>
+
+    <!-- 8. Qué hacer si algo no cuadra. -->
+    <details class="panel"><summary>Si algo no cuadra</summary>
+      <ul>
+        <li><strong>«SDA no llega al módulo» o «SCL no llega»:</strong> ese cable no está en su borne, o el INA219 no tiene VCC/GND. Revisa con el multímetro en continuidad: tornillo «8» ↔ SDA, «9» ↔ SCL, «3V3» ↔ VCC, «G» ↔ GND.</li>
+        <li><strong>«SDA y SCL llegan, pero no se encuentra»:</strong> casi siempre están intercambiados. Cambia los dos cables entre sí y pulsa «Buscar INA219».</li>
+        <li><strong>«SDA o SCL están a 0 V»:</strong> uno de los dos va a GND. Desenchufa y revísalo.</li>
+        <li><strong>Un contador sube varias veces por pasada:</strong> la señal tiembla. Aleja o acerca un poco el sensor y, en el infrarrojo, ajusta el potenciómetro.</li>
+        <li><strong>Un contador no sube nunca:</strong> revisa sus tres cables. Si el punto nunca se pone verde, el sensor no detecta: prueba otra distancia o la otra cara del imán.</li>
+        <li><strong>La corriente sale negativa:</strong> VIN+ y VIN− están al revés. No se corrige en el software (<a href="capitulo-6.html">capítulo 6</a>).</li>
+        <li><strong>«Fuera de rango»:</strong> se superaron 16 V o 400 mA. Para la prueba y revisa el circuito.</li>
+      </ul>
+    </details>
+
+    <footer>Proyecto de Sara · Montaje para el firmware Generador Sara BLE 1.1.0 · Pines: SDA 8 · SCL 9 · Hall 6 · Infrarrojo 7</footer>
+  </main>
+</body>
+</html>

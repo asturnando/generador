@@ -1,8 +1,13 @@
 # Generador Sara · PlatformIO + Bluetooth BLE
 
-Primera entrega para probar la parte informática con la ESP32 de Nando, sin motor,
-INA219 ni sensor de RPM. Siempre arranca en **DEMO, 0 RPM, 655 vueltas**.
-No controla ninguna salida del motor ni reemplaza protecciones físicas.
+Firmware completo (versión 1.1.0) para la placa de Sara: demostración, medida
+real con INA219, sensores de RPM Hall KY-003 e infrarrojo TCRT5000, y diagnóstico
+en directo de todo el montaje desde el monitor web. Siempre arranca en
+**DEMO, 0 RPM, 655 vueltas**. No controla ninguna salida del motor ni reemplaza
+protecciones físicas. Guía de cableado: `montaje.html` en la raíz del repositorio.
+
+Pines (ver `include/config.h`): SDA = GPIO 8, SCL = GPIO 9, Hall = GPIO 6,
+infrarrojo = GPIO 7. Todo alimentado a 3V3.
 
 ## Abrir en VS Code
 
@@ -72,21 +77,30 @@ implementación nueva no reescribe las decisiones pendientes del manual.
 - **MIXED**: RPM por pulsos, electricidad sintética calculada con la misma función
   de demostración. El origen se indica por magnitud en pantalla y en el CSV.
 
-REAL y MIXED están bloqueados por configuración. Antes de habilitarlos en
-`include/config.h`: verificar modelo/pinout, GPIO, nivel eléctrico 3,3 V, dirección
-I2C, shunt/calibración, flanco y pulsos por revolución. No se usa el pinout de una
-imagen generada como prueba. La fotografía confirma el marcado S3-N16R8, no toda
-la revisión de la placa de Sara.
+Desde la 1.1.0 los pines están fijados para la placa de Sara (ESP32-S3-WROOM-1
+en base de bornes, serigrafía DevKitC-1) y los sensores se vigilan siempre:
+
+- **INA219**: se busca solo en todo el bus I2C (0x08–0x77) al arrancar, cada 3 s
+  mientras no aparezca, y con la orden `SCAN`. Antes se comprueba si SDA/SCL
+  llegan a 3,3 V a través de las resistencias del módulo o están a 0 V, para
+  explicar en el monitor qué cable falla. Tres lecturas fallidas seguidas en REAL
+  lo dan por perdido; el modo sigue siendo REAL, con estado de error.
+- **RPM**: las dos entradas cuentan pulsos a la vez (interrupción en cada
+  cambio, antirrebote de 300 µs en alto). Las RPM del sensor elegido se calculan
+  con el tiempo exacto entre pulsos, no por ventanas fijas; sin pulsos durante
+  3 s pasan a 0. Sensor (`SRC`) y pulsos por vuelta (`PPR`) se eligen desde el
+  móvil y se guardan en la memoria permanente (NVS). Con PPR = 0 no hay RPM.
+- **REAL** necesita el INA219; las RPM se miden si hay PPR. **MIXED** necesita PPR.
 
 Se implementa únicamente la calibración 16 V / 400 mA de Adafruit para shunt de
-0,1 ohmios; habilitarla solo si procede. Los límites seguros reales pueden ser
-menores. La lectura de tensión es en VIN− respecto a GND (carga), no la tensión
-en vacío de la bobina. La corriente conserva su signo.
+0,1 ohmios. Los límites seguros reales pueden ser menores. La lectura de tensión
+es en VIN− respecto a GND (carga), no la tensión en vacío de la bobina; DC− debe
+estar unido a GND. La corriente conserva su signo.
 
-RPM usa conteo en ventanas de 1 s: resolución `60/PPR` RPM. Cero pulsos también
-puede indicar sensor desconectado; no hay autodiagnóstico físico de un sensor
-de tres hilos. La inicialización del INA219 no equivale a calibración verificada.
-Ante fallo, parar y revisar; no reconectar sensores con tensión.
+Cero pulsos también puede indicar sensor desconectado: el diagnóstico muestra el
+nivel de cada entrada para comprobarlo. La inicialización del INA219 no equivale
+a calibración verificada. Ante fallo, parar y revisar; no reconectar sensores
+con tensión.
 
 Cambiar «vueltas» solo etiqueta: para ensayar cada toma hay que cambiar físicamente
 el cable con el motor parado y desconectado. No une derivaciones electrónicamente.
@@ -103,7 +117,8 @@ para Arduino permanece intacto. No se instala ni actualiza PlatformIO global.
 
 Servicio `aa510001-7a4b-4c26-8e01-8c5370b56555`.
 Características con el mismo sufijo: `aa510002` telemetría READ/NOTIFY,
-`aa510003` control WRITE/READ/NOTIFY, `aa510004` información READ (JSON).
+`aa510003` control WRITE/READ/NOTIFY, `aa510004` información READ (JSON),
+`aa510005` diagnóstico READ/NOTIFY (desde 1.1.0; el JSON lo anuncia con `"diag":1`).
 
 Paquetes de 20 bytes cada 500 ms; no dependen de negociar un MTU grande:
 
@@ -119,8 +134,23 @@ Paquetes de 20 bytes cada 500 ms; no dependen de negociar un MTU grande:
 | 12–15 | Voltios float32 LE |
 | 16–19 | mA float32 LE |
 
+Diagnóstico, 20 bytes, al cambiar algo (revisión cada 200 ms) y al menos una vez
+por segundo:
+
+| Bytes | Campo |
+|---|---|
+| 0 | Versión = 1 |
+| 1 | Flags: 1 Hall a 0 V, 2 infrarrojo a 0 V, 4 INA219 listo, 8 RPM del infrarrojo, 16 pull-up en SDA, 32 pull-up en SCL, 64 SDA/SCL a 0 V |
+| 2 | Dirección del INA219 (0 = no encontrado) |
+| 3 | Pulsos por vuelta (0 = sin configurar) |
+| 4–7 | Pulsos Hall uint32 LE |
+| 8–11 | Pulsos infrarrojo uint32 LE |
+| 12 | Dispositivos I2C encontrados |
+| 13–19 | Sus direcciones (hasta 7) |
+
 Comandos ASCII: `MODE:DEMO`, `MODE:REAL`, `MODE:MIXED`, `SPEED:0` a `SPEED:1200`,
-`TURNS:200/400/600/655` (un único número por comando). Se confirma con `OK <orden>`
+`TURNS:200/400/600/655`, `PPR:0` a `PPR:64`, `SRC:HALL`, `SRC:IR`,
+`RESET:PULSES` y `SCAN` (un único número por comando). Se confirma con `OK <orden>`
 o `ERR <motivo>`. La web espera confirmación, no permite órdenes concurrentes.
 No hay autenticación BLE: ensayo local supervisado, una conexión, sin información
 personal ni órdenes a motor. No usar como control de seguridad.
@@ -131,6 +161,15 @@ Desde la raíz: `node --test tests/monitor-protocol.test.mjs tests/monitor-ui.te
 Compilar: `pio run -d firmware/generador_ble`.
 La compilación y los tests no prueban por sí solos radio, alimentación o sensores.
 Para confirmar funcionamiento físico completar la prueba de aceptación anterior.
+
+### Comprobaciones de la versión 1.1.0 (08/10/2026)
+
+- 26 tests de protocolo e interfaz pasaron con Node, incluidos diagnóstico,
+  órdenes nuevas, panel de sensores y compatibilidad con firmware anterior.
+- Compilación PlatformIO correcta, sin avisos: 540.689 bytes de programa,
+  30.464 bytes de RAM.
+- **Sin probar en hardware**: ninguna placa estaba conectada al compilar. Pendiente
+  comprobar en la placa real arranque, BLE, búsqueda del INA219 y contadores.
 
 ### Comprobaciones realizadas el 29/09/2026
 
