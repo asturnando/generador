@@ -97,8 +97,124 @@
           <tr><td>GND</td><td>Carril GND</td></tr>
         </tbody>
       </table></div>
-      <p>Mira a una marca que contraste con el CD (una zona blanca sobre fondo oscuro o al revés), a pocos milímetros. Con el rotor parado, ajusta la distancia (y su potenciómetro azul, si lo tiene) hasta que el LED del módulo cambie justo al pasar la marca. Si añades una marca al CD, revisa el equilibrio (<a href="capitulo-3.html">capítulo 3</a>).</p>
       <p>Se pueden dejar conectados los dos sensores: el firmware los lee a la vez y en el móvil se elige cuál da las RPM.</p>
+
+      <h3>Cómo poner las cintas y el sensor</h3>
+      <p>El CD refleja mucho el infrarrojo, así que las marcas son <strong>dos tiras de cinta aislante negra mate</strong> (no rotulador: muchas tintas negras son transparentes al infrarrojo), iguales y enfrentadas para que el CD siga equilibrado. Cada vuelta da <strong>2 pulsos</strong>.</p>
+      <!-- Dibujo a escala (2 px por mm) de un CD de 120 mm. El radio de los
+           imanes es un ejemplo: el real sale de la plantilla del capítulo 3. -->
+      <figure class="figure">
+        <svg viewBox="0 0 340 330" role="img" aria-labelledby="cd-front-title">
+          <title id="cd-front-title">Vista de frente del CD con dos cintas negras enfrentadas a 29 mm del centro, ocho imanes cerca del borde, la bobina abajo y el sensor arriba sobre la pista de las cintas</title>
+          <defs>
+            <radialGradient id="cd-grad" cx="45%" cy="40%" r="70%"><stop offset="0" stop-color="#eef3f8"/><stop offset=".6" stop-color="#c9d3de"/><stop offset="1" stop-color="#a9b6c4"/></radialGradient>
+            <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#b1c3d7"/></marker>
+          </defs>
+          <text x="12" y="20" fill="#69dfce" font-size="11" font-weight="800" letter-spacing="2">VISTA DE FRENTE</text>
+          <!-- CD, anillo central transparente y adaptador -->
+          <circle cx="170" cy="160" r="120" fill="url(#cd-grad)" stroke="#8fa1b3" stroke-width="1.5"/>
+          <circle cx="170" cy="160" r="34" fill="#e6edf4" stroke="#9fb0c1"/>
+          <circle cx="170" cy="160" r="24" fill="#7d8a99" stroke="#5d6a78" stroke-width="2"/>
+          <circle cx="170" cy="160" r="10" fill="#5d6a78"/>
+          <!-- Pista de las cintas: radio 29 mm -->
+          <circle cx="170" cy="160" r="58" fill="none" stroke="#0b1726" stroke-width="1.5" stroke-dasharray="5 4" opacity=".55"/>
+          <!-- Ocho imanes de 15 mm a 45 mm del centro, polos alternados -->
+          <g fill="#485463" stroke="#2d3743" stroke-width="1.5">
+            <circle cx="260" cy="160" r="15"/><circle cx="233.6" cy="223.6" r="15"/><circle cx="170" cy="250" r="15"/><circle cx="106.4" cy="223.6" r="15"/>
+            <circle cx="80" cy="160" r="15"/><circle cx="106.4" cy="96.4" r="15"/><circle cx="170" cy="70" r="15"/><circle cx="233.6" cy="96.4" r="15"/>
+          </g>
+          <g fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle">
+            <text x="260" y="164">N</text><text x="233.6" y="227.6">S</text><text x="170" y="254">N</text><text x="106.4" y="227.6">S</text>
+            <text x="80" y="164">N</text><text x="106.4" y="100.4">S</text><text x="170" y="74">N</text><text x="233.6" y="100.4">S</text>
+          </g>
+          <!-- Las dos cintas negras, enfrentadas -->
+          <rect x="216" y="150" width="24" height="20" rx="1.5" fill="#111" stroke="#ffffff" stroke-width="1.5"/>
+          <rect x="100" y="150" width="24" height="20" rx="1.5" fill="#111" stroke="#ffffff" stroke-width="1.5"/>
+          <!-- Bobina (por delante, a 10 mm), frente a los imanes de abajo -->
+          <rect x="140" y="220" width="60" height="60" rx="8" fill="none" stroke="#e0904a" stroke-width="3"/>
+          <rect x="155" y="235" width="30" height="30" rx="3" fill="none" stroke="#e0904a" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <!-- Sensor infrarrojo visto de punta, sobre la pista -->
+          <rect x="158" y="94" width="24" height="16" rx="3" fill="#0b1726" stroke="#69dfce" stroke-width="2.5"/>
+          <circle cx="164" cy="102" r="4" fill="#4a8dff"/><circle cx="176" cy="102" r="4" fill="#000"/>
+          <!-- Sentido de giro -->
+          <path d="M236 45.7 A132 132 0 0 1 294 114.9" fill="none" stroke="#b1c3d7" stroke-width="2" marker-end="url(#arrow-head)"/>
+          <text x="294" y="62" fill="#b1c3d7" font-size="12">giro</text>
+          <!-- Números de la leyenda -->
+          <g font-size="13" font-weight="800" text-anchor="middle">
+            <circle cx="138" cy="88" r="11" fill="#ffc66c"/><text x="138" y="92.5" fill="#072b2a">1</text>
+            <circle cx="228" cy="136" r="11" fill="#ffc66c"/><text x="228" y="140.5" fill="#072b2a">2</text>
+            <circle cx="112" cy="136" r="11" fill="#ffc66c"/><text x="112" y="140.5" fill="#072b2a">3</text>
+            <circle cx="222" cy="290" r="11" fill="#ffc66c"/><text x="222" y="294.5" fill="#072b2a">4</text>
+            <circle cx="129" cy="201" r="11" fill="#ffc66c"/><text x="129" y="205.5" fill="#072b2a">5</text>
+          </g>
+        </svg>
+        <figcaption>
+          <ol class="legend">
+            <li><strong>Sensor infrarrojo</strong>, fijo, apuntando de punta a la pista de las cintas (aquí, arriba).</li>
+            <li><strong>Cinta aislante negra mate</strong> de unos 10 × 12 mm, con el lado largo hacia el centro.</li>
+            <li><strong>Otra cinta idéntica, enfrentada</strong> (al otro lado del centro): equilibra el CD.</li>
+            <li><strong>Bobina</strong>, frente a los imanes (aquí, abajo). El sensor va en el lado opuesto.</li>
+            <li><strong>Pista:</strong> las dos cintas a la misma distancia del centro, entre el adaptador y los imanes. En un CD de 120 mm, unos 29 mm.</li>
+          </ol>
+          Dibujo a escala de un CD de 120 mm. La posición de los imanes es un ejemplo: la vuestra sale de la plantilla del <a href="capitulo-3.html">capítulo 3</a>.
+        </figcaption>
+      </figure>
+      <!-- Vista lateral a la misma escala: separaciones del sensor y de la bobina. -->
+      <figure class="figure">
+        <svg viewBox="0 0 340 330" role="img" aria-labelledby="cd-side-title">
+          <title id="cd-side-title">Vista de lado: motor con adaptador y CD; el sensor infrarrojo a 3 a 5 milímetros de la cara del CD sobre un soporte fijo a la base; la bobina más abajo a 10 milímetros</title>
+          <text x="12" y="20" fill="#69dfce" font-size="11" font-weight="800" letter-spacing="2">VISTA DE LADO</text>
+          <!-- Base y soporte del motor -->
+          <rect x="10" y="300" width="320" height="14" rx="3" fill="#7a5a3a"/>
+          <rect x="60" y="192" width="70" height="108" fill="#5a4330"/>
+          <!-- Motor, eje, adaptador y tuerca -->
+          <rect x="30" y="108" width="133" height="84" rx="10" fill="#7d8a99"/>
+          <rect x="163" y="145" width="24" height="10" fill="#b8c3cf"/>
+          <rect x="180" y="136" width="20" height="28" rx="2" fill="#5d6a78"/>
+          <rect x="204" y="138" width="8" height="24" rx="1.5" fill="#5d6a78"/>
+          <!-- CD de canto, con imanes y cintas en la cara libre -->
+          <rect x="200" y="30" width="4" height="240" fill="#c9d3de"/>
+          <rect x="204" y="45" width="4" height="30" fill="#485463"/><rect x="204" y="225" width="4" height="30" fill="#485463"/>
+          <rect x="204" y="80" width="3" height="24" fill="#111" stroke="#ffffff" stroke-width=".8"/>
+          <!-- Sensor infrarrojo sobre su soporte -->
+          <rect x="262" y="82" width="14" height="218" fill="#8a6a4a"/>
+          <rect x="216" y="82" width="56" height="20" rx="3" fill="#0b1726" stroke="#69dfce" stroke-width="2.5"/>
+          <circle cx="266" cy="92" r="3" fill="#d6dde5"/>
+          <!-- Separación del sensor (3-5 mm) -->
+          <path d="M208 114 H216 M208 110 V118 M216 110 V118" stroke="#ffc66c" stroke-width="1.5"/>
+          <!-- Bobina en su portabobina, a 10 mm -->
+          <rect x="248" y="195" width="8" height="105" fill="#8a6a4a"/>
+          <rect x="236" y="292" width="48" height="8" fill="#6b4c30"/>
+          <rect x="228" y="210" width="20" height="60" rx="3" fill="#c87533"/>
+          <path d="M208 205 H228 M208 201 V209 M228 201 V209" stroke="#ffc66c" stroke-width="1.5"/>
+          <!-- Letras de la leyenda -->
+          <g font-size="13" font-weight="800" text-anchor="middle">
+            <circle cx="96" cy="94" r="11" fill="#ffc66c"/><text x="96" y="98.5" fill="#072b2a">A</text>
+            <circle cx="176" cy="118" r="11" fill="#ffc66c"/><text x="176" y="122.5" fill="#072b2a">B</text>
+            <circle cx="184" cy="46" r="11" fill="#ffc66c"/><text x="184" y="50.5" fill="#072b2a">C</text>
+            <circle cx="243" cy="68" r="11" fill="#ffc66c"/><text x="243" y="72.5" fill="#072b2a">D</text>
+            <circle cx="296" cy="200" r="11" fill="#ffc66c"/><text x="296" y="204.5" fill="#072b2a">E</text>
+            <circle cx="226" cy="186" r="11" fill="#ffc66c"/><text x="226" y="190.5" fill="#072b2a">F</text>
+            <circle cx="312" cy="284" r="11" fill="#ffc66c"/><text x="312" y="288.5" fill="#072b2a">G</text>
+          </g>
+        </svg>
+        <figcaption>
+          <ol class="legend letters">
+            <li><strong>Motor</strong> en su soporte.</li>
+            <li><strong>Adaptador</strong> y tuerca que sujetan el CD.</li>
+            <li><strong>CD.</strong> Las cintas van en la cara que mira al sensor.</li>
+            <li><strong>Sensor infrarrojo</strong>, de punta hacia el CD, a <strong>3–5 mm</strong> (marca amarilla). Siempre más hueco del que oscila el CD al girarlo a mano.</li>
+            <li><strong>Soporte fijo atornillado a la base</strong>, por el agujero central del módulo. Nunca al CD, al motor ni al portabobina.</li>
+            <li><strong>Bobina</strong> en su portabobina, a <strong>10 mm</strong> (<a href="capitulo-4.html">capítulo 4</a>).</li>
+            <li><strong>Base.</strong> El resguardo y la tornillería no se dibujan, pero son obligatorios.</li>
+          </ol>
+        </figcaption>
+      </figure>
+      <ul>
+        <li>Si la cara del CD que mira al sensor es oscura o mate (la impresa), pegad antes un anillo de papel blanco a esa distancia del centro y las cintas negras encima.</li>
+        <li>Pesad las dos cintas y revisad el equilibrio antes del primer giro con motor (<a href="capitulo-3.html">capítulo 3</a>).</li>
+        <li>Calibración: «Poner contadores a cero», 10 vueltas a mano, deben salir <strong>20 pulsos</strong>. Escribid <strong>2</strong> en pulsos por vuelta y pulsad «Guardar». Si salen más, la señal tiembla: ajustad la distancia. Si salen menos, acercad el sensor.</li>
+      </ul>
     </section>
 
     <!-- 6. Ruta de potencia: bobina, puente, INA219 y carga. -->
