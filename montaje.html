@@ -2,7 +2,7 @@
 <!--
   montaje.html · Guía para conectar todo el circuito de una vez
 
-  Explica dónde va cada cable con el firmware 1.1.0 (pines definidos en
+  Explica dónde va cada cable con el firmware 1.1.1 (pines definidos en
   firmware/generador_ble/include/config.h) y en qué orden comprobarlo con el
   panel "Sensores y ajustes" del monitor. Si se cambia algún pin en
   config.h, hay que cambiarlo también aquí y en monitor.html.
@@ -18,7 +18,7 @@
   <main>
     <header><a class="back" href="monitor.html">← Monitor Bluetooth</a><span class="eyebrow">LABORATORIO · 655 VUELTAS</span>
       <h1>Montaje completo<span>INA219, sensor Hall, sensor infrarrojo y bobina</span></h1>
-      <p>Dónde va cada cable y cómo comprobarlo desde el móvil con un único firmware (versión 1.1.0). No hace falta cargar programas de prueba.</p>
+      <p>Dónde va cada cable y cómo comprobarlo desde el móvil con un único firmware (versión 1.1.1). No hace falta cargar programas de prueba.</p>
     </header>
 
     <!-- Reglas que no se pueden saltar. -->
@@ -242,6 +242,7 @@
     <!-- 7. Comprobación con el monitor, en orden. -->
     <section class="panel"><h2>7 · Comprobar con el móvil, paso a paso</h2>
       <p>Abre el <a href="monitor.html">monitor</a>, pulsa «Conectar ESP32» y baja hasta <strong>«Sensores y ajustes»</strong>.</p>
+      <p>También se puede hacer desde el ordenador al que está enchufada la placa, sin móvil, con la <a href="consola.html">consola USB</a>: muestra los mismos contadores y estados, y permite los mismos ajustes.</p>
       <ol>
         <li><strong>Sin la bobina conectada al puente.</strong> Enchufa el USB y conecta desde el móvil.</li>
         <li><strong>INA219:</strong> debe poner «Encontrado en 0x40» (u otra dirección entre 0x40 y 0x4F) con el punto verde. Si no, el propio mensaje dice qué cable revisar.</li>
@@ -269,7 +270,7 @@
       </ul>
     </details>
 
-    <footer>Proyecto de Sara · Montaje para el firmware Generador Sara BLE 1.1.0 · Pines: SDA 8 · SCL 9 · Hall 6 · Infrarrojo 7</footer>
+    <footer>Proyecto de Sara · Montaje para el firmware Generador Sara BLE 1.1.1 · Pines: SDA 8 · SCL 9 · Hall 6 · Infrarrojo 7</footer>
   </main>
 </body>
 </html>

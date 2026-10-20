@@ -1,5 +1,5 @@
 // =============================================================================
-// main.cpp · Programa principal del Generador Sara (firmware 1.1.0)
+// main.cpp · Programa principal del Generador Sara (firmware 1.1.1)
 // =============================================================================
 //
 // Qué hace este programa:
@@ -16,6 +16,9 @@
 //   - Recibe órdenes del móvil: modo, toma de la bobina, velocidad simulada,
 //     sensor de RPM, pulsos por vuelta, poner contadores a cero y volver a
 //     buscar el INA219. Responde "OK ..." o "ERR ...".
+//   - Desde la 1.1.1, escribe el diagnóstico también por el USB (líneas
+//     "DIAG ...") y acepta las mismas órdenes por USB, para comprobarlo todo
+//     desde un ordenador con la página consola.html.
 //
 // Qué NO hace: no controla el motor ni ninguna salida. Solo mide y simula.
 //
@@ -29,7 +32,7 @@
 //   3. INA219: búsqueda en el bus I2C y vigilancia.
 //   4. Órdenes recibidas por Bluetooth.
 //   5. sample(): prepara y envía cada lectura.
-//   6. sendDiag(): envía el diagnóstico.
+//   6. sendDiag(): envía el diagnóstico (y readSerialCommands(): órdenes por USB).
 //   7. setup(): arranque.
 //   8. loop(): bucle principal.
 // =============================================================================
@@ -497,8 +500,10 @@ void sample() {
   telemetry->setValue(packet, sizeof(packet));
   // ...y, si hay un móvil conectado, se lo envía como notificación.
   if (NimBLEDevice::getServer()->getConnectedCount()) telemetry->notify();
-  // Copia legible en el monitor serie, para comprobar con el cable USB.
-  Serial.printf("mode=%u turns=%u rpm=%.1f V=%.3f mA=%.3f status=%u src=%s ppr=%u\n", mode, turns, rpm,
+  // Copia legible por el USB (monitor serie o página consola.html). Formato
+  // "clave=valor" para que la consola la pueda leer. "mode" es 0 DEMO,
+  // 1 REAL, 2 MIXED; "status", el código de Status en protocol.h.
+  Serial.printf("LECTURA mode=%u turns=%u rpm=%.1f V=%.3f mA=%.3f status=%u src=%s ppr=%u\n", mode, turns, rpm,
                 voltage, current, status, source == SOURCE_IR ? "IR" : "HALL", ppr);
 }
 
@@ -507,7 +512,8 @@ void sample() {
 // =============================================================================
 // Se llama cada 200 ms. Solo envía si algo ha cambiado (un pulso nuevo, un
 // sensor que empieza a detectar...) o si "force" es true (una vez por
-// segundo), para no saturar el Bluetooth.
+// segundo), para no saturar el Bluetooth. Se envía a la vez por Bluetooth y,
+// como línea de texto "DIAG ...", por el USB.
 void sendDiag(bool force) {
   static uint8_t previous[20] = {};
   uint32_t hallCount, irCount, unused;
@@ -529,6 +535,44 @@ void sendDiag(bool force) {
   memcpy(previous, packet, sizeof(packet));
   diagnostics->setValue(packet, sizeof(packet));
   if (NimBLEDevice::getServer()->getConnectedCount()) diagnostics->notify();
+  // Misma información, legible, por el USB. "_bajo=1" = salida del sensor a
+  // 0 V; "ina=0x00" = INA219 no encontrado; "sda"/"scl" = 1 si la línea llega
+  // a 3,3 V a través del módulo; "bloqueo" = 1 si SDA o SCL están a 0 V.
+  Serial.printf("DIAG ir=%lu ir_bajo=%u hall=%lu hall_bajo=%u ina=0x%02X sda=%u scl=%u bloqueo=%u i2c=%u ppr=%u sensor=%s\n",
+                (unsigned long)irCount, (flags & DIAG_IR_LOW) ? 1u : 0u,
+                (unsigned long)hallCount, (flags & DIAG_HALL_LOW) ? 1u : 0u,
+                inaReady ? inaAddress : 0, sdaPullup ? 1u : 0u, sclPullup ? 1u : 0u, i2cStuck ? 1u : 0u,
+                i2cCount, ppr, source == SOURCE_IR ? "IR" : "HALL");
+}
+
+// =============================================================================
+// 6 bis. Órdenes por USB
+// =============================================================================
+// Además de por Bluetooth, la placa acepta las mismas órdenes escritas por el
+// puerto serie USB, una por línea (por ejemplo "PPR:2" y Enter). Así se puede
+// configurar y probar todo desde un ordenador con la página consola.html,
+// sin móvil. Las órdenes van a la misma cola que las del Bluetooth y reciben
+// la misma respuesta "OK ..." o "ERR ...".
+void readSerialCommands() {
+  static char line[21];        // Orden en construcción (hasta 20 caracteres + '\0').
+  static size_t length = 0;
+  static bool invalid = false; // true si la línea trae caracteres raros o es demasiado larga.
+  while (Serial.available()) {
+    const int c = Serial.read();
+    if (c == '\n' || c == '\r') {
+      // Fin de línea: si había una orden válida, se encola.
+      if (length && !invalid) {
+        Command command{};
+        memcpy(command.text, line, length);
+        if (xQueueSend(commands, &command, 0) != pdTRUE) reply("ERR BUSY");
+      } else if (invalid) reply("ERR COMMAND");
+      length = 0; invalid = false;
+    } else if (c < 32 || c > 126 || length >= 20) {
+      invalid = true;          // Se descarta toda la línea al llegar el Enter.
+    } else {
+      line[length++] = char(c);
+    }
+  }
 }
 
 // =============================================================================
@@ -585,7 +629,7 @@ void setup() {
   auto info = service->createCharacteristic(INFO, NIMBLE_PROPERTY::READ);
   // Construye el texto JSON con la versión, los pines y el estado de los
   // sensores al arrancar, por ejemplo:
-  //   {"protocol":1,"firmware":"1.1.0","finalTurns":655,"diag":1,"sda":8,
+  //   {"protocol":1,"firmware":"1.1.1","finalTurns":655,"diag":1,"sda":8,
   //    "scl":9,"hall":6,"ir":7,"rpmReady":false,"inaReady":true,"ppr":0}
   // snprintf escribe el texto sustituyendo cada %s, %d o %u por los valores
   // que van detrás, sin pasarse nunca del tamaño del búfer (200).
@@ -621,8 +665,10 @@ void setup() {
 // 8. loop(): se repite sin parar
 // =============================================================================
 void loop() {
-  // a) Si hay alguna orden en la cola, la ejecuta (una por vuelta). El 0
+  // a) Recoge las órdenes escritas por USB y, si hay alguna orden en la cola
+  //    (del USB o del Bluetooth), la ejecuta (una por vuelta). El 0
   //    significa "no esperar": si no hay órdenes, sigue adelante.
+  readSerialCommands();
   Command command;
   if (xQueueReceive(commands, &command, 0) == pdTRUE) processCommand(command.text);
 

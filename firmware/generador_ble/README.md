@@ -1,6 +1,6 @@
 # Generador Sara · PlatformIO + Bluetooth BLE
 
-Firmware completo (versión 1.1.0) para la placa de Sara: demostración, medida
+Firmware completo (versión 1.1.1) para la placa de Sara: demostración, medida
 real con INA219, sensores de RPM Hall KY-003 e infrarrojo TCRT5000, y diagnóstico
 en directo de todo el montaje desde el monitor web. Siempre arranca en
 **DEMO, 0 RPM, 655 vueltas**. No controla ninguna salida del motor ni reemplaza
@@ -151,7 +151,19 @@ por segundo:
 Comandos ASCII: `MODE:DEMO`, `MODE:REAL`, `MODE:MIXED`, `SPEED:0` a `SPEED:1200`,
 `TURNS:200/400/600/655`, `PPR:0` a `PPR:64`, `SRC:HALL`, `SRC:IR`,
 `RESET:PULSES` y `SCAN` (un único número por comando). Se confirma con `OK <orden>`
-o `ERR <motivo>`. La web espera confirmación, no permite órdenes concurrentes.
+o `ERR <motivo>`.
+
+Desde la 1.1.1 las mismas órdenes se aceptan también por el puerto serie USB,
+una por línea, y la placa escribe por USB:
+
+- `DIAG ir=13 ir_bajo=1 hall=0 hall_bajo=0 ina=0x40 sda=1 scl=1 bloqueo=0 i2c=1 ppr=2 sensor=IR`
+  cada vez que cambia el diagnóstico (revisión cada 200 ms) y al menos una vez por segundo.
+- `LECTURA mode=2 turns=655 rpm=60.0 V=0.400 mA=4.000 status=0 src=IR ppr=1` cada 500 ms.
+
+La página `consola.html` (Chrome/Edge de ordenador, Web Serial a 115200) lee esas
+líneas y envía órdenes, para comprobar el montaje sin móvil, también por AnyDesk.
+Al abrir el puerto deja DTR y RTS en reposo para no reiniciar la placa ni dejarla
+en modo de carga. La web espera confirmación, no permite órdenes concurrentes.
 No hay autenticación BLE: ensayo local supervisado, una conexión, sin información
 personal ni órdenes a motor. No usar como control de seguridad.
 
@@ -161,6 +173,14 @@ Desde la raíz: `node --test tests/monitor-protocol.test.mjs tests/monitor-ui.te
 Compilar: `pio run -d firmware/generador_ble`.
 La compilación y los tests no prueban por sí solos radio, alimentación o sensores.
 Para confirmar funcionamiento físico completar la prueba de aceptación anterior.
+
+### Comprobaciones de la versión 1.1.1 (20/10/2026)
+
+- 33 tests pasaron con Node, incluidos la lectura de líneas `DIAG`/`LECTURA` y
+  la consola USB con un puerto serie simulado.
+- Compilación PlatformIO correcta, sin avisos: 541.173 bytes de programa,
+  30.496 bytes de RAM.
+- **Sin probar en hardware**: ninguna placa conectada al compilar.
 
 ### Comprobaciones de la versión 1.1.0 (08/10/2026)
 

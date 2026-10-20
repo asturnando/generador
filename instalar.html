@@ -26,7 +26,7 @@
 <body>
   <main>
     <header><a class="back" href="monitor.html">← Monitor Bluetooth</a><span class="eyebrow">LABORATORIO · 655 VUELTAS</span>
-      <h1>Instalar el firmware<span>ESP32-S3 · versión 1.1.0 · completo</span></h1>
+      <h1>Instalar el firmware<span>ESP32-S3 · versión 1.1.1 · completo</span></h1>
       <p>Carga el programa en la ESP32 desde el navegador, sin instalar nada más. Es el firmware definitivo: incluye la demostración, las medidas reales del INA219, los sensores Hall e infrarrojo y su diagnóstico. No hace falta cargar programas de prueba.</p>
     </header>
     <!-- Botón de instalación. "manifest" indica qué firmware instalar.
@@ -52,9 +52,9 @@
         <li>Conecta la ESP32 al ordenador con el USB marcado <strong>UART</strong> (en algunas placas pone <strong>COM</strong>).</li>
         <li>Pulsa «Instalar firmware» y elige el puerto de la placa en la lista del navegador. Suele llamarse «USB Serial», «CP210x», «CH343» o «USB JTAG/serial debug unit».</li>
         <li>Pulsa «Install» y espera a que termine (alrededor de un minuto). No desconectes el cable mientras tanto.</li>
-        <li>Al acabar, pulsa el botón <strong>RST</strong> de la placa o desconéctala y vuelve a conectarla.</li>
-        <li>Abre el <a href="monitor.html">monitor</a> en Chrome para Android y pulsa «Conectar ESP32». Debe aparecer «firmware 1.1.0», el modo DEMOSTRACIÓN y el panel «Sensores y ajustes».</li>
-        <li>Para conectar el INA219 y los sensores, sigue la <a href="montaje.html">guía de montaje</a>.</li>
+        <li>Al acabar, <strong>cierra esta pestaña</strong> y pulsa el botón <strong>RST</strong> de la placa o desconéctala y vuelve a conectarla. Con esta pestaña abierta, la placa puede quedarse parada.</li>
+        <li>Abre el <a href="monitor.html">monitor</a> en Chrome para Android y pulsa «Conectar ESP32». Debe aparecer «firmware 1.1.1», el modo DEMOSTRACIÓN y el panel «Sensores y ajustes».</li>
+        <li>Para conectar el INA219 y los sensores, sigue la <a href="montaje.html">guía de montaje</a>. Para comprobarlos desde este ordenador, sin móvil, usa la <a href="consola.html">consola USB</a>.</li>
       </ol>
     </section>
     <!-- Problemas frecuentes, plegado para no distraer. -->
@@ -66,7 +66,7 @@
         <li><strong>El puerto está ocupado:</strong> cierra el monitor serie de PlatformIO, Arduino u otras pestañas que usen la placa.</li>
       </ul>
     </details>
-    <footer>Proyecto de Sara · Firmware Generador Sara BLE 1.1.0 · Instalador basado en ESP Web Tools</footer>
+    <footer>Proyecto de Sara · Firmware Generador Sara BLE 1.1.1 · Instalador basado en ESP Web Tools</footer>
   </main>
 </body>
 </html>

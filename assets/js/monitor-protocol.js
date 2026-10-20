@@ -117,6 +117,25 @@ export function decodeDiag(view) {
   };
 }
 
+// Lee una línea de texto que la placa escribe por USB (firmware 1.1.1+) y
+// devuelve su tipo y sus valores "clave=valor", o null si no es de las suyas.
+//   'DIAG ir=13 ir_bajo=1 ... sensor=IR' → { type: 'DIAG', ir: 13, ir_bajo: 1, ..., sensor: 'IR' }
+//   'LECTURA mode=2 rpm=60.0 ...'        → { type: 'LECTURA', mode: 2, rpm: 60, ... }
+// Los valores numéricos (también "0x40") se convierten en números; "nan"
+// (sin dato) pasa a null; el resto queda como texto.
+export function parseSerialLine(line) {
+  const match = /^(DIAG|LECTURA) (.*)$/.exec(String(line).trim());
+  if (!match) return null;
+  const result = { type: match[1] };
+  for (const [, key, raw] of match[2].matchAll(/(\w+)=(\S+)/g)) {
+    if (/^nan$/i.test(raw)) result[key] = null;
+    else if (/^0x[0-9a-f]+$/i.test(raw)) result[key] = parseInt(raw, 16);
+    else if (/^-?\d+(\.\d+)?$/.test(raw)) result[key] = Number(raw);
+    else result[key] = raw;
+  }
+  return result;
+}
+
 // Escribe una dirección I2C en hexadecimal, como 0x40.
 export const hex = n => '0x' + n.toString(16).toUpperCase().padStart(2, '0');
 

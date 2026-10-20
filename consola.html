@@ -1,0 +1,72 @@
+<!doctype html>
+<!--
+  consola.html · Consola USB: comprobar sensores desde un ordenador
+
+  Para el ordenador al que está enchufada la ESP32 por USB (también se puede
+  usar a distancia, por AnyDesk). Lee las líneas "DIAG ..." y "LECTURA ..."
+  que el firmware 1.1.1 escribe por el puerto serie y las muestra en grande;
+  también envía órdenes ("PPR:2", "SRC:IR"...) por el mismo cable. No usa
+  Bluetooth. La lógica está en assets/js/consola.js, que (igual que las
+  pruebas de tests/consola-ui.test.mjs) busca los elementos por su atributo id.
+-->
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102338">
+  <title>Generador Sara · Consola USB</title>
+  <link rel="stylesheet" href="assets/css/monitor.css">
+</head>
+<body>
+  <main>
+    <header><a class="back" href="monitor.html">← Monitor Bluetooth</a><span class="eyebrow">LABORATORIO · 655 VUELTAS</span>
+      <h1>Consola USB<span>Comprobar los sensores desde el ordenador</span></h1>
+      <p>Abre esta página en Chrome o Edge en el ordenador al que está enchufada la ESP32. Funciona también por AnyDesk. Necesita el firmware 1.1.1 o posterior.</p>
+    </header>
+
+    <!-- Conexión por USB: elegir puerto, cerrarlo y reiniciar la placa. -->
+    <section class="connection" aria-label="Conexión USB">
+      <div><span class="dot" id="dot"></span><strong id="connection">Sin conectar</strong><p id="device">ESP32-S3 · puerto serie USB (115200)</p></div>
+      <div class="actions"><button id="connect">Conectar por USB</button><button id="disconnect" class="secondary" disabled>Desconectar</button><button id="reset" class="secondary" disabled>Reiniciar placa</button></div>
+    </section>
+    <p id="message" role="status" aria-live="polite">Pulsa «Conectar por USB» y elige el puerto de la placa (por ejemplo, COM5).</p>
+
+    <!-- Estado en directo. El número grande de cada sensor es su contador de pulsos. -->
+    <section class="panel"><div class="section-head"><div><h2>Sensores en directo</h2><p>El número grande de cada sensor sube 1 en cada pasada del imán o de la marca.</p></div><button id="zero" class="secondary" disabled>Contadores a cero</button></div>
+      <div class="sensor-grid four">
+        <article class="sensor" id="ir-card"><strong><span class="dot" id="ir-dot"></span>Infrarrojo TCRT5000 · GPIO 7</strong><p><b id="ir-count">—</b> pulsos</p><small id="ir-level">Sin datos.</small></article>
+        <article class="sensor" id="hall-card"><strong><span class="dot" id="hall-dot"></span>Hall KY-003 · GPIO 6</strong><p><b id="hall-count">—</b> pulsos</p><small id="hall-level">Sin datos.</small></article>
+        <article class="sensor"><strong><span class="dot" id="ina-dot"></span>INA219 · tensión y corriente</strong><p id="ina-status">Sin datos.</p><small id="i2c-detail">SDA = GPIO 8 · SCL = GPIO 9</small></article>
+        <article class="sensor"><strong><span class="dot" id="reading-dot"></span>Lectura actual</strong><p><b id="rpm-now">—</b> RPM</p><small id="reading-detail">Sin datos.</small></article>
+      </div>
+    </section>
+
+    <!-- Ajustes: los mismos que en el monitor, enviados por el cable USB. -->
+    <section class="panel"><h2>Ajustes</h2><p>Se guardan en la ESP32 y se ven también en el monitor del móvil.</p>
+      <div class="control-grid">
+        <label>Sensor que da las RPM<select id="sensor" disabled><option value="HALL">Hall KY-003 · imanes</option><option value="IR">Infrarrojo TCRT5000 · marca</option></select></label>
+        <label for="ppr">Pulsos por vuelta (PPR)<span class="inline"><input id="ppr" type="number" min="0" max="64" step="1" inputmode="numeric" disabled><button id="save-ppr" disabled>Guardar</button></span></label>
+        <label>Origen de los datos<select id="mode" disabled><option value="DEMO">Demostración · todo simulado</option><option value="MIXED">Mixto · RPM medidas, electricidad simulada</option><option value="REAL">Real · sensores</option></select></label>
+        <label>Otras órdenes<span class="inline"><button id="scan" class="secondary" disabled>Buscar INA219</button></span></label>
+      </div>
+      <label for="command">Orden manual (por ejemplo, SPEED:300)<span class="inline"><input id="command" type="text" maxlength="20" autocomplete="off" spellcheck="false" disabled><button id="send" disabled>Enviar</button></span></label>
+    </section>
+
+    <!-- Texto tal como llega de la placa. -->
+    <section class="panel"><div class="section-head"><div><h2>Mensajes de la placa</h2><p>Lo que escribe la ESP32 por el USB, el más reciente abajo.</p></div><label class="check"><input type="checkbox" id="quiet" checked> Ocultar las lecturas periódicas</label></div>
+      <pre id="log" class="log"></pre>
+    </section>
+
+    <!-- Ayuda. -->
+    <details class="panel"><summary>Ayuda</summary>
+      <ul>
+        <li><strong>No aparece el puerto o no se puede abrir:</strong> cierra el instalador, el monitor serie de PlatformIO y cualquier otra pestaña que use la placa. Solo un programa puede usar el puerto a la vez. El monitor Bluetooth del móvil sí puede seguir conectado.</li>
+        <li><strong>No llegan datos:</strong> pulsa «Reiniciar placa». Si siguen sin llegar, desenchufa y vuelve a enchufar el USB y conecta de nuevo.</li>
+        <li><strong>Dice que el firmware es anterior a 1.1.1:</strong> instala la última versión con el <a href="instalar.html">instalador</a>, cierra su pestaña y vuelve aquí.</li>
+        <li>Prueba del infrarrojo: pasa una hoja blanca a 2–5 mm de la punta del sensor. El contador debe subir 1 en cada pasada. Para el montaje completo, consulta la <a href="montaje.html">guía de montaje</a>.</li>
+      </ul>
+    </details>
+    <footer>Proyecto de Sara · Consola USB para el firmware Generador Sara BLE 1.1.1 o posterior</footer>
+  </main>
+  <script type="module" src="assets/js/consola.js?v=1"></script>
+</body>
+</html>

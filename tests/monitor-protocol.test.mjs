@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { decodePacket, decodeDiag, hex, csvRows, commandText } from '../assets/js/monitor-protocol.js';
+import { decodePacket, decodeDiag, hex, csvRows, commandText, parseSerialLine } from '../assets/js/monitor-protocol.js';
 function packet({ mode = 0, flags = 3, status = 0, turns = 655, rpm = 300, volts = 2, ma = 20, sequence = 4 } = {}) {
   const d = new DataView(new ArrayBuffer(20));
   d.setUint8(0, 1); d.setUint8(1, mode); d.setUint8(2, flags); d.setUint8(3, status);
@@ -59,6 +59,15 @@ test('diagnóstico: rechaza tamaño, versión, bit desconocido y PPR imposible',
   assert.throws(() => decodeDiag(new DataView(new ArrayBuffer(19))));
   const v = diag(); v.setUint8(0, 2); assert.throws(() => decodeDiag(v));
   assert.throws(() => decodeDiag(diag({ flags: 128 }))); assert.throws(() => decodeDiag(diag({ ppr: 65 })));
+});
+test('líneas USB: DIAG y LECTURA con números, hexadecimal y sin dato', () => {
+  const d = parseSerialLine('DIAG ir=13 ir_bajo=1 hall=0 hall_bajo=0 ina=0x40 sda=1 scl=1 bloqueo=0 i2c=1 ppr=2 sensor=IR\r');
+  assert.equal(d.type, 'DIAG'); assert.equal(d.ir, 13); assert.equal(d.ir_bajo, 1); assert.equal(d.ina, 0x40);
+  assert.equal(d.ppr, 2); assert.equal(d.sensor, 'IR');
+  assert.equal(parseSerialLine('DIAG ir=0 ina=0x00').ina, 0);
+  const l = parseSerialLine('LECTURA mode=2 turns=655 rpm=60.0 V=nan mA=nan status=0 src=IR ppr=1');
+  assert.equal(l.type, 'LECTURA'); assert.equal(l.mode, 2); assert.equal(l.rpm, 60); assert.equal(l.V, null);
+  for (const other of ['BLE listo: busca Generador Sara', 'OK PPR:2', 'I2C: 1 dispositivo(s)', '']) assert.equal(parseSerialLine(other), null);
 });
 test('órdenes de sensores: PPR, sensor, contadores y búsqueda I2C', () => {
   assert.equal(commandText('PPR', '4'), 'PPR:4'); assert.equal(commandText('PPR', 0), 'PPR:0'); assert.equal(commandText('PPR', 64), 'PPR:64');
