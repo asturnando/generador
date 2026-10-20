@@ -71,9 +71,11 @@ async function connect() {
     // Con el valor por defecto (255 bytes) se pierden trozos al arrancar la
     // placa, que escribe mucho de golpe.
     await selected.open({ baudRate: 115200, bufferSize: 16384 });
-    // En estas placas, las líneas DTR y RTS del USB controlan los botones RST
-    // y BOOT. Se dejan las dos en reposo para que la placa siga funcionando.
-    await selected.setSignals({ dataTerminalReady: false, requestToSend: false });
+    // Las líneas DTR y RTS NO se tocan al conectar: el navegador las deja
+    // activas, y así la placa sigue funcionando y el USB entrega los datos.
+    // (En estas placas DTR y RTS mueven los botones BOOT y RST. Ponerlas a 0
+    // reiniciaba la placa, porque Windows las cambia de una en una, y con DTR
+    // a 0 el conversor USB dejaba de entregar lo que llegaba.)
     port = selected; keepReading = true; buffer = ''; lastLineAt = performance.now(); lastDiagAt = 0;
     oldFirmware = false; bytesIn = 0; linesIn = 0; stale = false; uptime = null;
     text('connection', 'Conectado por USB'); $('dot').className = 'dot live';
@@ -133,14 +135,18 @@ async function disconnect(fromLoop = false) {
   setControls();
 }
 
-// Reinicia la placa como el botón RST: RTS activo un momento (pone RST a 0)
-// y después las dos líneas en reposo. Al arrancar, los contadores vuelven a 0.
+// Reinicia la placa como el botón RST. Con RTS activo, desactivar DTR pone
+// RST a 0; al volver a activar DTR, la placa arranca normalmente (BOOT no se
+// toca). Se cambia una sola línea cada vez para no pasar por combinaciones
+// intermedias, y se terminan las dos activas, como al conectar.
+// Al arrancar, los contadores vuelven a 0.
 async function resetBoard() {
   if (!port) return;
   try {
-    await port.setSignals({ dataTerminalReady: false, requestToSend: true });
-    await new Promise(resolve => setTimeout(resolve, 120));
-    await port.setSignals({ dataTerminalReady: false, requestToSend: false });
+    await port.setSignals({ requestToSend: true });
+    await port.setSignals({ dataTerminalReady: false });
+    await new Promise(resolve => setTimeout(resolve, 150));
+    await port.setSignals({ dataTerminalReady: true });
     message('Reiniciando la placa...');
   } catch (error) { message(`No se pudo reiniciar: ${error.message}`); }
 }

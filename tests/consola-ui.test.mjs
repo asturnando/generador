@@ -53,10 +53,11 @@ test('sin Web Serial se explica y no deja conectar', () => {
   const f = fixture({ serial: false });
   assert.equal(f.nodes.get('connect').disabled, true); assert.match(f.nodes.get('message').textContent, /Chrome o Edge/);
 });
-test('conecta a 115200 con DTR/RTS en reposo y muestra los pulsos del infrarrojo', async () => {
+test('conecta a 115200 sin tocar DTR/RTS y muestra los pulsos del infrarrojo', async () => {
   const f = fixture(); await f.run('connect()');
   assert.equal(f.port.options.baudRate, 115200);
-  assert.deepEqual({ ...f.port.signals[0] }, { dataTerminalReady: false, requestToSend: false });
+  // Cambiar DTR/RTS al conectar reiniciaba la placa y cortaba los datos.
+  assert.equal(f.port.signals.length, 0);
   assert.equal(f.nodes.get('zero').disabled, false);
   await f.feed(DIAG);
   assert.equal(f.nodes.get('ir-count').textContent, '3'); assert.match(f.nodes.get('ir-level').textContent, /0 V/);
@@ -114,8 +115,8 @@ test('un error puntual del USB no corta la lectura; uno grave desconecta', async
   assert.equal(f.nodes.get('connection').textContent, 'Sin conectar'); assert.match(f.nodes.get('message').textContent, /Se perdió/);
   assert.equal(f.port.closed, true);
 });
-test('reiniciar pulsa RTS y lo suelta', async () => {
+test('reiniciar cambia una sola línea cada vez y termina con las dos activas', async () => {
   const f = fixture(); await f.run('connect()'); await f.click('reset');
-  assert.deepEqual(f.port.signals.slice(1).map(s => ({ ...s })), [
-    { dataTerminalReady: false, requestToSend: true }, { dataTerminalReady: false, requestToSend: false }]);
+  assert.deepEqual(f.port.signals.map(s => ({ ...s })), [
+    { requestToSend: true }, { dataTerminalReady: false }, { dataTerminalReady: true }]);
 });
