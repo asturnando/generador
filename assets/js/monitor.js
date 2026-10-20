@@ -1,4 +1,4 @@
-import { UUID, decodePacket, decodeDiag, hex, commandText, csvRows } from './monitor-protocol.js?v=4';
+import { UUID, decodePacket, decodeDiag, hex, commandText, csvRows } from './monitor-protocol.js?v=5';
 // =============================================================================
 // monitor.js · Lógica de la página del monitor (monitor.html)
 // =============================================================================
@@ -29,7 +29,7 @@ import { UUID, decodePacket, decodeDiag, hex, commandText, csvRows } from './mon
 //
 // La línea "import" de arriba trae las funciones de monitor-protocol.js.
 // (Debe seguir siendo la primera línea: las pruebas automáticas la quitan
-// para poder ejecutar este archivo en Node.) Su "?v=4" debe coincidir con el
+// para poder ejecutar este archivo en Node.) Su "?v=5" debe coincidir con el
 // de monitor.html: así el navegador nunca mezcla un monitor.js nuevo con un
 // monitor-protocol.js antiguo guardado en caché.
 // =============================================================================
@@ -230,10 +230,14 @@ function renderDiag() {
     ? `Responden en I2C: ${d.i2cAddresses.map(hex).join(', ')}${d.i2cCount > d.i2cAddresses.length ? '…' : ''}`
     : 'Ningún dispositivo responde en SDA = GPIO 8 · SCL = GPIO 9.');
   // ---- Sensores de RPM ----
-  // Contador de pulsos y nivel actual. En la mayoría de módulos, 0 V = detectando.
-  const level = (low, what) => low ? `Salida a 0 V: detectando ${what} (su LED suele encenderse).` : 'Salida a 3,3 V: en reposo.';
-  text('hall-pulses', d.hallPulses.toLocaleString('es-CO')); text('hall-level', level(d.hallLow, 'imán'));
-  text('ir-pulses', d.irPulses.toLocaleString('es-CO')); text('ir-level', level(d.irLow, 'marca'));
+  // Contador de pulsos y nivel actual. El infrarrojo de Sara ("Tracker
+  // Sensor") da 0 V cuando NO ve nada que refleje: sobre la cinta negra del
+  // CD o sin nada delante (comprobado el 20/10/2026). El Hall suele dar 0 V
+  // al detectar un imán.
+  text('hall-pulses', d.hallPulses.toLocaleString('es-CO'));
+  text('hall-level', d.hallLow ? 'Salida a 0 V: detectando imán (su LED suele encenderse).' : 'Salida a 3,3 V: sin imán delante.');
+  text('ir-pulses', d.irPulses.toLocaleString('es-CO'));
+  text('ir-level', d.irLow ? 'Salida a 0 V: no ve nada que refleje (la cinta negra o nada delante).' : 'Salida a 3,3 V: ve una superficie que refleja (el CD o papel blanco).');
   $('hall-dot').className = 'dot' + (d.hallLow ? ' live' : '');
   $('ir-dot').className = 'dot' + (d.irLow ? ' live' : '');
   // ---- Ajustes ----

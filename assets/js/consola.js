@@ -199,14 +199,21 @@ function flash(id) {
 // Muestra un diagnóstico (línea "DIAG ...").
 function renderDiag(d) {
   // ---- Sensores de RPM: contador y nivel actual ----
-  for (const [key, what, card] of [['ir', 'marca', 'ir-card'], ['hall', 'imán', 'hall-card']]) {
+  // Qué significa cada nivel. El infrarrojo de Sara ("Tracker Sensor") da
+  // 0 V cuando NO ve nada que refleje: sobre la cinta negra del CD o sin nada
+  // delante (comprobado el 20/10/2026). El Hall suele dar 0 V al detectar un imán.
+  const levels = {
+    ir: ['Salida a 3,3 V: ve una superficie que refleja (el CD o papel blanco).', 'Salida a 0 V: no ve nada que refleje (la cinta negra o nada delante).'],
+    hall: ['Salida a 3,3 V: sin imán delante.', 'Salida a 0 V: detectando imán (su LED suele encenderse).'],
+  };
+  for (const [key, card] of [['ir', 'ir-card'], ['hall', 'hall-card']]) {
     const count = d[key];
     if (typeof count !== 'number') continue;
     if (counts[key] !== null && count > counts[key]) flash(card);
     counts[key] = count;
     text(`${key}-count`, count.toLocaleString('es-CO'));
     const low = d[`${key}_bajo`] === 1;
-    text(`${key}-level`, low ? `Salida a 0 V: detectando ${what} (su LED suele encenderse).` : 'Salida a 3,3 V: en reposo.');
+    text(`${key}-level`, levels[key][low ? 1 : 0]);
     $(`${key}-dot`).className = 'dot' + (low ? ' live' : '');
   }
   // ---- INA219: la causa más probable según lo que comprobó la placa ----
