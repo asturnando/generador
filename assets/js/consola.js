@@ -28,15 +28,24 @@ const MODE_NAMES = { DEMO: 'Demostración', REAL: 'Real', MIXED: 'Mixto' };
 const STATUS_NAMES = ['lectura correcta', 'configuración incompleta', 'error del INA219', 'sin pulsos', 'fuera de rango'];
 
 //   port     → el puerto serie abierto (o null).
-//   reader   → lector del texto que llega; readDone, la tubería que lo alimenta.
+//   reader   → lector de los bytes que llegan; loopDone, la promesa del bucle de lectura.
+//   keepReading → false cuando se pide cerrar: el bucle de lectura termina.
 //   buffer   → trozo de línea que aún no ha terminado (sin Enter).
 //   lastLineAt / lastDiagAt → cuándo llegó la última línea y el último DIAG.
 //   oldFirmware → true si llegan lecturas con el formato de firmware anterior.
 //   counts   → últimos contadores vistos, para iluminar la tarjeta al subir.
-let port = null, reader = null, readDone = null, buffer = '';
+//   bytesIn / linesIn → cuánto ha llegado desde que se conectó (para el diagnóstico).
+//   stale    → true mientras se está avisando de que no llegan datos.
+//   uptime   → segundos que lleva encendida la placa, según su último DIAG.
+let port = null, reader = null, loopDone = null, keepReading = false, buffer = '';
 let lastLineAt = 0, lastDiagAt = 0, oldFirmware = false;
+let bytesIn = 0, linesIn = 0, stale = false, uptime = null;
 const counts = { ir: null, hall: null };
 const logLines = [];
+// Errores puntuales del puerto serie (se pierde algún dato, normalmente al
+// reiniciar la placa) tras los que se puede seguir leyendo. Cualquier otro
+// error (por ejemplo, cable desenchufado) cierra la conexión.
+const RECOVERABLE = new Set(['BufferOverrunError', 'BreakError', 'FramingError', 'ParityError']);
 
 // Activa o desactiva los botones según haya o no un puerto abierto.
 function setControls() {
@@ -58,45 +67,69 @@ function addLog(line) {
 async function connect() {
   try {
     const selected = await navigator.serial.requestPort();
-    await selected.open({ baudRate: 115200 });
+    // bufferSize: memoria para lo que llega mientras la página está ocupada.
+    // Con el valor por defecto (255 bytes) se pierden trozos al arrancar la
+    // placa, que escribe mucho de golpe.
+    await selected.open({ baudRate: 115200, bufferSize: 16384 });
     // En estas placas, las líneas DTR y RTS del USB controlan los botones RST
     // y BOOT. Se dejan las dos en reposo para que la placa siga funcionando.
     await selected.setSignals({ dataTerminalReady: false, requestToSend: false });
-    port = selected; buffer = ''; lastLineAt = performance.now(); lastDiagAt = 0; oldFirmware = false;
+    port = selected; keepReading = true; buffer = ''; lastLineAt = performance.now(); lastDiagAt = 0;
+    oldFirmware = false; bytesIn = 0; linesIn = 0; stale = false; uptime = null;
     text('connection', 'Conectado por USB'); $('dot').className = 'dot live';
     message('Conectado. Esperando datos de la placa...');
     setControls();
-    readLoop(selected);
+    loopDone = readLoop(selected);
   } catch (error) {
     message(error.name === 'NotFoundError' ? 'No se eligió ningún puerto.'
       : `No se pudo abrir el puerto: ${error.message}. Cierra el instalador u otros programas que lo estén usando.`);
   }
 }
 
-// Lee el texto que llega por el puerto hasta que se cierre o se desenchufe.
+// Lee lo que llega por el puerto hasta que se cierre o se desenchufe.
+// Tras un error puntual (ver RECOVERABLE), el navegador ofrece un flujo de
+// lectura nuevo en port.readable y se sigue leyendo; el error se apunta en
+// el registro para saber que se perdió algún dato.
 async function readLoop(selected) {
-  // TextDecoderStream convierte los bytes en texto (UTF-8) a medida que llegan.
-  const decoder = new TextDecoderStream();
-  readDone = selected.readable.pipeTo(decoder.writable).catch(() => {});
-  reader = decoder.readable.getReader();
-  try {
-    for (;;) { const { value, done } = await reader.read(); if (done) break; receive(value); }
-  } catch (error) {
-    message(`Se perdió la conexión USB: ${error.message}`);
-  } finally {
-    reader.releaseLock(); reader = null;
+  // TextDecoder convierte los bytes en texto (UTF-8). "stream: true" guarda
+  // las letras que lleguen partidas entre dos trozos (como la ñ o las tildes).
+  const decoder = new TextDecoder();
+  let errors = 0;
+  while (keepReading && port === selected && selected.readable) {
+    reader = selected.readable.getReader();
+    try {
+      for (;;) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        bytesIn += value.byteLength; errors = 0;
+        receive(decoder.decode(value, { stream: true }));
+      }
+    } catch (error) {
+      addLog(`[consola] ${error.name}: ${error.message}`);
+      // Un error grave, o muchos puntuales seguidos, cierran la conexión.
+      if (!RECOVERABLE.has(error.name) || ++errors > 20) {
+        message(`Se perdió la conexión USB: ${error.message}`); keepReading = false;
+      }
+    } finally {
+      reader.releaseLock(); reader = null;
+    }
   }
   // Si el puerto se cerró solo (cable desenchufado), se deja todo limpio.
-  if (port === selected) await disconnect();
+  if (port === selected) await disconnect(true);
 }
 
-// Cierra el puerto con orden: primero el lector, luego la tubería y el puerto.
-async function disconnect() {
-  const closing = port; port = null;
-  try { await reader?.cancel(); } catch { /* ya estaba cerrado */ }
-  try { await readDone; } catch { /* ya estaba cerrado */ }
+// Cierra el puerto con orden: primero se detiene la lectura y luego el puerto.
+// "fromLoop" es true cuando lo llama el propio bucle de lectura (que ya ha
+// terminado y no hay que esperarlo).
+async function disconnect(fromLoop = false) {
+  const closing = port; port = null; keepReading = false;
+  if (!fromLoop) {
+    try { await reader?.cancel(); } catch { /* ya estaba cerrado */ }
+    try { await loopDone; } catch { /* ya había terminado */ }
+  }
   try { await closing?.close(); } catch { /* ya estaba cerrado */ }
   text('connection', 'Sin conectar'); $('dot').className = 'dot';
+  text('device', 'ESP32-S3 · puerto serie USB (115200)');
   setControls();
 }
 
@@ -126,9 +159,19 @@ function receive(chunk) {
 // Procesa una línea: diagnóstico, lectura, respuesta a una orden u otro mensaje.
 function handleLine(line) {
   if (!line.trim()) return;
-  lastLineAt = performance.now();
+  lastLineAt = performance.now(); linesIn++;
+  // Si se estaba avisando de que no llegaban datos, se dice que han vuelto.
+  if (stale) { stale = false; message('Vuelven a llegar datos de la placa.'); }
   const data = parseSerialLine(line);
-  if (data?.type === 'DIAG') { lastDiagAt = lastLineAt; renderDiag(data); }
+  if (data?.type === 'DIAG') {
+    lastDiagAt = lastLineAt;
+    // "t" son los segundos que lleva encendida: si baja, se ha reiniciado.
+    if (typeof data.t === 'number') {
+      if (uptime !== null && data.t < uptime) addLog('[consola] La placa se ha reiniciado.');
+      uptime = data.t;
+    }
+    renderDiag(data);
+  }
   else if (data?.type === 'LECTURA') renderReading(data);
   else if (/^OK /.test(line)) message(`La placa confirmó la orden ${line.slice(3)}.`);
   else if (/^ERR /.test(line)) message(`La placa rechazó la orden: ${line}`);
@@ -221,13 +264,20 @@ $('send').addEventListener('click', () => {
 });
 
 // ---- Comprobación periódica ----
-// Si hay puerto abierto pero no llega nada en 4 s, se avisa. Si llegan
-// lecturas pero ningún diagnóstico, es un firmware antiguo.
+// Una vez por segundo: se actualiza el resumen de lo recibido; si hay puerto
+// abierto pero no llega nada en 4 s, se avisa. Si llegan lecturas pero
+// ningún diagnóstico, es un firmware antiguo.
 setInterval(() => {
   if (!port) return;
   const now = performance.now();
-  if (now - lastLineAt > 4000) message('No llegan datos de la placa. Pulsa «Reiniciar placa» o desenchufa y vuelve a enchufar el USB.');
-  else if (!lastDiagAt && oldFirmware) message('Esta placa tiene un firmware anterior a 1.1.1 y no envía los sensores por USB. Instala la última versión con el instalador.');
+  const ago = Math.round((now - lastLineAt) / 1000);
+  text('device', `115200 baudios · ${bytesIn.toLocaleString('es-CO')} bytes · ${linesIn.toLocaleString('es-CO')} líneas · última hace ${ago} s`
+    + (uptime === null ? '' : ` · placa encendida hace ${uptime} s`));
+  if (now - lastLineAt > 4000) {
+    stale = true;
+    message(bytesIn ? 'Han dejado de llegar datos de la placa. Pulsa «Reiniciar placa» y mira los mensajes «ARRANQUE» del registro: el último indica dónde se quedó.'
+      : 'No llega nada por el USB. Pulsa «Reiniciar placa» o desenchufa y vuelve a enchufar el USB.');
+  } else if (!lastDiagAt && oldFirmware) message('Esta placa tiene un firmware anterior a 1.1.1 y no envía los sensores por USB. Instala la última versión con el instalador.');
 }, 1000);
 
 // Al abrir la página: Web Serial solo existe en Chrome/Edge de ordenador.

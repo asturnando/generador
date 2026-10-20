@@ -57,7 +57,7 @@ constexpr const char* INFO = "aa510004-7a4b-4c26-8e01-8c5370b56555";
 constexpr const char* DIAG = "aa510005-7a4b-4c26-8e01-8c5370b56555";
 
 // Versión del firmware. Se muestra en el monitor serie y en el monitor web.
-constexpr const char* FIRMWARE_VERSION = "1.1.1";
+constexpr const char* FIRMWARE_VERSION = "1.1.2";
 
 // -----------------------------------------------------------------------------
 // 2. Códigos numéricos

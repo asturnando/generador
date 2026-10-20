@@ -1,6 +1,6 @@
 # Generador Sara · PlatformIO + Bluetooth BLE
 
-Firmware completo (versión 1.1.1) para la placa de Sara: demostración, medida
+Firmware completo (versión 1.1.2) para la placa de Sara: demostración, medida
 real con INA219, sensores de RPM Hall KY-003 e infrarrojo TCRT5000, y diagnóstico
 en directo de todo el montaje desde el monitor web. Siempre arranca en
 **DEMO, 0 RPM, 655 vueltas**. No controla ninguna salida del motor ni reemplaza
@@ -173,6 +173,21 @@ Desde la raíz: `node --test tests/monitor-protocol.test.mjs tests/monitor-ui.te
 Compilar: `pio run -d firmware/generador_ble`.
 La compilación y los tests no prueban por sí solos radio, alimentación o sensores.
 Para confirmar funcionamiento físico completar la prueba de aceptación anterior.
+
+### Versión 1.1.2 (20/10/2026)
+
+Diagnóstico de arranque y bloqueos, a raíz de una placa que dejaba de enviar
+lecturas por USB tras arrancar:
+
+- Mensajes `ARRANQUE <ms>: ...` en cada paso del arranque (con `Serial.flush()`),
+  para saber dónde se queda si se bloquea.
+- `DIAG` incluye `t=` (segundos desde el arranque): si baja, hubo reinicio.
+- `AVISO bucle lento: <ms>` si las órdenes o la comprobación del INA219 tardan
+  más de 300 ms; la línea `I2C (...)` indica cuánto tardó cada búsqueda.
+- Los reintentos cada 3 s solo buscan en 0x40–0x4F; la búsqueda completa
+  (0x08–0x77) queda para el arranque y la orden `SCAN`.
+- Compilación correcta, sin avisos: 541.585 bytes de programa. 34 tests pasan.
+  **Sin probar en hardware.**
 
 ### Comprobaciones de la versión 1.1.1 (20/10/2026)
 

@@ -1,5 +1,5 @@
 // =============================================================================
-// main.cpp · Programa principal del Generador Sara (firmware 1.1.1)
+// main.cpp · Programa principal del Generador Sara (firmware 1.1.2)
 // =============================================================================
 //
 // Qué hace este programa:
@@ -271,9 +271,15 @@ bool isStuckLow(int pin) {
   return digitalRead(pin) == LOW;
 }
 
-// Busca el INA219: revisa las líneas, recorre todas las direcciones I2C
-// posibles y, si alguna entre 0x40 y 0x4F responde, prepara el INA219 allí.
-void detectIna() {
+// Busca el INA219: revisa las líneas, recorre las direcciones I2C y, si
+// alguna entre 0x40 y 0x4F responde, prepara el INA219 allí.
+//   full = true  → todas las direcciones posibles (0x08 a 0x77): al arrancar
+//                  y con la orden SCAN. Sirve para ver qué hay en el bus.
+//   full = false → solo las del INA219 (0x40 a 0x4F): en los reintentos
+//                  cada 3 s, para que sean lo más cortos posible.
+// Escribe por USB cuánto ha tardado, para detectar bloqueos.
+void detectIna(bool full) {
+  const uint32_t started = millis();
   // 1. Se suelta el bus para poder revisar las líneas como pines normales.
   Wire.end();
   i2cStuck = isStuckLow(Config::SDA_PIN) || isStuckLow(Config::SCL_PIN);
@@ -289,7 +295,8 @@ void detectIna() {
   // 3. Con una línea clavada a 0 V el bus no funciona: no se busca nada.
   if (!i2cStuck) {
     // Se "llama" a cada dirección; quien exista contesta (endTransmission = 0).
-    for (uint8_t address = 0x08; address <= 0x77; ++address) {
+    const uint8_t first = full ? 0x08 : 0x40, last = full ? 0x77 : 0x4f;
+    for (uint8_t address = first; address <= last; ++address) {
       Wire.beginTransmission(address);
       if (Wire.endTransmission() != 0) continue;
       if (i2cCount < sizeof(i2cFound)) i2cFound[i2cCount] = address;
@@ -309,7 +316,8 @@ void detectIna() {
   } else {
     inaAddress = 0;
   }
-  Serial.printf("I2C: %u dispositivo(s), INA219 %s 0x%02X, SDA %s, SCL %s%s\n", i2cCount,
+  Serial.printf("I2C (%s, %lu ms): %u dispositivo(s), INA219 %s 0x%02X, SDA %s, SCL %s%s\n",
+                full ? "completo" : "0x40-0x4F", (unsigned long)(millis() - started), i2cCount,
                 inaReady ? "listo en" : "no encontrado", inaAddress,
                 sdaPullup ? "con pull-up" : "sin pull-up", sclPullup ? "con pull-up" : "sin pull-up",
                 i2cStuck ? " | LINEA A 0 V" : "");
@@ -327,7 +335,7 @@ void checkIna() {
     inaReady = false;
     Serial.println("INA219 perdido: se buscará de nuevo");
   }
-  detectIna();
+  detectIna(false);
 }
 
 // =============================================================================
@@ -426,7 +434,7 @@ void processCommand(const char* text) {
     hall.count = 0; ir.count = 0;
     portEXIT_CRITICAL(&pulseMux);
     resetRpm();
-  } else if (!strcmp(text, "SCAN")) detectIna();
+  } else if (!strcmp(text, "SCAN")) detectIna(true);
   else { reply("ERR COMMAND"); return; }  // Orden desconocida o valor fuera de rango.
   // Respuesta de confirmación: "OK " (3) + orden (hasta 20) + '\0' (1) = 24 caracteres.
   char response[24];
@@ -538,8 +546,9 @@ void sendDiag(bool force) {
   // Misma información, legible, por el USB. "_bajo=1" = salida del sensor a
   // 0 V; "ina=0x00" = INA219 no encontrado; "sda"/"scl" = 1 si la línea llega
   // a 3,3 V a través del módulo; "bloqueo" = 1 si SDA o SCL están a 0 V.
-  Serial.printf("DIAG ir=%lu ir_bajo=%u hall=%lu hall_bajo=%u ina=0x%02X sda=%u scl=%u bloqueo=%u i2c=%u ppr=%u sensor=%s\n",
-                (unsigned long)irCount, (flags & DIAG_IR_LOW) ? 1u : 0u,
+  // "t" = segundos desde el arranque: si vuelve a empezar, la placa se reinició.
+  Serial.printf("DIAG t=%lu ir=%lu ir_bajo=%u hall=%lu hall_bajo=%u ina=0x%02X sda=%u scl=%u bloqueo=%u i2c=%u ppr=%u sensor=%s\n",
+                (unsigned long)(millis() / 1000), (unsigned long)irCount, (flags & DIAG_IR_LOW) ? 1u : 0u,
                 (unsigned long)hallCount, (flags & DIAG_HALL_LOW) ? 1u : 0u,
                 inaReady ? inaAddress : 0, sdaPullup ? 1u : 0u, sclPullup ? 1u : 0u, i2cStuck ? 1u : 0u,
                 i2cCount, ppr, source == SOURCE_IR ? "IR" : "HALL");
@@ -575,6 +584,15 @@ void readSerialCommands() {
   }
 }
 
+// Escribe por USB un paso del arranque con los milisegundos transcurridos.
+// Serial.flush() espera a que el texto salga del todo: si la placa se
+// bloqueara en el paso siguiente, este mensaje ya habría llegado y se sabría
+// dónde se quedó.
+void bootStep(const char* what) {
+  Serial.printf("ARRANQUE %lu ms: %s\n", (unsigned long)millis(), what);
+  Serial.flush();
+}
+
 // =============================================================================
 // 7. setup(): se ejecuta una vez al encender
 // =============================================================================
@@ -603,11 +621,13 @@ void setup() {
   setupPulseInput(hall, onHallEdge);
   setupPulseInput(ir, onIrEdge);
   resetRpm();
-  detectIna();
+  detectIna(true);
+  bootStep("sensores listos");
 
   // ---- Configuración del Bluetooth ----
   // Inicia el Bluetooth con el nombre que se verá en el móvil.
   NimBLEDevice::init("Generador Sara");
+  bootStep("Bluetooth iniciado");
   // La placa actúa como "servidor": ofrece datos y el móvil se conecta a ella.
   auto server = NimBLEDevice::createServer();
   // Al desconectarse el móvil, vuelve a anunciarse para permitir reconectar.
@@ -629,7 +649,7 @@ void setup() {
   auto info = service->createCharacteristic(INFO, NIMBLE_PROPERTY::READ);
   // Construye el texto JSON con la versión, los pines y el estado de los
   // sensores al arrancar, por ejemplo:
-  //   {"protocol":1,"firmware":"1.1.1","finalTurns":655,"diag":1,"sda":8,
+  //   {"protocol":1,"firmware":"1.1.2","finalTurns":655,"diag":1,"sda":8,
   //    "scl":9,"hall":6,"ir":7,"rpmReady":false,"inaReady":true,"ppr":0}
   // snprintf escribe el texto sustituyendo cada %s, %d o %u por los valores
   // que van detrás, sin pasarse nunca del tamaño del búfer (200).
@@ -644,6 +664,7 @@ void setup() {
   // basura y no podía leerlo.)
   info->setValue(reinterpret_cast<const uint8_t*>(metadata), strlen(metadata));
   service->start();  // Publica el servicio con sus cuatro características.
+  bootStep("servicio Bluetooth publicado");
   // Primera lectura y primer diagnóstico, para que ya tengan valor antes de
   // que se conecte nadie.
   sample();
@@ -658,6 +679,7 @@ void setup() {
   advertising->enableScanResponse(true);
   advertising->setName("Generador Sara");
   advertising->start();
+  bootStep("anuncio Bluetooth activo");
   Serial.println("BLE listo: busca Generador Sara desde monitor.html");
 }
 
@@ -681,6 +703,10 @@ void loop() {
 
   // b) Cada 3 s: comprobar el INA219 o volver a buscarlo.
   if (now - lastI2c >= Config::I2C_CHECK_MS) { lastI2c = now; checkIna(); }
+  // Si algo de lo anterior ha tardado mucho, las lecturas se retrasan: se
+  // avisa por USB para poder localizar el bloqueo.
+  const uint32_t busy = millis() - now;
+  if (busy > 300) Serial.printf("AVISO bucle lento: %lu ms (ordenes/INA219)\n", (unsigned long)busy);
 
   // c) Cada 500 ms: calcular RPM y enviar una lectura.
   if (now - lastSample >= Config::SAMPLE_MS) { lastSample = now; updateRpm(); sample(); }

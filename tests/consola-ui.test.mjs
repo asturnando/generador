@@ -18,12 +18,15 @@ function fixture({ serial = true } = {}) {
     const el = new Emitter(); Object.assign(el, { textContent: '', value: '', disabled: false, className: '', checked: id === 'quiet', scrollTop: 0, scrollHeight: 0 });
     return [id, el];
   }));
-  let controller; const written = [];
+  // Como en Web Serial: tras un error puntual, port.readable es un flujo nuevo.
+  let controller, readable; const written = [];
+  const newStream = () => { readable = new ReadableStream({ start(c) { controller = c; } }); };
+  newStream();
   const port = {
     signals: [],
     async open(options) { this.options = options; },
     async setSignals(signals) { this.signals.push(signals); },
-    readable: new ReadableStream({ start(c) { controller = c; } }),
+    get readable() { return readable; },
     writable: new WritableStream({ write(chunk) { written.push(new TextDecoder().decode(chunk)); } }),
     async close() { this.closed = true; },
   };
@@ -35,6 +38,11 @@ function fixture({ serial = true } = {}) {
   vm.runInContext(source, context);
   return { nodes, port, written, run: expr => vm.runInContext(expr, context),
     async feed(text) { controller.enqueue(new TextEncoder().encode(text)); for (let i = 0; i < 6; i++) await flush(); },
+    // Error del puerto: "recoverable" deja un flujo nuevo listo, como el navegador.
+    async fail(name, recoverable = true) {
+      const old = controller; if (recoverable) newStream(); else readable = null;
+      old.error(Object.assign(new Error('fallo simulado'), { name })); for (let i = 0; i < 8; i++) await flush();
+    },
     advance(ms) { now += ms; for (const fn of intervals) fn(); },
     async click(id) { nodes.get(id).emit('click'); for (let i = 0; i < 4; i++) await flush(); },
     async change(id, value) { nodes.get(id).value = value; nodes.get(id).emit('change'); for (let i = 0; i < 4; i++) await flush(); },
@@ -86,7 +94,25 @@ test('respuestas OK y ERR, registro silencioso y aviso sin datos', async () => {
   await f.feed('ERR CONFIG_RPM\n'); assert.match(f.nodes.get('message').textContent, /rechazó/);
   await f.feed(DIAG + 'BLE listo: busca Generador Sara desde monitor.html\n');
   assert.doesNotMatch(f.nodes.get('log').textContent, /DIAG/); assert.match(f.nodes.get('log').textContent, /BLE listo/);
-  f.advance(5000); assert.match(f.nodes.get('message').textContent, /No llegan datos/);
+  f.advance(5000); assert.match(f.nodes.get('message').textContent, /dejado de llegar datos/);
+  // Al volver los datos, se dice y se actualiza el resumen.
+  await f.feed('DIAG t=12 ir=1 ir_bajo=0 hall=0 hall_bajo=0 ina=0x00 sda=0 scl=0 bloqueo=0 i2c=0 ppr=0 sensor=HALL\n');
+  assert.match(f.nodes.get('message').textContent, /Vuelven a llegar/);
+  f.advance(1000); assert.match(f.nodes.get('device').textContent, /líneas · última hace .* placa encendida hace 12 s/);
+});
+test('un error puntual del USB no corta la lectura; uno grave desconecta', async () => {
+  const f = fixture(); await f.run('connect()');
+  assert.equal(f.port.options.bufferSize, 16384);
+  await f.feed('DIAG t=5 ir=3 ir_bajo=0 hall=0 hall_bajo=0 ina=0x00 sda=0 scl=0 bloqueo=0 i2c=0 ppr=0 sensor=HALL\n');
+  await f.fail('BreakError');
+  assert.match(f.nodes.get('log').textContent, /BreakError/); assert.equal(f.nodes.get('connection').textContent, 'Conectado por USB');
+  // Tras el reinicio, el reloj de la placa vuelve a empezar.
+  await f.feed('DIAG t=0 ir=0 ir_bajo=0 hall=0 hall_bajo=0 ina=0x00 sda=0 scl=0 bloqueo=0 i2c=0 ppr=0 sensor=HALL\n');
+  assert.equal(f.nodes.get('ir-count').textContent, '0'); assert.match(f.nodes.get('log').textContent, /se ha reiniciado/);
+  await f.feed('ARRANQUE 812 ms: anuncio Bluetooth activo\n'); assert.match(f.nodes.get('log').textContent, /ARRANQUE 812 ms/);
+  await f.fail('NetworkError', false);
+  assert.equal(f.nodes.get('connection').textContent, 'Sin conectar'); assert.match(f.nodes.get('message').textContent, /Se perdió/);
+  assert.equal(f.port.closed, true);
 });
 test('reiniciar pulsa RTS y lo suelta', async () => {
   const f = fixture(); await f.run('connect()'); await f.click('reset');
