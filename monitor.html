@@ -53,7 +53,7 @@
     <section class="panel controls">
       <div><h2>Preparar el ensayo</h2><p>Modo y vueltas se confirman en la ESP32, no solo en esta pantalla.</p></div>
       <div class="control-grid">
-        <label>Origen de los datos<select id="mode" disabled><option value="DEMO">Demostración · todo simulado</option><option value="REAL" disabled>Real · sensores</option><option value="MIXED" disabled>Mixto · RPM medidas, electricidad simulada</option></select></label>
+        <label>Origen de los datos<select id="mode" disabled><option value="DEMO">Demostración · todo simulado</option><option value="REAL" disabled>Real · sensores</option><option value="MIXED" disabled>Mixto · RPM medidas, electricidad simulada</option><option value="THEORY" disabled>Teórico · RPM medidas, electricidad según la ley de Faraday</option></select></label>
         <label>Salida de la bobina<select id="turns" disabled><option value="200">INICIO → T200 · 200 vueltas</option><option value="400">INICIO → T400 · 400 vueltas</option><option value="600">INICIO → T600 · 600 vueltas</option><option value="655" selected>INICIO → FINAL · 655 vueltas</option></select></label>
       </div>
       <p class="note">Seleccionar vueltas solo etiqueta el ensayo: no cambia cables. En modo real, para cambiar de toma hay que parar y desconectar el motor, cambiar los cables y actualizar esta selección.</p>
@@ -63,6 +63,18 @@
         <input id="speed" type="range" min="0" max="1200" step="25" value="0" disabled>
         <div class="actions"><button id="apply-speed" disabled>Aplicar velocidad simulada</button><button id="stop" class="secondary" disabled>Poner simulación a cero</button></div>
         <p class="note">Este control NO mueve ni detiene el motor. Es una demostración arbitraria, no una predicción de lo que producirá la bobina.</p>
+      </div>
+      <!-- Modo teórico (solo en esta página): la placa trabaja en mixto y
+           monitor.js sustituye la electricidad simulada por la estimación del
+           modelo de Faraday (theoreticalOutput en monitor-protocol.js). -->
+      <div id="theory-panel" class="theory" hidden>
+        <h3>Modelo teórico: lo que daría bien montado</h3>
+        <p class="note">Ley de Faraday para una bobina bien colocada (hueco del tamaño del imán), imanes de neodimio de 15 × 2 mm alternando N y S, carga de 100 Ω y puente de diodos. Es una estimación de orden de magnitud, <b>no una medida</b>.</p>
+        <div class="control-grid">
+          <label for="theory-magnets">Imanes en el CD<span class="inline"><input id="theory-magnets" type="number" min="2" max="40" step="2" inputmode="numeric"></span></label>
+          <label for="theory-gap">Distancia bobina–imanes (mm)<span class="inline"><input id="theory-gap" type="number" min="1" max="30" step="1" inputmode="numeric"></span></label>
+        </div>
+        <p class="note" id="theory-note">Esperando RPM medidas.</p>
       </div>
     </section>
     <!-- Sensores y ajustes (firmware 1.1.0 o posterior): estado en directo del
@@ -105,10 +117,10 @@
     </details>
     <footer>Proyecto de Sara · 200 / 400 / 600 / 655 vueltas · Monitor v1<br>La simulación comprueba el software; no sustituye los resultados experimentales.</footer>
   </main>
-  <!-- La lógica de la página. "?v=5" es un número de versión: al cambiarlo,
+  <!-- La lógica de la página. "?v=6" es un número de versión: al cambiarlo,
        el navegador descarga el archivo nuevo en lugar de usar el guardado.
        Hay que subirlo cada vez que se modifique monitor.js o
        monitor-protocol.js (y también en la línea import de monitor.js). -->
-  <script type="module" src="assets/js/monitor.js?v=5"></script>
+  <script type="module" src="assets/js/monitor.js?v=6"></script>
 </body>
 </html>

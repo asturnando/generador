@@ -40,6 +40,51 @@ export const SOURCES = ['HALL', 'IR'];
 // Máximo de pulsos por vuelta que acepta la placa (MAX_PPR en config.h).
 export const MAX_PPR = 64;
 
+// -----------------------------------------------------------------------------
+// Modelo teórico (modo «Teórico» del monitor)
+// -----------------------------------------------------------------------------
+// Estima lo que daría el generador BIEN MONTADO a partir de las RPM medidas,
+// con la ley de Faraday. Es un orden de magnitud para comparar con lo medido,
+// no una medida: el monitor lo rotula siempre como «Teórico».
+// Supuestos (valores por defecto, los dos primeros se pueden cambiar en pantalla):
+//   magnets          → imanes en el CD, alternando N y S.
+//   gapMm            → distancia entre la cara de los imanes y la bobina.
+//   magnetDiameterMm, magnetThicknessMm → imanes de neodimio de 15 × 2 mm.
+//   remanenceT       → campo propio del neodimio (unos 1,2 T).
+//   fluxFactor       → fracción media del campo central que atraviesa un hueco
+//                      de bobina del tamaño del imán (0,6).
+//   coilOhmAt655     → resistencia estimada del hilo con 655 vueltas (13 Ω).
+//   loadOhm          → la carga de 100 Ω.
+//   bridgeDropV      → lo que se comen los dos diodos que conducen (0,6 V).
+export const THEORY_DEFAULTS = Object.freeze({
+  magnets: 6, gapMm: 5, magnetDiameterMm: 15, magnetThicknessMm: 2, remanenceT: 1.2,
+  fluxFactor: 0.6, coilOhmAt655: 13, loadOhm: 100, bridgeDropV: 0.6,
+});
+
+// Devuelve, para unas RPM y unas vueltas de bobina:
+//   frequency (Hz), emf (V~ de la bobina sin carga), vac (V~ con la carga),
+//   volts (V continuos tras el puente), current (mA) y power (mW).
+export function theoreticalOutput(rpm, turns, params = {}) {
+  const p = { ...THEORY_DEFAULTS, ...params };
+  if (!(rpm > 0) || !(turns > 0)) return { frequency: 0, emf: 0, vac: 0, volts: 0, current: 0, power: 0 };
+  // Campo en el eje de un imán de disco, a la distancia de la bobina (en metros).
+  const R = p.magnetDiameterMm / 2000, L = p.magnetThicknessMm / 1000, z = p.gapMm / 1000;
+  const field = p.remanenceT / 2 * ((L + z) / Math.hypot(R, L + z) - z / Math.hypot(R, z));
+  // Flujo máximo por el hueco de la bobina (del tamaño del imán).
+  const flux = p.fluxFactor * field * Math.PI * R * R;
+  // Con los imanes alternados, cada pareja N-S es un ciclo de la onda.
+  const frequency = (p.magnets / 2) * rpm / 60;
+  // Tensión eficaz inducida: E = 4,44 × f × N × Φ (onda senoidal).
+  const emf = 4.44 * frequency * turns * flux;
+  // Parte de la tensión se queda en el propio hilo de la bobina.
+  const coilOhm = p.coilOhmAt655 * turns / 655;
+  const vac = emf * p.loadOhm / (p.loadOhm + coilOhm);
+  // Tras el puente: media de la onda rectificada (0,9 × eficaz) menos los diodos.
+  const volts = Math.max(0, 0.9 * vac - p.bridgeDropV);
+  const current = volts / p.loadOhm * 1000;
+  return { frequency, emf, vac, volts, current, power: volts * current };
+}
+
 // Traduce un paquete de telemetría (20 bytes) a un objeto con nombres claros.
 // "view" es un DataView: una forma de leer bytes indicando su posición y tipo.
 // Si el paquete no es válido, lanza un error en vez de mostrar datos dudosos.

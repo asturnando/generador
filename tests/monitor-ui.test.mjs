@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
-import { UUID, decodePacket, decodeDiag, hex, commandText, csvRows } from '../assets/js/monitor-protocol.js';
+import { UUID, decodePacket, decodeDiag, hex, commandText, csvRows, THEORY_DEFAULTS, theoreticalOutput } from '../assets/js/monitor-protocol.js';
 const source = readFileSync(new URL('../assets/js/monitor.js', import.meta.url), 'utf8').replace(/^import .*;\r?\n/, '');
 const html = readFileSync(new URL('../monitor.html', import.meta.url), 'utf8');
 function packet({ sequence = 1, mode = 0, flags = 3, status = 0, rpm = 0, volts = 0, ma = 0 } = {}) {
@@ -56,7 +56,7 @@ function fixture({ bluetooth = true, secure = true, rpmReady = false, inaReady =
   if (diag) { diagChar.value = diagPacket(diag); chars[UUID.diag] = diagChar; }
   const device = new Emitter(); device.name = 'Generador Sara';
   device.gatt = { connected: false, async connect() { this.connected = true; return this; }, async getPrimaryService() { return { getCharacteristic: async id => chars[id] }; }, disconnect() { if (this.connected) { this.connected = false; device.emit('gattserverdisconnected'); } } };
-  const context = vm.createContext({ UUID, decodePacket, decodeDiag, hex, commandText, csvRows, console, TextEncoder, TextDecoder, DataView, Date, Blob, URL,
+  const context = vm.createContext({ UUID, decodePacket, decodeDiag, hex, commandText, csvRows, THEORY_DEFAULTS, theoreticalOutput, console, TextEncoder, TextDecoder, DataView, Date, Blob, URL,
     document: { getElementById: id => { assert.ok(nodes.has(id), `ID ${id} existe`); return nodes.get(id); }, createElement: () => ({ click() {} }) },
     navigator: bluetooth ? { bluetooth: { requestDevice: async () => device } } : {},
     window: { isSecureContext: secure, devicePixelRatio: 1, addEventListener() {} },
@@ -68,6 +68,7 @@ function fixture({ bluetooth = true, secure = true, rpmReady = false, inaReady =
   return { nodes, telemetry, control, diagChar, device, context, run: expr => vm.runInContext(expr, context),
     push(props) { telemetry.value = packet(props); telemetry.emit('characteristicvaluechanged'); },
     pushDiag(props) { diagChar.value = diagPacket(props); diagChar.emit('characteristicvaluechanged'); },
+    async change(id, value) { nodes.get(id).value = value; nodes.get(id).emit('change'); for (let i = 0; i < 4; i++) await new Promise(r => setImmediate(r)); },
     advance(ms) { now += ms; for (const [id, timer] of timers) if (timer.deadline <= now) { timers.delete(id); timer.fn(); } for (const fn of intervals) fn(); },
   };
 }
@@ -171,4 +172,22 @@ test('CSV apunta sensor y PPR de las RPM medidas', async () => {
   f.push({ mode: 2, sequence: 2, flags: 11, rpm: 120, volts: 1, ma: 10 });
   assert.match(f.run('csvRows(rows)'), /MIXED,655,120,.*,IR,4\r\n$/);
   assert.match(f.nodes.get('rpm-source').textContent, /infrarrojo/);
+});
+test('modo teórico: la placa en mixto y la electricidad según el modelo, rotulada', async () => {
+  const f = fixture({ rpmReady: true, diag: { ppr: 1, flags: 52 | 8 } }); await f.run('connect()');
+  f.push({ sequence: 2, flags: 3 | 8 });
+  assert.equal(f.nodes.get('mode').querySelector('[value="THEORY"]').disabled, false);
+  assert.equal(f.nodes.get('theory-magnets').value, '6'); assert.equal(f.nodes.get('theory-gap').value, '5');
+  await f.change('mode', 'THEORY'); assert.equal(f.control.lastWrite, 'MODE:MIXED');
+  assert.equal(f.nodes.get('theory-panel').hidden, false);
+  // Paquete mixto: la placa manda electricidad simulada (1 V); se muestra la teórica.
+  f.push({ mode: 2, sequence: 3, flags: 11, rpm: 3685, volts: 1, ma: 10 });
+  const expected = theoreticalOutput(3685, 655);
+  assert.match(f.nodes.get('volts').textContent, new RegExp(expected.volts.toFixed(3).replace('.', ',')));
+  assert.match(f.nodes.get('electric-source').textContent, /Teórico/); assert.match(f.nodes.get('mode-label').textContent, /TEÓRICO/);
+  assert.match(f.nodes.get('theory-note').textContent, /184 Hz/);
+  assert.equal(f.nodes.get('mode').value, 'THEORY'); assert.match(f.run('csvRows(rows)'), /,TEORICO,/);
+  // Volver a mixto: otra vez la electricidad simulada de la placa.
+  await f.change('mode', 'MIXED'); f.push({ mode: 2, sequence: 4, flags: 11, rpm: 3685, volts: 1, ma: 10 });
+  assert.match(f.nodes.get('electric-source').textContent, /Simulado/); assert.equal(f.nodes.get('theory-panel').hidden, true);
 });

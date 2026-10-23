@@ -1,4 +1,4 @@
-import { UUID, decodePacket, decodeDiag, hex, commandText, csvRows } from './monitor-protocol.js?v=5';
+import { UUID, decodePacket, decodeDiag, hex, commandText, csvRows, THEORY_DEFAULTS, theoreticalOutput } from './monitor-protocol.js?v=6';
 // =============================================================================
 // monitor.js · Lógica de la página del monitor (monitor.html)
 // =============================================================================
@@ -29,7 +29,7 @@ import { UUID, decodePacket, decodeDiag, hex, commandText, csvRows } from './mon
 //
 // La línea "import" de arriba trae las funciones de monitor-protocol.js.
 // (Debe seguir siendo la primera línea: las pruebas automáticas la quitan
-// para poder ejecutar este archivo en Node.) Su "?v=5" debe coincidir con el
+// para poder ejecutar este archivo en Node.) Su "?v=6" debe coincidir con el
 // de monitor.html: así el navegador nunca mezcla un monitor.js nuevo con un
 // monitor-protocol.js antiguo guardado en caché.
 // =============================================================================
@@ -67,6 +67,20 @@ let rows = [], history = [], dropped = 0;
 //   diagChar → característica de diagnóstico (null si el firmware no la tiene).
 //   diag     → último diagnóstico recibido, ya traducido (o null).
 let diagChar = null, diag = null;
+//   theory → true si se eligió «Teórico»: la placa trabaja en mixto y esta
+//            página calcula la electricidad con el modelo de Faraday.
+let theory = false;
+
+// Parámetros del modelo teórico que se pueden cambiar en pantalla. Si el
+// valor escrito no es válido, se usa el de THEORY_DEFAULTS.
+function theoryParams() {
+  const magnets = Math.round(Number($('theory-magnets').value));
+  const gap = Number($('theory-gap').value);
+  return {
+    magnets: magnets >= 2 && magnets <= 40 ? magnets : THEORY_DEFAULTS.magnets,
+    gapMm: gap >= 1 && gap <= 30 ? gap : THEORY_DEFAULTS.gapMm,
+  };
+}
 
 // Escribe un texto en un elemento de la página.
 const text = (id, value) => { $(id).textContent = value; };
@@ -110,6 +124,9 @@ function setControls() {
   const caps = lastPacket ?? metadata;
   $('mode').querySelector('[value="REAL"]').disabled = !caps.inaReady;
   $('mode').querySelector('[value="MIXED"]').disabled = !caps.rpmReady;
+  // Teórico necesita lo mismo que mixto: RPM medidas.
+  $('mode').querySelector('[value="THEORY"]').disabled = !caps.rpmReady;
+  $('theory-panel').hidden = !theory;
   // Ajustes de sensores: solo con datos recientes, diagnóstico disponible y
   // sin órdenes pendientes.
   const tuning = ready && !!diag;
@@ -149,9 +166,21 @@ function packetEvent(event) { receive(event.target.value); }
 // Procesa una lectura: la traduce, la muestra, la guarda y actualiza la gráfica.
 function receive(value) {
   try {
-    const p = decodePacket(value);  // Lanza un error si el paquete no es válido.
+    let p = decodePacket(value);  // Lanza un error si el paquete no es válido.
     if (p.sequence === lastSequence) return; // lectura inicial y notify pueden coincidir.
     lastSequence = p.sequence; lastPacket = p; lastAt = performance.now();
+    // Modo teórico: la placa está en mixto (RPM medidas) y aquí la
+    // electricidad simulada se sustituye por la estimación del modelo.
+    const view = theory && p.mode === 'MIXED' ? 'THEORY' : p.mode;
+    if (view === 'THEORY') {
+      const t = theoreticalOutput(p.rpm ?? 0, p.turns, theoryParams());
+      const known = p.rpm !== null;
+      p = { ...p, volts: known ? t.volts : null, current: known ? t.current : null, power: known ? t.power : null,
+        electricSource: known ? 'TEORICO' : 'SIN_DATO' };
+      text('theory-note', known
+        ? `Con ${format(p.rpm, 0)} RPM: onda de ${format(t.frequency, 0)} Hz; la bobina daría ${format(t.emf, 2)} V~ sin carga y ${format(t.vac, 2)} V~ con la carga; tras el puente, ${format(t.volts, 2)} V y ${format(t.current, 1)} mA.`
+        : 'Esperando RPM medidas.');
+    }
     text('connection', 'Recibiendo datos'); $('dot').className = 'dot live';
     // Cifras principales, con 0, 3, 2 y 2 decimales.
     text('rpm', format(p.rpm, 0)); text('volts', format(p.volts, 3));
@@ -160,15 +189,17 @@ function receive(value) {
     // Con diagnóstico se sabe además qué sensor mide las RPM.
     const sensorName = diag ? (diag.source === 'IR' ? 'Medido · infrarrojo' : 'Medido · sensor Hall') : 'Medido por pulsos';
     text('rpm-source', p.rpmSource === 'MEDIDO' ? sensorName : p.rpmSource === 'SIMULADO' ? 'Simulado · no mide giro' : 'Sin dato');
-    for (const id of ['electric-source', 'current-source', 'power-source']) text(id, p.electricSource === 'MEDIDO' ? 'Medición INA219' : p.electricSource === 'SIMULADO' ? 'Simulado · no experimental' : 'Sin dato');
+    const electricNames = { MEDIDO: 'Medición INA219', SIMULADO: 'Simulado · no experimental', TEORICO: 'Teórico · ley de Faraday' };
+    for (const id of ['electric-source', 'current-source', 'power-source']) text(id, electricNames[p.electricSource] ?? 'Sin dato');
     // Rótulo del modo: título y explicación para cada uno.
-    const labels = { DEMO: ['DEMOSTRACIÓN · DATOS SIMULADOS', 'Prueba del software. No son resultados experimentales.'], REAL: ['MODO REAL · SENSORES', 'Las lecturas ausentes se muestran como —, nunca se rellenan con simulación.'], MIXED: ['MODO MIXTO', 'RPM medidas por el sensor; tensión, corriente y potencia SIMULADAS.'] };
-    text('mode-label', labels[p.mode][0]); text('mode-description', labels[p.mode][1]);
+    const labels = { DEMO: ['DEMOSTRACIÓN · DATOS SIMULADOS', 'Prueba del software. No son resultados experimentales.'], REAL: ['MODO REAL · SENSORES', 'Las lecturas ausentes se muestran como —, nunca se rellenan con simulación.'], MIXED: ['MODO MIXTO', 'RPM medidas por el sensor; tensión, corriente y potencia SIMULADAS.'],
+      THEORY: ['MODO TEÓRICO · ESTIMACIÓN', 'RPM medidas por el sensor; tensión, corriente y potencia calculadas con la ley de Faraday: lo que daría la bobina bien montada. No son medidas.'] };
+    text('mode-label', labels[view][0]); text('mode-description', labels[view][1]);
     // El recuadro cambia de color en modo REAL (clase CSS "real").
     $('origin').className = 'origin' + (p.mode === 'REAL' ? ' real' : '');
     // Los desplegables muestran lo que dice la placa, no lo que se eligió en
     // pantalla (salvo mientras se espera la confirmación de un cambio).
-    if (!pending) { $('mode').value = p.mode; $('turns').value = String(p.turns); }
+    if (!pending) { $('mode').value = view; $('turns').value = String(p.turns); }
     // Texto del estado de los sensores.
     const states = { OK: 'Lectura recibida.', CONFIG_ERROR: 'Configuración incompleta.', INA_ERROR: 'Error de lectura INA219: revisar conexión.', NO_PULSES: 'Sin pulsos: puede estar parado o existir un fallo del sensor.', RANGE_ERROR: 'INA219 fuera del rango configurado; detener la prueba y revisar.' };
     text('sensor-status', `${states[p.status]} RPM: ${p.rpmReady ? 'configurado, no equivale a validación física' : 'sin pulsos por vuelta configurados'}. INA219: ${p.inaReady ? 'responde' : 'no encontrado'}.`);
@@ -389,14 +420,24 @@ async function runCommand(kind, value) {
   try { await send(kind, value); message('Orden confirmada por la ESP32. Esperando la próxima lectura.'); }
   catch (error) { message(error.message); }
   finally {
-    if (lastPacket) { $('mode').value = lastPacket.mode; $('turns').value = String(lastPacket.turns); }
+    if (lastPacket) { $('mode').value = theory && lastPacket.mode === 'MIXED' ? 'THEORY' : lastPacket.mode; $('turns').value = String(lastPacket.turns); }
     if (diag) $('rpm-sensor').value = diag.source;
   }
 }
 $('apply-speed').addEventListener('click', () => runCommand('SPEED', $('speed').value));
 // "Poner simulación a cero": deslizador a 0 y orden SPEED:0.
 $('stop').addEventListener('click', () => { $('speed').value = '0'; text('speed-value', '0 RPM'); runCommand('SPEED', 0); });
-$('mode').addEventListener('change', () => runCommand('MODE', $('mode').value));
+// «Teórico» no es un modo de la placa: se le pide MIXTO (RPM medidas) y es
+// esta página la que calcula la electricidad con el modelo.
+$('mode').addEventListener('change', () => {
+  theory = $('mode').value === 'THEORY';
+  setControls();
+  runCommand('MODE', theory ? 'MIXED' : $('mode').value);
+});
+// Los parámetros del modelo se recuerdan en este navegador (si se puede).
+for (const [id, key] of [['theory-magnets', 'magnets'], ['theory-gap', 'gapMm']]) {
+  $(id).addEventListener('change', () => { try { localStorage.setItem(`sara-theory-${key}`, $(id).value); } catch { /* sin almacenamiento */ } });
+}
 $('turns').addEventListener('change', () => runCommand('TURNS', $('turns').value));
 
 // Botones del panel "Sensores y ajustes".
@@ -490,4 +531,11 @@ setInterval(() => {
 // navegadores compatibles (Chrome, Edge). Si no se cumple, se explica.
 if (!window.isSecureContext) message('Bluetooth requiere HTTPS. Desde Android usa la URL publicada; http://IP-del-PC no sirve. En el propio PC puedes usar localhost.');
 else if (!navigator.bluetooth) message('Este navegador no ofrece Web Bluetooth. Usa Chrome en Android o Chrome/Edge compatible en el ordenador.');
+// Valores iniciales del modelo teórico: los guardados en este navegador o los
+// de THEORY_DEFAULTS.
+for (const [id, key] of [['theory-magnets', 'magnets'], ['theory-gap', 'gapMm']]) {
+  let saved = null;
+  try { saved = localStorage.getItem(`sara-theory-${key}`); } catch { /* sin almacenamiento */ }
+  $(id).value = saved ?? String(THEORY_DEFAULTS[key]);
+}
 setControls(); draw();

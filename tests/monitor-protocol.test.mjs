@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { decodePacket, decodeDiag, hex, csvRows, commandText, parseSerialLine } from '../assets/js/monitor-protocol.js';
+import { decodePacket, decodeDiag, hex, csvRows, commandText, parseSerialLine, theoreticalOutput } from '../assets/js/monitor-protocol.js';
 function packet({ mode = 0, flags = 3, status = 0, turns = 655, rpm = 300, volts = 2, ma = 20, sequence = 4 } = {}) {
   const d = new DataView(new ArrayBuffer(20));
   d.setUint8(0, 1); d.setUint8(1, mode); d.setUint8(2, flags); d.setUint8(3, status);
@@ -76,4 +76,18 @@ test('órdenes de sensores: PPR, sensor, contadores y búsqueda I2C', () => {
   assert.equal(commandText('RESET', 'PULSES'), 'RESET:PULSES'); assert.throws(() => commandText('RESET', 'TODO'));
   assert.equal(commandText('SCAN'), 'SCAN');
   for (const c of [commandText('RESET', 'PULSES'), commandText('SRC', 'HALL'), commandText('PPR', 64)]) assert.ok(c.length <= 20);
+});
+test('modelo teórico: Faraday proporcional a RPM y vueltas, y umbral del puente', () => {
+  const t = theoreticalOutput(3685, 655);
+  assert.ok(Math.abs(t.frequency - 184.25) < 1e-9);             // 6 imanes → 3 ciclos por vuelta
+  assert.ok(t.emf > 3.5 && t.emf < 5.5, `emf ${t.emf}`);         // unos 4,3 V~ sin carga
+  assert.ok(t.volts > 2.3 && t.volts < 3.4, `V ${t.volts}`);     // unos 2,9 V tras el puente
+  assert.ok(Math.abs(t.current - t.volts * 10) < 1e-9);           // 100 Ω → mA = V × 10
+  assert.ok(Math.abs(t.power - t.volts * t.current) < 1e-9);      // mW = V × mA
+  assert.ok(Math.abs(theoreticalOutput(7370, 655).emf / t.emf - 2) < 1e-9);    // doble de RPM, doble de tensión
+  assert.ok(Math.abs(theoreticalOutput(3685, 200).emf / t.emf - 200 / 655) < 1e-9);
+  assert.equal(theoreticalOutput(300, 655).volts, 0);             // a poca velocidad no pasa el puente
+  assert.deepEqual(theoreticalOutput(0, 655), { frequency: 0, emf: 0, vac: 0, volts: 0, current: 0, power: 0 });
+  assert.ok(theoreticalOutput(3685, 655, { gapMm: 10 }).emf < t.emf); // más lejos, menos tensión
+  assert.ok(theoreticalOutput(3685, 655, { magnets: 8 }).frequency > t.frequency);
 });
